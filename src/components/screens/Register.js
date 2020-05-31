@@ -7,11 +7,18 @@ import {
     Button,
     TouchableOpacity,
     Image,
-    Alert,StatusBar
+    Alert, StatusBar, ActivityIndicator
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
-export default class Register extends Component {
+import {connect} from "react-redux";
+import {
+    mobileChanged,
+    passwordChanged,
+    registerUser
+
+} from "../../action/RegisterUser";
+ class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,10 +26,29 @@ export default class Register extends Component {
             password: '',
         }
     }
+     onMobileChange(text) {
+         this.props.mobileChanged(text)
+     }
 
-    onClickListener = (viewId) => {
-        Alert.alert("Alert", "Button pressed "+viewId);
-    }
+     onPasswordChange(text) {
+         this.props.passwordChanged(text)
+     }
+
+     onRegisterUser() {
+         const {mobile, password} = this.props;
+         const {navigation}= this.props;
+         this.props.registerUser({mobile, password,navigation});
+     }
+     renderRegister(){
+         if(this.props.loading){
+             return(<ActivityIndicator/>);
+         }
+         return ( <TouchableOpacity activeOpacity={0.8} style={[styles.buttonContainer, styles.loginButton]}
+                                    onPress={this.onRegisterUser.bind(this)}>
+             <Text style={styles.loginText}>ثبت نام</Text>
+         </TouchableOpacity> )
+     }
+
 
     render() {
         return (
@@ -43,6 +69,8 @@ export default class Register extends Component {
                         </Text>
                     </View>
                     <View style={{justifyContent:'center',alignItems:'center',marginTop:60}}>
+                        <Text style={{textAlign:'center',fontFamily: 'IRANSansMobile(FaNum)',color:'#fff'}}>{this.props.error}</Text>
+
                         <View style={styles.inputContainer}>
                             <Icon style={styles.inputIcon} name='user'color='#43c164'size={25} />
                             <TextInput style={styles.inputs}
@@ -50,7 +78,7 @@ export default class Register extends Component {
                                        keyboardType="name-phone-pad"
                                        maxLength={11}
                                        underlineColorAndroid='transparent'
-                                       onChangeText={(email) => this.setState({email})}/>
+                                       onChangeText={this.onMobileChange.bind(this)}/>
                         </View>
 
                         <View style={styles.inputContainer}>
@@ -59,15 +87,11 @@ export default class Register extends Component {
                                        placeholder="رمز عبور"
                                        secureTextEntry={true}
                                        underlineColorAndroid='transparent'
-                                       onChangeText={(password) => this.setState({password})}/>
+                                       onChangeText={this.onPasswordChange.bind(this)}/>
                         </View>
-                        <TouchableOpacity activeOpacity={0.8} style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('login')}>
-                            <Text style={styles.loginText}>ثبت نام</Text>
-                        </TouchableOpacity>
+                        {this.renderRegister()}
 
-                        {/*<TouchableOpacity   activeOpacity={0.8} style={styles.buttonContainer} onPress={() => this.onClickListener('register')}>*/}
-                        {/*    <Text style={styles.btnText}>ورود</Text>*/}
-                        {/*</TouchableOpacity>*/}
+
                     </View>
                 </LinearGradient>
             </View>
@@ -187,3 +211,17 @@ const styles = StyleSheet.create({
 
     }
 });
+const mapStateToProps = state => {
+    return {
+        mobile: state.registerUser.mobile,
+        password: state.registerUser.password,
+        loading: state.registerUser.loading,
+        success:state.registerUser.success,
+        error: state.registerUser.error
+    }
+}
+export default connect(mapStateToProps, {
+    mobileChanged,
+    passwordChanged,
+    registerUser
+})(Register);

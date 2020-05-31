@@ -12,10 +12,11 @@ import {
     StatusBar,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+
 export default class Splash extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props)
+
         this.animatedValue1 = new Animated.Value(0);
         this.animatedValue2 = new Animated.Value(0);
         this.animatedValue3 = new Animated.Value(0);
@@ -34,6 +35,7 @@ export default class Splash extends Component {
 
     splash() {
         setTimeout(() => {
+
             this.props.navigation.navigate('LoginOrRegister');
 
         }, 6000);

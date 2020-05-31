@@ -15,7 +15,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class LoginOrRegister extends Component {
     constructor(props) {
+
         super(props);
+        console.log(this.props.navi)
         this.state = {
             open: false,
             showAlert: false,
