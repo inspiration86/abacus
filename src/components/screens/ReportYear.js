@@ -99,13 +99,13 @@ export default class ReportYear extends React.Component {
 
             },
 
-            highlights: [{ x: 50 }],
-            description: {
-                text: '',
-                textSize: 15,
-                textColor: processColor('darkgray'),
-
-            },
+            // highlights: [{ x: 50 }],
+            // description: {
+            //     text: '',
+            //     textSize: 15,
+            //     textColor: processColor('darkgray'),
+            //
+            // },
 
             yeardata: [
                 {

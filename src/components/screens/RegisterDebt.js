@@ -10,7 +10,6 @@ import {
     Image,
     ScrollView,
 } from 'react-native';
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import {Button} from 'react-native-elements';
 import Modal from 'react-native-modalbox';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -23,47 +22,9 @@ import DatePicker, {getFormatedDate} from 'react-native-modern-datepicker';
 import Menu, {MenuItem, MenuDivider} from 'react-native-material-menu';
 import Header from '../layouts/Header';
 import LinearGradient from 'react-native-linear-gradient';
-import {Card, List, Content, ListItem,Left, Body, Right, Title,CardItem,Item,Input,Label} from 'native-base';
+import {Card, List, Content, ListItem,Left, Body, Right, Title,CardItem} from 'native-base';
 import Modaldate from 'react-native-modal';
 import {Divider} from 'react-native-paper';
-const items = [
-    // this is the parent or 'item'
-    {
-        name: ' شخصي',
-        id: 0,
-        children: [{
-            name: <Text style={{
-                color: '#777',
-                fontFamily: 'IRANSansMobile(FaNum)',
-                marginHorizontal: 70,
-            }}>خانه </Text>,
-            id: 10,
-        }, {
-            name: 'موبايل',
-            id: 17,
-        }, {
-            name: 'خودكار',
-            id: 13,
-        }, {
-            name: 'دفتر',
-            id: 14,
-        }],
-    },
-    {
-        name: 'وسايل برقي',
-        id: 1,
-        children: [{
-            name: 'تلويزيون',
-            id: 20,
-        }, {
-            name: 'لپ تاپ',
-            id: 21,
-        }, {
-            name: 'يخچال',
-            id: 22,
-        }],
-    },
-];
 
 //.........const............
 const typeIncome = [
@@ -113,7 +74,7 @@ const renderImage = (image) => {
         </>,
     ];
 };
-export default class RegisterIncome extends Component {
+export default class RegisterDebt extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -122,7 +83,8 @@ export default class RegisterIncome extends Component {
             DateHolder: null,
             PickerValueHolder: '',
             image: '',
-            isModalVisible: false,
+            isModalVisible1: false,
+            isModalVisible2: false,
             show: true,
             isVisableBoxImage: 'none',
         };
@@ -155,9 +117,16 @@ export default class RegisterIncome extends Component {
     };
     // ......................modaldatepiker.....................
     toggleModal = () => {
-        console.log(this.state.isModalVisible);
-        this.setState({isModalVisible: !this.state.isModalVisible});
+        console.log(this.state.isModalVisible1);
+        this.setState({isModalVisible1: !this.state.isModalVisible1});
     };
+    toggleModald = () => {
+        console.log(this.state.isModalVisible2);
+        this.setState({isModalVisible2: !this.state.isModalVisible2});
+    };
+
+
+
     // ..................datepicker..................
 
     DatePickerMainFunctionCall = () => {
@@ -239,9 +208,6 @@ export default class RegisterIncome extends Component {
         });
 
     };
-    onSelectedItemsChange = (selectedItems) => {
-        this.setState({ selectedItems });
-    };
 
     // ..................code............
     render() {
@@ -252,7 +218,7 @@ export default class RegisterIncome extends Component {
                     hidden={false}
                     backgroundColor='#3e843d'
                 />
-                <Header title="ثبت درآمدها" onBackPress={() => {
+                <Header title="ثبت بدهی" onBackPress={() => {
                     this.props.navigation.goBack();
                 }}/>
 
@@ -260,27 +226,28 @@ export default class RegisterIncome extends Component {
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <Text
                         style={{marginTop: 15, textAlign: 'center', fontSize: 15, fontFamily: 'IRANSansMobile'}}> برای
-                        ثبت درامد های روزانه خود فرم
+                        ثبت بدهی های خود فرم
                         زیر را پرکنید </Text>
 
                     {/* .....................datepicker....................................... */}
 
 
                     <View style={{flexDirection: 'row', marginTop: 20}}>
-                        <TouchableOpacity activeOpacity={0.8} style={styles.SectionStyle} onPress={this.toggleModal}>
+                        <TouchableOpacity activeOpacity={0.8} style={styles.SectionStyle} onPress={this.toggleModald}>
                             <Icon name="sort-desc" size={20} color="#777777" style={{marginLeft: 8, marginTop: 2}}/>
                             <Text style={[styles.inputs, {
                                 marginTop: -8,
-                            }]}> {this.state.DateText}</Text>
+                                textAlign: 'center',
+                            }]}> {this.state.DateStartTextDebt}</Text>
                         </TouchableOpacity>
-                        <View style={{marginRight: 30, marginTop: 12, flex: 1}}>
-                            <Text style={{fontSize: 14, flex: 1, fontFamily: 'IRANSansMobile'}}> تاریخ :</Text>
+                        <View style={{marginRight: 10, marginTop: 12, flex: 1}}>
+                            <Text style={{fontSize: 13, flex: 1,fontFamily: 'IRANSansMobile',marginHorizontal:-5}}> تاریخ دریافت</Text>
                             {/* <Image style={styles.imageIcon} source={require('../../../assets/images/icons/date.png')} /> */}
                         </View>
                     </View>
 
                     <View style={{flex: 1}}>
-                        <Modaldate isVisible={this.state.isModalVisible}
+                        <Modaldate isVisible={this.state.isModalVisible2}
 
                         >
                             <View style={{flex: 1}}>
@@ -291,7 +258,49 @@ export default class RegisterIncome extends Component {
                                                 headerFont: 'Shabnam-Medium',
                                             }}
                                             onDateChange={date => {
-                                                this.setState({DateText: date});
+                                                this.setState({ DateStartTextDebt: date });
+                                                this.toggleModald();
+                                            }
+
+                                            }
+
+                                            placeholder="Select date"
+                                />
+                                <Button title="انصراف" onPress={this.toggleModald} color='green'/>
+                            </View>
+                        </Modaldate>
+                    </View>
+
+                    {/* .....................datepicker....................................... */}
+
+
+                    <View style={{flexDirection: 'row', marginTop: 5}}>
+                        <TouchableOpacity activeOpacity={0.8} style={styles.SectionStyle} onPress={this.toggleModal}>
+                            <Icon name="sort-desc" size={20} color="#777777" style={{marginLeft: 8, marginTop: 2}}/>
+                            <Text style={[styles.inputs, {
+                                marginTop: -8,
+                                textAlign: 'center',
+                            }]}> {this.state.DateEndTextDebt}</Text>
+                        </TouchableOpacity>
+                        <View style={{marginRight: 10, marginTop: 12, flex: 1}}>
+                            <Text style={{fontSize: 13, flex: 1,fontFamily: 'IRANSansMobile',marginHorizontal:-20 ,marginRight:-10}}>  تاریخ تسویه</Text>
+                            {/* <Image style={styles.imageIcon} source={require('../../../assets/images/icons/date.png')} /> */}
+                        </View>
+                    </View>
+
+                    <View style={{flex: 1}}>
+                        <Modaldate isVisible={this.state.isModalVisible1}
+
+                        >
+                            <View style={{flex: 1}}>
+                                <DatePicker isGregorian={false}
+                                            mode="date"
+                                            options={{
+                                                defaultFont: 'Shabnam-Light',
+                                                headerFont: 'Shabnam-Medium',
+                                            }}
+                                            onDateChange={date => {
+                                                this.setState({DateEndTextDebt: date});
                                                 this.toggleModal();
                                             }
 
@@ -303,30 +312,6 @@ export default class RegisterIncome extends Component {
                             </View>
                         </Modaldate>
                     </View>
-
-                    {/* .........................timepicker....................................... */}
-
-                    <View style={{flexDirection: 'row'}}>
-                        <TouchableOpacity activeOpacity={0.7} style={styles.SectionStyle}
-                                          onPress={this._showDateTimePicker}>
-                            <Icon name="sort-desc" size={20} color="#777777" style={{marginLeft: 8, marginTop: 2}}/>
-                            <Text style={[styles.inputs, {
-                                marginTop: -10,
-                                textAlign: 'center',
-                            }]}>{this.state.TimeText}</Text>
-                        </TouchableOpacity>
-                        <View style={{marginRight: 30, marginTop: 12, flex: 1}}>
-                            <Text style={{fontSize: 14, flex: 1, fontFamily: 'IRANSansMobile'}}> زمان :</Text>
-                            {/* <Image style={styles.imageIcon} source={require('../../../assets/images/icons/date.png')} /> */}
-                        </View>
-                    </View>
-                    <DateTimePicker
-                        mode={'time'}
-                        isVisible={this.state.isDateTimePickerVisible}
-                        onConfirm={this._handleDatePicked}
-                        onCancel={this._hideDateTimePicker}
-                        cancelTextIOS="یلی"
-                    />
                     {/* .........................price....................................... */}
 
                     <View style={{flexDirection: 'row'}}>
@@ -337,104 +322,31 @@ export default class RegisterIncome extends Component {
                                 underlineColorAndroid="transparent"
                             />
                         </View>
-                        <View style={{marginRight: 30, marginTop: 12, flex: 1}}>
-                            <Text style={{fontSize: 14, flex: 1, fontFamily: 'IRANSansMobile'}}> مبلغ :</Text>
+                        <View style={{marginRight: 10, marginTop: 12, flex: 1}}>
+                            <Text style={{fontSize: 14, flex: 1,fontFamily: 'IRANSansMobile',}}> مبلغ :</Text>
                             {/* <Image style={styles.imageIcon} source={require('../../../assets/images/icons/639365.png')} /> */}
                         </View>
                     </View>
+
+                    {/* .........................timepicker....................................... */}
+
+
+
                     {/*...........................category.....................*/}
-                    <View style={{flexDirection: 'row'}}>
-                    <View style={[styles. SectionStyle,{justifyContent:'center'}]}
-                      >
-
-                            <SectionedMultiSelect
-                                itemFontFamily={{ fontWeight: 'bold',}}
-                                subItemFontFamily={{ fontWeight: 'bold',color:'#555'}}
-                                items={items}
-                                confirmText={{
-                                    fontSize: 50,
-                                    fontFamily: 'IRANSansMobile(FaNum)',
-                                    backgroundColor: 'green',
-                                }}
-                                colors={{primary: '#47b03e'}}
-                                single={true}
-                                showChips={true}
-                                uniqueKey='id'
-                                subKey='children'
-                                selectText='دسته مورد نظر خود را انتخاب نمائيد'
-                                showDropDowns={true}
-                                readOnlyHeadings={true}
-                                confirmText="بستن"
-                                text="#2e2e2e"
-                                numberOfLines="3"
-                                success="green"
-                                searchPlaceholderText="جستجو"
-                                onSelectedItemsChange={this.onSelectedItemsChange}
-                                selectedItems={this.state.selectedItems}
-                            />
-                            <Divider/>
-
-                    </View>
-                    <View style={{marginRight: 30, marginTop: 12, flex: 1}}>
-                        <Text style={{fontSize: 14, flex: 1, fontFamily: 'IRANSansMobile'}}>دسته </Text>
-                        {/* <Image style={styles.imageIcon} source={require('../../../assets/images/icons/639365.png')} /> */}
-                    </View>
-                    </View>
 
 
 
-                    {/*.........................select2...............................  */}
 
-                    <View style={{flexDirection: 'row'}}>
-                        <View style={{flexDirection: 'row', flex: 1, marginTop: 10}}>
-                            <TouchableOpacity onPress={() => this.refs.modal3.open()}>
-                                <Icon name="plus-circle" size={25} color='#3ede30'
-                                      style={{marginLeft: 7, marginTop: 3}}/>
-                            </TouchableOpacity>
-                            <Select2
 
-                                style={{
-                                    borderRadius: 5,
-                                    width: '138%',
-                                    marginLeft: 16,
-                                    borderColor: '#3d933c',
-                                    borderWidth: 1.5,
-                                }}
-                                isSelectSingle={true}
-                                colorTheme='#3d933c'
-                                popupTitle="انتخاب نوع دریافتی"
-                                cancelButtonText="انصراف"
-                                newButtonText="جدید"
-                                selectButtonText="تایید"
-                                title="نوع دریافتی"
-                                searchPlaceHolderText="جستجو نوع دریافتی"
-                                data={typeIncome}
-                                onSelect={data => {
-                                    this.setState({data});
-                                }}
-                                onRemoveItem={data => {
-                                    this.setState({data});
-                                }}
-                            />
-                        </View>
-                        <View style={{marginTop: 15, fontSize: 16, flex: 1}}>
-                            <Text style={{fontSize: 14, marginRight: 5, fontFamily: 'IRANSansMobile'}}> دریافت :</Text>
-                            {/* <Image style={[styles.imageIcon,{marginLeft:-40}]} source={require('../../../assets/images/icons/2503483.png')} /> */}
-                        </View>
-
-                    </View>
                     {/* .........................select2....................................... */}
                     <View style={{flexDirection: 'row'}}>
 
-                        <View style={{flexDirection: 'row', flex: 1, marginTop: 15}}>
-                            <TouchableOpacity onPress={() => this.refs.modal4.open()}>
-                                <Icon name="plus-circle" size={25} color='#3ede30'
-                                      style={{marginLeft: 7, marginTop: 3}}/>
-                            </TouchableOpacity>
+                        <View style={{flexDirection: 'row', flex: 1, marginTop: 15,marginLeft:5}}>
+
                             <Select2
                                 style={{
                                     borderRadius: 5,
-                                    width: '138%',
+                                    width: '140%',
                                     marginLeft: 16,
                                     borderColor: '#3d933c',
                                     borderWidth: 1.5,
@@ -456,7 +368,7 @@ export default class RegisterIncome extends Component {
                             />
                         </View>
                         <View style={{marginTop: 15, flex: 1}}>
-                            <Text style={{fontSize: 14, marginRight: 30, fontFamily: 'IRANSansMobile'}}> حساب:</Text>
+                            <Text style={{fontSize: 13, flex: 1,fontFamily: 'IRANSansMobile',marginHorizontal:10}}> حساب:</Text>
                             {/* <Image style={[styles.imageIcon,{marginLeft:-40}]} source={require('../../../assets/images/icons/wallet.png')} /> */}
                         </View>
                     </View>
@@ -477,9 +389,7 @@ export default class RegisterIncome extends Component {
                                 underlineColorAndroid="transparent"/>
                         </View>
                         <View style={{marginTop: 15, flex: 2}}>
-                            <Text style={{
-                                fontSize: 14, marginRight: 30, fontFamily: 'IRANSansMobile(FaNum)',
-                            }}>شرح:</Text>
+                            <Text style={{fontSize: 13, flex: 1,fontFamily: 'IRANSansMobile',marginHorizontal:15}}>شرح:</Text>
                             {/* <Image style={styles.imageIcon} source={require('../image/des.png')} /> */}
                         </View>
                     </View>
@@ -492,9 +402,9 @@ export default class RegisterIncome extends Component {
                                 <Left>
                                     <TouchableOpacity activeOpacity={0.9}>
 
-                                    <Icon name='ellipsis-v'
-                                          style={{marginTop: 5, fontSize: 25, color: '#47b03e'}}
-                                          onPress={this.showMenu}/>
+                                        <Icon name='ellipsis-v'
+                                              style={{marginTop: 5, fontSize: 25, color: '#47b03e'}}
+                                              onPress={this.showMenu}/>
                                     </TouchableOpacity>
                                     <Menu
                                         ref={this.setMenuRef}>
@@ -636,7 +546,7 @@ const styles = StyleSheet.create({
     },
     SectionStyle: {
 
-        borderRadius: 5, width: '70%', marginLeft: 43, borderWidth: 2,
+        borderRadius: 5, width: '70%', marginLeft: 20, borderWidth: 1.5,
         borderColor: '#3d933c', height: 45, marginTop: 15,
 
 

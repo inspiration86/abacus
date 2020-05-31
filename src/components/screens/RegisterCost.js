@@ -10,7 +10,6 @@ import {
     Image,
     ScrollView,
 } from 'react-native';
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import {Button} from 'react-native-elements';
 import Modal from 'react-native-modalbox';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -23,47 +22,9 @@ import DatePicker, {getFormatedDate} from 'react-native-modern-datepicker';
 import Menu, {MenuItem, MenuDivider} from 'react-native-material-menu';
 import Header from '../layouts/Header';
 import LinearGradient from 'react-native-linear-gradient';
-import {Card, List, Content, ListItem,Left, Body, Right, Title,CardItem,Item,Input,Label} from 'native-base';
+import {Card, List, Content, ListItem,Left, Body, Right, Title,} from 'native-base';
 import Modaldate from 'react-native-modal';
 import {Divider} from 'react-native-paper';
-const items = [
-    // this is the parent or 'item'
-    {
-        name: ' شخصي',
-        id: 0,
-        children: [{
-            name: <Text style={{
-                color: '#777',
-                fontFamily: 'IRANSansMobile(FaNum)',
-                marginHorizontal: 70,
-            }}>خانه </Text>,
-            id: 10,
-        }, {
-            name: 'موبايل',
-            id: 17,
-        }, {
-            name: 'خودكار',
-            id: 13,
-        }, {
-            name: 'دفتر',
-            id: 14,
-        }],
-    },
-    {
-        name: 'وسايل برقي',
-        id: 1,
-        children: [{
-            name: 'تلويزيون',
-            id: 20,
-        }, {
-            name: 'لپ تاپ',
-            id: 21,
-        }, {
-            name: 'يخچال',
-            id: 22,
-        }],
-    },
-];
 
 //.........const............
 const typeIncome = [
@@ -239,9 +200,6 @@ export default class RegisterIncome extends Component {
         });
 
     };
-    onSelectedItemsChange = (selectedItems) => {
-        this.setState({ selectedItems });
-    };
 
     // ..................code............
     render() {
@@ -343,13 +301,18 @@ export default class RegisterIncome extends Component {
                         </View>
                     </View>
                     {/*...........................category.....................*/}
-                    <View style={{flexDirection: 'row'}}>
-                    <View style={[styles. SectionStyle,{justifyContent:'center'}]}
-                      >
 
+                    <View style={{
+                        borderStyle: 'solid',
+                        borderWidth: 1.5,
+                        borderColor: '#00C851',
+                        borderRadius: 10,
+                        marginHorizontal: 10,
+                        marginTop: 20,
+                    }}>
+                        <Card>
                             <SectionedMultiSelect
-                                itemFontFamily={{ fontWeight: 'bold',}}
-                                subItemFontFamily={{ fontWeight: 'bold',color:'#555'}}
+                                itemFontFamily="IRANSansMobile(FaNum)"
                                 items={items}
                                 confirmText={{
                                     fontSize: 50,
@@ -365,20 +328,46 @@ export default class RegisterIncome extends Component {
                                 showDropDowns={true}
                                 readOnlyHeadings={true}
                                 confirmText="بستن"
+                                styles={{itemText: 'fontSize:80'}}
                                 text="#2e2e2e"
                                 numberOfLines="3"
                                 success="green"
                                 searchPlaceholderText="جستجو"
-                                onSelectedItemsChange={this.onSelectedItemsChange}
-                                selectedItems={this.state.selectedItems}
+                                onSelectedItemsChange={handleOrangeClick}
+                                selectedItems={selectedItems}
                             />
                             <Divider/>
+                            <CardItem>
+                                <Body>
+                                    <Item fixedLabel>
+                                        <Left>
 
-                    </View>
-                    <View style={{marginRight: 30, marginTop: 12, flex: 1}}>
-                        <Text style={{fontSize: 14, flex: 1, fontFamily: 'IRANSansMobile'}}>دسته </Text>
-                        {/* <Image style={styles.imageIcon} source={require('../../../assets/images/icons/639365.png')} /> */}
-                    </View>
+                                            <View style={{flex: 1, marginTop: 10, marginLeft: 10}}>
+                                                <Text style={{
+                                                    color: '#777',
+                                                    fontFamily: 'IRANSansMobile(FaNum)',
+                                                }}>ریال</Text>
+
+                                            </View>
+                                        </Left>
+                                        <Input style={{color: '#777', fontFamily: 'IRANSansMobile(FaNum)'}}/>
+                                        <Label><Text style={{
+                                            color: '#777', fontFamily: 'IRANSansMobile(FaNum)', paddingRight: 20,
+                                        }}>هزینه :</Text></Label>
+
+                                    </Item>
+                                </Body>
+                            </CardItem>
+                            <CardItem footer style={{justifyContent: 'flex-end'}}>
+                                <Text style={{fontFamily: 'IRANSansMobile(FaNum)'}}>بودجه بندی به صورت ماهانه می
+                                    باشد</Text>
+                            </CardItem>
+                            <Button iconRight full style={{backgroundColor: '#47b03e'}}>
+                                <Text style={{color: '#fff', fontSize: 19, fontFamily: 'IRANSansMobile(FaNum)'}}> ثبت
+                                    بودجه</Text>
+                                <Icon name='add-circle' style={{marginLeft: 30, fontSize: 27}}/>
+                            </Button>
+                        </Card>
                     </View>
 
 
@@ -492,9 +481,9 @@ export default class RegisterIncome extends Component {
                                 <Left>
                                     <TouchableOpacity activeOpacity={0.9}>
 
-                                    <Icon name='ellipsis-v'
-                                          style={{marginTop: 5, fontSize: 25, color: '#47b03e'}}
-                                          onPress={this.showMenu}/>
+                                        <Icon name='ellipsis-v'
+                                              style={{marginTop: 5, fontSize: 25, color: '#47b03e'}}
+                                              onPress={this.showMenu}/>
                                     </TouchableOpacity>
                                     <Menu
                                         ref={this.setMenuRef}>

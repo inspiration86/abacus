@@ -233,7 +233,7 @@ function DefineBudgeting({navigation}) {
 
     return (
         <View style={styles.container}>
-            <CardItem cardBody style={{marginTop: 5}}>
+            <CardItem cardBody style={{marginTop:50}}>
                 <Image source={require('../../../assets/images/icons/818203.png')} style={{height: 200, flex: 1}}/>
             </CardItem>
             <View style={{
@@ -246,7 +246,8 @@ function DefineBudgeting({navigation}) {
             }}>
                 <Card>
                     <SectionedMultiSelect
-                        itemFontFamily="IRANSansMobile(FaNum)"
+                        itemFontFamily={{ fontWeight: 'bold',}}
+                        subItemFontFamily={{ fontWeight: 'bold',color:'#555'}}
                         items={items}
                         confirmText={{
                             fontSize: 50,
@@ -262,7 +263,6 @@ function DefineBudgeting({navigation}) {
                         showDropDowns={true}
                         readOnlyHeadings={true}
                         confirmText="بستن"
-                        styles={{itemText: 'fontSize:80'}}
                         text="#2e2e2e"
                         numberOfLines="3"
                         success="green"

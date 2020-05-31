@@ -37,7 +37,6 @@ import {faSearch} from '@fortawesome/free-solid-svg-icons/faSearch';
 import {faCheckSquare} from '@fortawesome/free-solid-svg-icons/faCheckSquare';
 import {faCheckDouble} from '@fortawesome/free-solid-svg-icons/faCheckDouble';
 import {faFlagCheckered} from '@fortawesome/free-solid-svg-icons/faFlagCheckered';
-
 const CustomDrawerComponent = props => (
     <View style={{flex: 1}}>
         <Header style={styles.container}>
@@ -257,4 +256,5 @@ const CustomerMyDrawerNavigator = createDrawerNavigator({
             },
         },
     });
+
 export default createAppContainer(CustomerMyDrawerNavigator);

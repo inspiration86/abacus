@@ -11,7 +11,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faBars} from '@fortawesome/free-solid-svg-icons/faBars';
-
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 export default class Home extends Component {
     constructor(props) {
         super(props);
@@ -42,21 +42,21 @@ export default class Home extends Component {
                 ,
                 {
                     id: 4,
-                    title: 'دخل و خرج',
-                    image: require('../../../assets/images/icons/2760970.png'),
+                    title: 'ثبت بدهی',
+                    image: require('../../../assets/images/icons/debt.png'),
 
                 }
                 ,
                 {
                     id: 5,
-                    title: 'ثبت بدهی',
-                    image: require('../../../assets/images/icons/debt.png'),
+                    title: 'یادآوری',
+                    image: require('../../../assets/images/icons/1792931.png'),
                 }
                 ,
                 {
                     id: 6,
-                    title: 'یادآوری',
-                    image: require('../../../assets/images/icons/1792931.png'),
+                    title: 'موجودی',
+                    image: require('../../../assets/images/icons/639365.png'),
 
                 }
                 ,
@@ -75,8 +75,9 @@ export default class Home extends Component {
                 ,
                 {
                     id: 9,
-                    title: 'موجودی',
-                    image: require('../../../assets/images/icons/639365.png'),
+                    title: 'دخل و خرج',
+                    image: require('../../../assets/images/icons/2760970.png'),
+
                 },
                 {
                     id: 10,
@@ -115,11 +116,36 @@ export default class Home extends Component {
 
         });
     };
+    showError = (item) => {
+        this.setState({
+            showAlert: true,
+            titles: item,
+
+        });
+    };
     hideAlert = () => {
         this.setState({
             showAlert: false,
         });
     };
+    cardNavigate=(item)=>{
+        switch (item.id)
+        {
+            case 1: this.props.navigation.navigate('Budgeting');
+                break;
+            case 2: this.props.navigation.navigate('RegisterCost');
+                break;
+            case 3: this.props.navigation.navigate('RegisterIncome');
+                break;
+            case 4: this.props.navigation.navigate('RegisterDebt');
+                break;
+            case 5: this.props.navigation.navigate('Reminder');
+                break;
+            case 6: this.props.navigation.navigate('Balance');
+                break;
+            default:this.showError('در نسخه های بعدی این قابلیت افزوده خواهد شد')
+        }
+    }
 
     render() {
         const {open} = this.state;
@@ -135,6 +161,8 @@ export default class Home extends Component {
                                 locations={[0, 0.5, 0.6]}
                                 colors={['#3e843d', '#3ede30', '#47b03e']} style={{
                     height: 200, alignItems: 'center', justifyContent: 'center',
+                    // borderBottomLeftRadius:20,
+                    // borderBottomRightRadius:20
                 }}>
                     <FontAwesomeIcon icon={faBars} size={25} style={{color: '#fff', marginLeft: '88%',}}
                                      onPress={() => this.props.screenProps.openDrawer()}/>
@@ -158,32 +186,36 @@ export default class Home extends Component {
                     <View style={styles.detailContent}>
                         <Image style={styles.icon1} source={require('../../../assets/images/icons/2760970.png')}/>
                         <Text style={styles.textHeader}>مبلغ بدهی</Text>
-                        <Text style={styles.textHeader}>500000 تومان</Text>
+                        <Text style={[styles.textHeader,{marginTop:-5}]}>500000 تومان</Text>
 
                     </View>
+
                     <View
                         style={[styles.detailContent,{borderLeftWidth: 1,
-                            borderColor: '#e2e2e2',}]}>
+                            borderColor: '#e2e2e2'}]}>
                         <Image style={styles.icon1} source={require('../../../assets/images/icons/1312175.png')}/>
                         <Text style={styles.textHeader}>مخارج</Text>
-                        <Text style={styles.textHeader}>500000 تومان</Text>
+                        <Text style={[styles.textHeader,{marginTop:-5}]}>500000 تومان</Text>
 
                     </View>
                     <View  style={[styles.detailContent,{borderLeftWidth: 1,
                         borderColor: '#e2e2e2'}]}>
                         <Image style={styles.icon1} source={require('../../../assets/images/icons/2553139.png')}/>
                         <Text style={styles.textHeader}>مانده</Text>
-                        <Text style={styles.textHeader}>500000 تومان</Text>
+                        <Text style={[styles.textHeader,{marginTop:-5}]}>500000 تومان</Text>
                     </View>
                 </View>
                     <FlatGrid
                         itemDimension={100}
                         items={this.state.data}
-                      style={{marginTop:50}}
+                      style={{marginTop:60}}
                               contentContainerStyle={{justifyContent:'center', alignItems:'center'}}
                         renderItem={({ item, index }) => (
                     <View>
-                            {/* onPress={() => this.showAlert(item)}>*/}
+                        <TouchableOpacity activeOpacity={0.8}
+                                          onPress={() => this.cardNavigate(item)}>
+
+                                         {/*onPress={() => this.props.navigation.navigate('RegisterDebt')}>*/}
                     <Card style={{width:'100%',height: 120,
                         shadowColor: '#3d933c',
                         shadowOffset: {
@@ -198,17 +230,15 @@ export default class Home extends Component {
                         borderColor:'#3d933c',borderRadius:15,
                         borderWidth:1.5,alignItems: 'center', justifyContent:'center',
                       }}
-                          onPress={() => this.props.navigation.navigate('Report')}>
+                         >
+                          {/*onPress={() => this.props.navigation.navigate('Report')}>*/}
                         <Card.Cover style={{width:80,height: 75,backgroundColor:'#fff',marginTop:5}} source={item.image} />
-                        <Card.Title title={item.title}     titleStyle={{
-                                                        fontSize: 14,
-                                                        color: '#111',
-                                                        fontFamily: 'IRANSansMobile(FaNum)',
-                                                        marginHorizontal: -10,
-                                                        marginTop: -10
-                                                    }}/>
+                        <Card.Title title={item.title}
+                            titleStyle={styles.titelRespnsive}
+                        />
 
                     </Card>
+                        </TouchableOpacity>
                 </View>
                             )} />
 
@@ -227,11 +257,11 @@ export default class Home extends Component {
                     closeOnTouchOutside={true}
                     closeOnHardwareBackPress={false}
                     showConfirmButton={true}
-                    titleStyle={{fontSize: 16, fontFamily: 'IRANSansMobile(FaNum)', textAlign: 'justify'}}
+                    titleStyle={{fontSize: 16, fontFamily: 'IRANSansMobile(FaNum)', textAlign: 'center'}}
                     messageStyle={{fontSize: 15, fontFamily: 'IRANSansMobile(FaNum)'}}
                     confirmText="تایید"
                     confirmButtonColor="#3d933c"
-                    confirmButtonStyle={{width: 90}}
+                    confirmButtonStyle={{width: 100}}
                     confirmButtonTextStyle={{
                         fontSize: 17,
                         fontFamily: 'IRANSansMobile(FaNum)',
@@ -276,9 +306,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     Detail: {
-        width: 280,
+        width: 310,
         alignSelf: 'center',
-        marginTop: 165,
+        marginTop: 170,
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
@@ -297,13 +327,12 @@ const styles = StyleSheet.create({
         elevation: 12,
     },
     detailContent: {
+        marginTop:5,
         marginHorizontal: 5,
-        marginVertical: 5,
         alignItems: 'center',
         justifyContent: 'center',
-
-        padding:5,
-        height:70
+        paddingHorizontal:12,
+        height:80
     },
     icon1: {
         width: 35,
@@ -327,10 +356,20 @@ const styles = StyleSheet.create({
         elevation: 12,
     },
     textHeader:{
-        fontSize: 11,
+        fontSize: 13,
         fontFamily: 'IRANSansMobile(FaNum)',
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-    }
+    },
+   titelRespnsive: {
+        fontSize: RFValue(12, 580),
+        textAlign: "center",
+      // alignSelf:'center',
+        margin: 10,
+       color: '#111',
+       fontFamily: 'IRANSansMobile(FaNum)',
+       marginHorizontal: -10,
+flex:2
+   },
 });

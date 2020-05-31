@@ -6,15 +6,17 @@ import Home from '../screens/Home';
 import AdvancedSearch from '../screens/AdvancedSearch';
 import ReportDay from '../screens/ReportDay';
 import ReportYear from '../screens/ReportYear';
-import Report from "../screens/Report";
+import RegisterCost from "../screens/RegisterCost";
+import RegisterDebt from "../screens/RegisterDebt";
 import RegisterIncome from '../screens/RegisterIncome';
+import Balance from "../screens/Balance";
+import Reminder from "../screens/Reminder";
+import Budgeting from "../screens/Budgeting";
+import Report from "../screens/Report";
 import {createStackNavigator} from 'react-navigation-stack';
 import Icon from 'react-native-vector-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faBell, faCalculator, faChartPie, faHome} from '@fortawesome/free-solid-svg-icons';
-import {faUserClock} from '@fortawesome/free-solid-svg-icons/faUserClock';
-import {faCalendar} from '@fortawesome/free-solid-svg-icons/faCalendar';
-import {faCoins} from '@fortawesome/free-solid-svg-icons/faCoins';
 const RootStack = createStackNavigator({
         Home: {
             screen: Home,
@@ -28,14 +30,32 @@ const RootStack = createStackNavigator({
                 headerShown: false
             })
         },
-        ReportDay: {
-            screen: ReportDay,
+        RegisterDebt: {
+            screen: RegisterDebt,
             navigationOptions: ({navigation}) => ({
                 headerShown: false
             })
         },
-        ReportYear: {
-            screen: ReportYear,
+        RegisterCost: {
+            screen: RegisterCost,
+            navigationOptions: ({navigation}) => ({
+                headerShown: false
+            })
+        },
+        Budgeting: {
+            screen: Budgeting,
+            navigationOptions: ({navigation}) => ({
+                headerShown: false
+            })
+        },
+        Reminder: {
+            screen: Reminder,
+            navigationOptions: ({navigation}) => ({
+                headerShown: false
+            })
+        },
+        Balance: {
+            screen: Balance,
             navigationOptions: ({navigation}) => ({
                 headerShown: false
             })
@@ -76,7 +96,7 @@ const AppMaterialTopTabNavigator = createMaterialBottomTabNavigator(
                     </View>),
             }
         },
-        'صفحه اصلی':{screen:Home,
+        'صفحه اصلی':{screen:RootStack,
             navigationOptions:{
                 tabBarLabel:'صفحه اصلی',
                 tabBarIcon: ({ tintColor }) => (

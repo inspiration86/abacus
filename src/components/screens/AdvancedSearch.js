@@ -114,14 +114,14 @@ export default class advanced extends Component {
                     </TabHeading>}>
                         <ScrollView showsVerticalScrollIndicator={false}>
                             <View>
-                                <Item fixedLabel>
+                                <Item fixedLabel onPress={() => this.refs.modal1.open()}>
                                     <Left>
-                                        <Button transparent onPress={() => this.refs.modal1.open()}>
+                                        <Button transparent >
                                             <Icon active name="calendar" style={{color: '#00C851', fontSize: 35}}/>
                                         </Button>
                                     </Left>
-                                    <Input value={this.state.DateStartTextCost}
-                                           style={{color: '#777', fontFamily: 'IRANSansMobile(FaNum)'}}/>
+                                    <Text style={{color: '#777', fontFamily: 'IRANSansMobile(FaNum)'}}>{this.state.DateStartTextCost}</Text>
+
                                     <Label style={{
                                         paddingRight: 20,
                                     }}><Text style={{
@@ -134,10 +134,11 @@ export default class advanced extends Component {
                                     position={'bottom'}
                                     ref={'modal1'}
                                     coverScreen={true}
+                                    useNativeDriver={true}
                                 >
 
                                     <DatePicker isGregorian={false}
-                                                mode="date"
+                                                mode='datepicker'
                                                 options={{
                                                     defaultFont: 'Shabnam-Light',
                                                     headerFont: 'Shabnam-Medium',
@@ -157,14 +158,14 @@ export default class advanced extends Component {
                                 </Modal>
 
 
-                                <Item fixedLabel Icon>
+                                <Item fixedLabel Icon  onPress={() => this.refs.modal2.open()}>
                                     <Left>
-                                        <Button transparent onPress={() => this.refs.modal2.open()}>
+                                        <Button transparent >
                                             <Icon active name="calendar" style={{color: '#00C851', fontSize: 35}}/>
                                         </Button>
                                     </Left>
-                                    <Input value={this.state.DateEndTextCost} onKeyPress={this.toggleModal}
-                                           style={{color: '#777', fontFamily: 'IRANSansMobile(FaNum)'}}/>
+                                    <Text style={{color: '#777', fontFamily: 'IRANSansMobile(FaNum)'}}> {this.state.DateEndTextCost} </Text>
+
                                     <Label style={{
                                         paddingRight: 20,
                                     }}> <Text style={{
@@ -177,10 +178,11 @@ export default class advanced extends Component {
                                     position={'bottom'}
                                     ref={'modal2'}
                                     coverScreen={true}
+                                    useNativeDriver={true}
                                 >
 
                                     <DatePicker isGregorian={false}
-                                                mode="date"
+                                                mode='datepicker'
                                                 options={{
                                                     defaultFont: 'Shabnam-Light',
                                                     headerFont: 'Shabnam-Medium',
@@ -317,14 +319,13 @@ export default class advanced extends Component {
                         <ScrollView showsVerticalScrollIndicator={false}>
                             <View>
                                 <TouchableOpacity>
-                                    <Item fixedLabel>
+                                    <Item fixedLabel Icon  onPress={() => this.refs.modal3.open()}>
                                         <Left>
                                             <Button transparent onPress={() => this.refs.modal3.open()}>
                                                 <Icon active name="calendar" style={{color: '#00C851', fontSize: 35}}/>
                                             </Button>
                                         </Left>
-                                        <Input value={this.state.DateStartTextIncome}
-                                               style={{color: '#777', fontFamily: 'IRANSansMobile(FaNum)'}}/>
+                                        <Text style={{color: '#777', fontFamily: 'IRANSansMobile(FaNum)'}}>{this.state.DateStartTextIncome}</Text>
                                         <Label style={{
                                             paddingRight: 20,
                                         }}><Text style={{
@@ -363,14 +364,14 @@ export default class advanced extends Component {
                                 </Modal>
 
 
-                                <Item fixedLabel Icon>
-                                    <Left>
+                                <Item fixedLabel Icon  onPress={() => this.refs.modal4.open()}>
+
+                                <Left>
                                         <Button transparent onPress={() => this.refs.modal4.open()}>
                                             <Icon active name="calendar" style={{color: '#00C851', fontSize: 35}}/>
                                         </Button>
                                     </Left>
-                                    <Input value={this.state.DateEndTextIncome}
-                                           style={{color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light'}}/>
+                                    <Text style={{color: '#777', fontFamily: 'IRANSansMobile(FaNum)'}}>{this.state.DateEndTextIncome}</Text>
                                     <Label style={{
                                         paddingRight: 20,
                                     }}> <Text style={{

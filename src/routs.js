@@ -5,7 +5,7 @@ import Slider from './components/screens/Slider';
 import Splash from './components/screens/Splash';
 import Home from './components/screens/Home';
 import Login from './components/screens/Login';
-import DashboardUser from './components/layouts/DashboardUser';
+import  DashboardUser from './components/layouts/DashboardUser';
 import Register from './components/screens/Register';
 import LoginOrRegister from './components/screens/LoginOrRegister';
 const RootStack = createStackNavigator({

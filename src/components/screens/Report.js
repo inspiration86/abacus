@@ -118,21 +118,22 @@ export default class Home extends Component {
                     <View style={styles.detailContent}>
                         <Image style={styles.icon1} source={require('../../../assets/images/icons/2760970.png')}/>
                         <Text style={styles.textHeader}>مبلغ بدهی</Text>
-                        <Text style={styles.textHeader}>500000 تومان</Text>
+                        <Text style={[styles.textHeader,{marginTop:-5}]}>500000 تومان</Text>
+
                     </View>
                     <View
                         style={[styles.detailContent,{borderLeftWidth: 1,
-                            borderColor: '#e2e2e2',}]}>
+                            borderColor: '#e2e2e2'}]}>
                         <Image style={styles.icon1} source={require('../../../assets/images/icons/1312175.png')}/>
                         <Text style={styles.textHeader}>مخارج</Text>
-                        <Text style={styles.textHeader}>500000 تومان</Text>
+                        <Text style={[styles.textHeader,{marginTop:-5}]}>500000 تومان</Text>
 
                     </View>
                     <View  style={[styles.detailContent,{borderLeftWidth: 1,
                         borderColor: '#e2e2e2'}]}>
                         <Image style={styles.icon1} source={require('../../../assets/images/icons/2553139.png')}/>
                         <Text style={styles.textHeader}>مانده</Text>
-                        <Text style={styles.textHeader}>500000 تومان</Text>
+                        <Text style={[styles.textHeader,{marginTop:-5}]}>500000 تومان</Text>
                     </View>
                 </View>
                 <FlatGrid
@@ -143,6 +144,7 @@ export default class Home extends Component {
                     renderItem={({ item, index }) => (
                         <View>
                             {/* onPress={() => this.showAlert(item)}>*/}
+
                             <Card style={{width:'100%',height: 120,
                                 shadowColor: '#3d933c',
                                 shadowOffset: {
@@ -235,7 +237,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     Detail: {
-        width: 280,
+        width: 310,
         alignSelf: 'center',
         marginTop: 165,
         alignItems: 'center',
@@ -257,12 +259,10 @@ const styles = StyleSheet.create({
     },
     detailContent: {
         marginHorizontal: 5,
-        marginVertical: 5,
         alignItems: 'center',
         justifyContent: 'center',
-
-        padding:5,
-        height:70
+        height:80,
+        paddingHorizontal:12
     },
     icon1: {
         width: 35,
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
         elevation: 12,
     },
     textHeader:{
-        fontSize: 11,
+        fontSize: 13,
         fontFamily: 'IRANSansMobile(FaNum)',
         alignSelf: 'center',
         justifyContent: 'center',
