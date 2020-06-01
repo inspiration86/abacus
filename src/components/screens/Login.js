@@ -30,7 +30,8 @@ class TestLogin extends Component {
             password: '',
             showAlert: false,
             showToast: false,
-            visible: true
+            visible: true,
+            messageError:''
         }
     }
 
@@ -71,6 +72,17 @@ class TestLogin extends Component {
                     "",
                    "اطلاعات رو به طور کامل وارد نمائید");
             }
+            else
+                if(mobile.length<11){
+                    this.setState({messageError:'شماره همراه را بطور کامل وارد نمائید'})
+                    this.showAlert();
+                }
+                else
+                if(password.length<5){
+                    Alert.alert(
+                        "",
+                        "حداکثر طول رمز عبور 6 کاراکتر است");
+                }
             else {
           this.props.loginUser({mobile, password, navigation});
                 if(this.props.success===false && this.props.error.length>1) {
@@ -158,7 +170,7 @@ renderLogin(){
                     show={showAlert}
                     showProgress={false}
                     // title="اطلاعات  را به طور کامل وارد نمائید"
-                    message={this.props.error}
+                    message={this.state.error}
                     closeOnTouchOutside={true}
                     closeOnHardwareBackPress={false}
                     showConfirmButton={true}

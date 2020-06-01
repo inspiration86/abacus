@@ -92,7 +92,7 @@ const RootStack = createStackNavigator({
         },
     },
     {
-        initialRouteName: 'DashboardUser',
+        initialRouteName: 'LoginOrRegister',
     },
     {
         defaultNavigationOptions: {headerShown: false}
