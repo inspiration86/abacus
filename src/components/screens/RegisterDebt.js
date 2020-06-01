@@ -323,7 +323,7 @@ export default class RegisterDebt extends Component {
                             />
                         </View>
                         <View style={{marginRight: 10, marginTop: 12, flex: 1}}>
-                            <Text style={{fontSize: 14, flex: 1,fontFamily: 'IRANSansMobile',}}> مبلغ :</Text>
+                            <Text style={{fontSize: 14, flex: 1,fontFamily: 'IRANSansMobile',}}> مبلغ بدهی</Text>
                             {/* <Image style={styles.imageIcon} source={require('../../../assets/images/icons/639365.png')} /> */}
                         </View>
                     </View>
@@ -368,7 +368,7 @@ export default class RegisterDebt extends Component {
                             />
                         </View>
                         <View style={{marginTop: 15, flex: 1}}>
-                            <Text style={{fontSize: 13, flex: 1,fontFamily: 'IRANSansMobile',marginHorizontal:10}}> حساب:</Text>
+                            <Text style={{fontSize: 13, flex: 1,fontFamily: 'IRANSansMobile',marginHorizontal:10}}> نوع حساب</Text>
                             {/* <Image style={[styles.imageIcon,{marginLeft:-40}]} source={require('../../../assets/images/icons/wallet.png')} /> */}
                         </View>
                     </View>
@@ -389,7 +389,7 @@ export default class RegisterDebt extends Component {
                                 underlineColorAndroid="transparent"/>
                         </View>
                         <View style={{marginTop: 15, flex: 2}}>
-                            <Text style={{fontSize: 13, flex: 1,fontFamily: 'IRANSansMobile',marginHorizontal:15}}>شرح:</Text>
+                            <Text style={{fontSize: 13, flex: 1,fontFamily: 'IRANSansMobile',marginHorizontal:15}}>شرح بدهی</Text>
                             {/* <Image style={styles.imageIcon} source={require('../image/des.png')} /> */}
                         </View>
                     </View>
