@@ -48,7 +48,7 @@ export const registerUser = ({mobile, password, navigation}) => {
 }
 const registerUserSuccess = (dispatch, navigation) => {
     dispatch({type: USER_REGISTER_SUCCESS});
-    const NavigationAction = NavigationActions.navigate({routeName: 'Login', params: {},})
+    const NavigationAction = NavigationActions.navigate({routeName: 'SendMessage', params: {},})
     navigation.dispatch(NavigationAction);
 
 }

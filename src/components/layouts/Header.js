@@ -14,7 +14,7 @@ export default class Header extends React.Component {
         return (
             <View>
                 <Appbar.Header  style={{marginHorizontal:-5, justifyContent: 'center',
-                    alignItems: 'center',}}>
+                    alignItems: 'center',marginTop:-23}}>
                     <LinearGradient
                         start={{x: 0.48, y: 0.0}} end={{x: 0.5, y: 1.0}}
                         locations={[0.1,0.6,0.9]}

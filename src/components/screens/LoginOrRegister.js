@@ -3,7 +3,7 @@ import {
     StyleSheet,
     Text,
     View,
-    Image, FlatList, TouchableOpacity, Alert, ScrollView, ImageBackground, StatusBar,
+    Image, FlatList, TouchableOpacity, Alert, ScrollView, ImageBackground, StatusBar,Dimensions
 } from 'react-native';
 import {Button, Input} from 'react-native-elements';
 import {Avatar, Card, Title, Paragraph} from 'react-native-paper';
@@ -12,12 +12,10 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-
+const {width, height} = Dimensions.get('window');
 export default class LoginOrRegister extends Component {
     constructor(props) {
-
         super(props);
-        console.log(this.props.navi)
         this.state = {
             open: false,
             showAlert: false,
@@ -59,7 +57,7 @@ export default class LoginOrRegister extends Component {
                                 locations={[0,0.5,0.9]}
                                 style={styles.header}
                                 colors={['#3e843d','#3ede30','#47b03e']} >
-                <View style={styles.headerContent}>
+                    <View style={styles.headerContent}>
                         <Image style={{width: 90, height: 90}}
                                source={require('../../../assets/images/icons/857385.png')}/>
 
@@ -68,74 +66,75 @@ export default class LoginOrRegister extends Component {
                             color: '#fff',
                             fontFamily: 'Far_Aref',
                         }}>
-                        چرتکه
+                            چرتکه
                         </Text>
 
                     </View>
                     {/*d6f5d3*/}
-                <Card
-                    style={{
-                        marginTop:40,
-                        backgroundColor:'#c5f3c1',
-                        width: '140%',height:'70%', alignSelf: 'center',
-                        borderRadius: 60,
-                        shadowColor: '#3d933c',
-                        marginBottom: 20,
-                        shadowOffset: {
-                            width: 0,
-                            height: 9,
-                            marginRight: 16,
-                            marginBottom: 12,
-                        },
-                        shadowOpacity: 0.50,
-                        shadowRadius: 7.49,
-                        elevation: 19,
-                        alignItems: 'center', justifyContent: 'center'
-                    }}>
-                    <View style={{marginTop: 100}}>
-                        <Button buttonStyle={{
-                            marginVertical: 20,
-                            backgroundColor: '#47b03e',
-                            borderRadius: 30,
-                            width: '100%',
-                            height: 48,
-                            shadowColor: '#43c164',
+                    {/*c5f3c1*/}
+                    <Card
+                        style={{
+                            marginTop:40,
+                            backgroundColor:'#d6f5d3',
+                            width:width,height:height, alignSelf: 'center',
+                            borderRadius: 60,
+                            shadowColor: '#3d933c',
+                            marginBottom: 20,
                             shadowOffset: {
                                 width: 0,
-                                height: 6,
+                                height: 9,
+                                marginRight: 16,
+                                marginBottom: 12,
                             },
-                            shadowOpacity: 0.37,
+                            shadowOpacity: 0.50,
                             shadowRadius: 7.49,
-                            elevation: 5,
-                        }}
-                                onPress={() => this.props.navigation.navigate('Login')}
-                                titleStyle={{color: '#fff',fontFamily:'IRANSansMobile(FaNum)',fontSize:18}}
+                            elevation: 19,
+                            alignItems: 'center', justifyContent: 'center'
+                        }}>
+                        <View style={{marginTop: 110}}>
+                            <Button buttonStyle={{
+                                marginVertical: 20,
+                                backgroundColor: '#47b03e',
+                                borderRadius: 30,
+                                width: '100%',
+                                height: 48,
+                                shadowColor: '#43c164',
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 6,
+                                },
+                                shadowOpacity: 0.37,
+                                shadowRadius: 7.49,
+                                elevation: 5,
+                            }}
+                                    onPress={() => this.props.navigation.navigate('Login')}
+                                    titleStyle={{color: '#fff',fontFamily:'IRANSansMobile(FaNum)',fontSize:18}}
 
 
-                                title="ورود"
-                        />
-                        <Button buttonStyle={{
-                            marginVertical: 15,
-                            backgroundColor: '#47b03e',
-                            borderRadius: 30,
-                            width: '100%',
-                            height: 48,
-                            shadowColor: '#43c164',
-                            shadowOffset: {
-                                width: 0,
-                                height: 6,
-                            },
-                            shadowOpacity: 0.37,
-                            shadowRadius: 7.49,
-                            elevation: 5,
-                        }}
-                                onPress={() => this.props.navigation.navigate('Register')}
-                                titleStyle={{color: '#fff',fontFamily:'IRANSansMobile(FaNum)',fontSize:18}}
+                                    title="ورود"
+                            />
+                            <Button buttonStyle={{
+                                marginVertical: 15,
+                                backgroundColor: '#47b03e',
+                                borderRadius: 30,
+                                width: '100%',
+                                height: 48,
+                                shadowColor: '#43c164',
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 6,
+                                },
+                                shadowOpacity: 0.37,
+                                shadowRadius: 7.49,
+                                elevation: 5,
+                            }}
+                                    onPress={() => this.props.navigation.navigate('Register')}
+                                    titleStyle={{color: '#fff',fontFamily:'IRANSansMobile(FaNum)',fontSize:18}}
 
-                                title="ثبت نام"
-                        />
-                    </View>
-                </Card>
+                                    title="ثبت نام"
+                            />
+                        </View>
+                    </Card>
                 </LinearGradient>
 
 

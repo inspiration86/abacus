@@ -3,6 +3,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 // global screens
 import Slider from './components/screens/Slider';
 import Splash from './components/screens/Splash';
+import SendMessage from './components/screens/SendMessage';
 import Home from './components/screens/Home';
 import Login from './components/screens/Login';
 import  DashboardUser from './components/layouts/DashboardUser';
@@ -86,6 +87,12 @@ const RootStack = createStackNavigator({
         },
         Balance: {
             screen: Balance,
+            navigationOptions: ({navigation}) => ({
+                headerShown: false
+            })
+        },
+        SendMessage: {
+            screen: SendMessage,
             navigationOptions: ({navigation}) => ({
                 headerShown: false
             })
