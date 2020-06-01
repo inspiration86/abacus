@@ -12,11 +12,13 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {connect} from "react-redux";
+
 import AwesomeAlert from 'react-native-awesome-alerts';
+import Toast from 'react-native-root-toast';
 import {
     mobileChanged,
     passwordChanged,
-    loginUser
+    loginUser,failMessageChanged
 
 } from "../../action/LoginUser";
 
@@ -27,7 +29,15 @@ class TestLogin extends Component {
             mobile: '',
             password: '',
             showAlert: false,
+            showToast: false,
+            visible: true
         }
+    }
+
+     convert($string) {
+        let persian=['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+        // let num = String.range(0, 9);
+       let x=$string.replace(persian)
     }
 
     showAlert = () => {
@@ -56,7 +66,21 @@ class TestLogin extends Component {
     onLoginUser() {
             const {mobile, password} = this.props;
             const {navigation}= this.props;
-            this.props.loginUser({mobile, password,navigation});
+            if((mobile.length<1) || (password.length<1 )){
+                Alert.alert(
+                    "",
+                   "اطلاعات رو به طور کامل وارد نمائید");
+            }
+            else {
+          this.props.loginUser({mobile, password, navigation});
+                if(this.props.success===false && this.props.error.length>1) {
+                    let x=this.props.error;
+                    this.showAlert();
+                    // setTimeout(() => this.setState({
+                    //     visible: false
+                    // }), 5000);
+                }
+            }
     }
 renderLogin(){
         if(this.props.loading){
@@ -148,6 +172,7 @@ renderLogin(){
                         this.hideAlert();
                     }}
                 />
+
             </View>
         );
     }
@@ -275,5 +300,5 @@ export default connect(mapStateToProps, {
 
     mobileChanged,
     passwordChanged,
-    loginUser
+    loginUser,failMessageChanged
 })(TestLogin);

@@ -15,7 +15,7 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 export default class Home extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props.navigation);
+        console.log(this.props.screenProps);
         this.state = {
             open: false,
             showAlert: false,
@@ -131,17 +131,17 @@ export default class Home extends Component {
     cardNavigate=(item)=>{
         switch (item.id)
         {
-            case 1: this.props.navigation.navigate('Budgeting');
+            case 1: this.props.screenProps.navigate('Budgeting');
                 break;
-            case 2: this.props.navigation.navigate('RegisterCost');
+            case 2: this.props.screenProps.navigate('RegisterCost');
                 break;
-            case 3: this.props.navigation.navigate('RegisterIncome');
+            case 3: this.props.screenProps.navigate('RegisterIncome');
                 break;
-            case 4: this.props.navigation.navigate('RegisterDebt');
+            case 4: this.props.screenProps.navigate('RegisterDebt');
                 break;
-            case 5: this.props.navigation.navigate('Reminder');
+            case 5: this.props.screenProps.navigate('Reminder');
                 break;
-            case 6: this.props.navigation.navigate('Balance');
+            case 6: this.props.screenProps.navigate('Balance');
                 break;
             default:this.showError('در نسخه های بعدی این قابلیت افزوده خواهد شد')
         }

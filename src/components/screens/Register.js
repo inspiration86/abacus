@@ -37,7 +37,14 @@ import {
      onRegisterUser() {
          const {mobile, password} = this.props;
          const {navigation}= this.props;
-         this.props.registerUser({mobile, password,navigation});
+         if((mobile.length<1) || (password.length<1 )){
+             Alert.alert(
+                 "",
+                 "اطلاعات رو به طور کامل وارد نمائید");
+         }
+         else {
+             this.props.registerUser({mobile, password, navigation});
+         }
      }
      renderRegister(){
          if(this.props.loading){
@@ -75,7 +82,7 @@ import {
                             <Icon style={styles.inputIcon} name='user'color='#43c164'size={25} />
                             <TextInput style={styles.inputs}
                                        placeholder="شماره همراه"
-                                       keyboardType="name-phone-pad"
+                                       keyboardType="numeric"
                                        maxLength={11}
                                        underlineColorAndroid='transparent'
                                        onChangeText={this.onMobileChange.bind(this)}/>

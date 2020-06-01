@@ -8,6 +8,12 @@ import Login from './components/screens/Login';
 import  DashboardUser from './components/layouts/DashboardUser';
 import Register from './components/screens/Register';
 import LoginOrRegister from './components/screens/LoginOrRegister';
+import RegisterIncome from "./components/screens/RegisterIncome";
+import RegisterDebt from "./components/screens/RegisterDebt";
+import RegisterCost from "./components/screens/RegisterCost";
+import Budgeting from "./components/screens/Budgeting";
+import Reminder from "./components/screens/Reminder";
+import Balance from "./components/screens/Balance";
 const RootStack = createStackNavigator({
         Splash: {screen: Splash,navigationOptions: ({navigation}) => ({
             headerShown: false
@@ -48,9 +54,45 @@ const RootStack = createStackNavigator({
                 headerShown: false
             })
         },
+        RegisterIncome: {
+            screen: RegisterIncome,
+            navigationOptions: ({navigation}) => ({
+                headerShown: false
+            })
+        },
+        RegisterDebt: {
+            screen: RegisterDebt,
+            navigationOptions: ({navigation}) => ({
+                headerShown: false
+            })
+        },
+        RegisterCost: {
+            screen: RegisterCost,
+            navigationOptions: ({navigation}) => ({
+                headerShown: false
+            })
+        },
+        Budgeting: {
+            screen: Budgeting,
+            navigationOptions: ({navigation}) => ({
+                headerShown: false
+            })
+        },
+        Reminder: {
+            screen: Reminder,
+            navigationOptions: ({navigation}) => ({
+                headerShown: false
+            })
+        },
+        Balance: {
+            screen: Balance,
+            navigationOptions: ({navigation}) => ({
+                headerShown: false
+            })
+        },
     },
     {
-        initialRouteName: 'Splash',
+        initialRouteName: 'DashboardUser',
     },
     {
         defaultNavigationOptions: {headerShown: false}

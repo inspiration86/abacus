@@ -19,6 +19,12 @@ export const passwordChanged = (text) => {
         payload: text
     }
 }
+export const failMessageChanged = (text) => {
+    return {
+        type: USER_LOGIN_FAIL,
+        payload: text
+    }
+}
 export const loginUser = ({mobile, password, navigation}) => {
     return (dispatch) => {
 
@@ -36,12 +42,14 @@ export const loginUser = ({mobile, password, navigation}) => {
         }).then((response) => response.json()).then((responseJson) => {
             console.log(responseJson)
             if (responseJson.success === true) {
+
                 loginSellerSuccess(dispatch, navigation);
             } else {
-                loginSellerFail(dispatch);
+
+                loginSellerFail(dispatch,responseJson.data);
             }
         }).catch((error) => {
-            console.error('yyy');
+            console.error(error);
         });
     }
 
@@ -53,6 +61,7 @@ const loginSellerSuccess = (dispatch, navigation) => {
     navigation.dispatch(NavigationAction);
 
 }
-const loginSellerFail = (dispatch) => {
-    dispatch({type: USER_LOGIN_FAIL})
+const loginSellerFail = (dispatch,error) => {
+    dispatch({type: USER_LOGIN_FAIL,payload:error});
+
 }

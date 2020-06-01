@@ -96,7 +96,7 @@ const AppMaterialTopTabNavigator = createMaterialBottomTabNavigator(
                     </View>),
             }
         },
-        'صفحه اصلی':{screen:RootStack,
+        'صفحه اصلی':{screen:Home,
             navigationOptions:{
                 tabBarLabel:'صفحه اصلی',
                 tabBarIcon: ({ tintColor }) => (

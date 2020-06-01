@@ -38,7 +38,7 @@ export const registerUser = ({mobile, password, navigation}) => {
             if (responseJson.success === true) {
                 registerUserSuccess(dispatch, navigation);
             } else {
-                registerUserFail(dispatch);
+                registerUserFail(dispatch,responseJson.data);
             }
         }).catch((error) => {
             console.error('yyy');
@@ -47,12 +47,11 @@ export const registerUser = ({mobile, password, navigation}) => {
 
 }
 const registerUserSuccess = (dispatch, navigation) => {
-
     dispatch({type: USER_REGISTER_SUCCESS});
-    const NavigationAction = NavigationActions.navigate({routeName: 'DashboardUser', params: {},})
+    const NavigationAction = NavigationActions.navigate({routeName: 'Login', params: {},})
     navigation.dispatch(NavigationAction);
 
 }
-const registerUserFail = (dispatch) => {
-    dispatch({type: USER_REGISTER_FAIL})
+const registerUserFail = (dispatch,error) => {
+    dispatch({type: USER_REGISTER_FAIL,payload:error})
 }

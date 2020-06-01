@@ -22,7 +22,7 @@ export default(state=INITIAL_STATE,action) =>{
             return{...state,success: true};
             break;
         case USER_REGISTER_FAIL:
-            return{...state,loading:false,success: false,error:'نام کاربری یا گذرواژه اشتباه است'};
+            return{...state,loading:false,success: false,error:action.payload};
             break;
         default:
             return state;

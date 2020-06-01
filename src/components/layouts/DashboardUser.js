@@ -29,6 +29,7 @@ import Report from "../screens/Report";
 import RegisterIncome from  '../screens/RegisterIncome';
 import Reminder from  '../screens/Reminder'
 import Budgeting from '../screens/Budgeting';
+import Home from '../screens/Home';
 import BottomTabNavigator from '../layouts/BottomTabNavigator';
 import {Body, Footer, Header, Icon, Left, Right} from "native-base";
 import {faList} from '@fortawesome/free-solid-svg-icons/faList';
