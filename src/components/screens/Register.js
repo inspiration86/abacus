@@ -43,8 +43,31 @@ import {
                  "اطلاعات رو به طور کامل وارد نمائید");
          }
          else {
-             this.props.registerUser({mobile, password, navigation});
+             fetch('http://194.5.175.25:2000/api/v1/findmobile', {
+                 method: 'POST',
+                 headers: {
+                     Accept: 'application/json',
+                     'Content-Type': 'application/json',
+                 },
+                 body: JSON.stringify({
+                     mobile: mobile,
+                 }),
+             }).then((response) => response.json()).then((responseJson) => {
+                 console.log(responseJson)
+                 if (responseJson.success === false) {
+                     this.props.navigation.navigate('SendMessage',{mobile:mobile,password:password})
+                 } else {
+                     alert(responseJson.data);
+
+                 }
+             }).catch((error) => {
+                 console.error('yyy');
+             });
+             // this.props.registerUser({mobile, password, navigation});
          }
+     }
+     validationMobile(){
+
      }
      renderRegister(){
          if(this.props.loading){

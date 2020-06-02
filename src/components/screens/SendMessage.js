@@ -4,9 +4,20 @@ import {Divider, Dialog, Portal} from 'react-native-paper';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import CodeInput from 'react-native-confirmation-code-input';
 import { faSms} from "@fortawesome/free-solid-svg-icons";
-import { StyleSheet, View, Text, Platform, Alert, TouchableOpacity } from 'react-native';
+import {Button} from 'react-native-elements';
+
+import {StyleSheet, View, Text, Platform, Alert, TouchableOpacity, ScrollView} from 'react-native';
 import CountDown from 'react-native-countdown-component';
 class SendMessage extends Component {
+    constructor(props){
+        super(props);
+        console.log(this.props.navigation.state.params)
+        this.state={
+            mobile:this.props.navigation.state.params.mobile,
+            password:this.props.navigation.state.params.password,
+            codeOTD:''
+        }
+    }
     onDoneCountdown = () => {
         Alert.alert("ارسال مجدد کد ...");
     }
@@ -16,27 +27,70 @@ class SendMessage extends Component {
 
     _onFinishCheckingCode1(a) {
         if (a) {
-
-            Alert.alert(
-                'تائیده کد ارسالی',
-                'فروشنده محترم خوش آمدید');
-
-            this.props.navigation.push('DashboardSeller');
-            console.log( this.props.navigation);
+            // this.onRegister()
         } else
             Alert.alert(
-                'تائیده کد ارسالی',
-                'فروشنده محترم کد وارد شده اشتباه می باشد. مجدد تلاش کنید');
+                '',
+                'کاربر محترم کد وارد شده اشتباه می باشد. مجدد تلاش کنید');
     }
     componentDidMount() {
+      this.onSendSMS();
     }
+    onSendSMS(){
+        fetch('http://194.5.175.25:2000/api/v1/sendsms', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                mobile: this.state.mobile,
 
+            }),
+        }).then((response) => response.json()).then((responseJson) => {
+            console.log(responseJson)
+            if (responseJson.success === true) {
+                this.setState({codeOTD:responseJson.data})
+                console.log(responseJson.data);
+            } else {
+
+                console.log(responseJson.data);
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
+    }
+onRegister(){
+        console.log('jjj')
+    fetch('http://194.5.175.25:2000/api/v1/register', {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            mobile: this.state.mobile,
+            password: this.state.password,
+        }),
+    }).then((response) => response.json()).then((responseJson) => {
+        console.log(responseJson)
+        if (responseJson.success === true) {
+            this.props.navigation.push('Login');
+
+        } else {
+            console.log(responseJson.data);
+
+        }
+    }).catch((error) => {
+        console.error('yyy');
+    });
+}
     render() {
 
         return (
 
             <View style={{justifyContent: 'center', marginTop: '10%',}}>
-
+       <ScrollView>
                 <View style={{justifyContent: 'center',alignItems:'center',marginBottom:20,marginTop:30}}>
                     <FontAwesomeIcon icon={faSms} size={70} style={{color:'#47b03e',marginBottom:10}}/>
 
@@ -79,7 +133,7 @@ class SendMessage extends Component {
                             <CodeInput
                                 ref="codeInputRef2"
                                 secureTextEntry
-                                compareWithCode='12345'
+                                compareWithCode={this.state.codeOTD}
                                 activeColor='#47b03e'
                                 inactiveColor='#777'
                                 autoFocus={false}
@@ -95,13 +149,40 @@ class SendMessage extends Component {
 
 
                     </View>
+                    <Button buttonStyle={{
+                        marginTop: 10,
+                        marginLeft:25,
+                        backgroundColor: '#47b03e',
+                        borderRadius: 30,
+                        width: '80%',
+                        height: 45,
+                        shadowColor: '#43c164',
+                        shadowOffset: {
+                            width: 0,
+                            height: 6,
+                        },
+                        shadowOpacity: 0.37,
+                        shadowRadius: 7.49,
+                        elevation: 5,
+                        marginBottom:20
+                    }}
+                            onPress={() => this.onRegister()}
+                            titleStyle={{color: '#fff',fontFamily:'IRANSansMobile(FaNum)',fontSize:18}}
+
+                            title="ثبت نهایی"
+                    />
+
+                        {/*{setTimeout(()=>{*/}
+                            <Text style={{marginHorizontal:10,color:'#777', fontFamily:'IRANSansMobile(FaNum)',fontSize:15}} onPress={()=> this.onSendSMS()}>ارسال مجدد کد</Text>
+                        {/*},6000)}*/}
+
                 </View>
-                <View style={{flex:1,justifyContent: 'center',alignItems:'center',marginTop:60}}>
+                <View style={{flex:1,justifyContent: 'center',alignItems:'center',marginTop:5}}>
 
                     <View style={styles.MainContainer}>
 
                         <CountDown
-                            until={5}
+                            until={180}
                             onFinish={this.onDoneCountdown}
                             onPress={this.onPressCountdown}
                             size={23}
@@ -114,7 +195,7 @@ class SendMessage extends Component {
 
                     </View>
                 </View>
-
+       </ScrollView>
             </View>
         );
     }

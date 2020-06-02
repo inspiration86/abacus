@@ -36,7 +36,7 @@ export const registerUser = ({mobile, password, navigation}) => {
         }).then((response) => response.json()).then((responseJson) => {
             console.log(responseJson)
             if (responseJson.success === true) {
-                registerUserSuccess(dispatch, navigation);
+                registerUserSuccess(dispatch, navigation,mobile);
             } else {
                 registerUserFail(dispatch,responseJson.data);
             }
@@ -46,9 +46,9 @@ export const registerUser = ({mobile, password, navigation}) => {
     }
 
 }
-const registerUserSuccess = (dispatch, navigation) => {
+const registerUserSuccess = (dispatch, navigation,mobile) => {
     dispatch({type: USER_REGISTER_SUCCESS});
-    const NavigationAction = NavigationActions.navigate({routeName: 'SendMessage', params: {},})
+    const NavigationAction = NavigationActions.navigate({routeName: 'SendMessage', params: {mobile},})
     navigation.dispatch(NavigationAction);
 
 }
