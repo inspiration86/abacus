@@ -22,8 +22,7 @@ import Select2 from 'react-native-select-two';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import DatePicker, {getFormatedDate} from 'react-native-modern-datepicker';
-import Menu, {MenuItem, MenuDivider} from 'react-native-material-menu';
-import Header from '../layouts/Header';
+import Menu, {MenuItem, MenuDivider} from 'react-native-material-menu'; import Header from '../layouts/Header';
 import LinearGradient from 'react-native-linear-gradient';
 import {Card, List, Content, ListItem,Left, Body, Right, Title,CardItem,Item,Input,Label} from 'native-base';
 import Modaldate from 'react-native-modal';
@@ -620,28 +619,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        marginTop: 22,
         justifyContent: 'center',
 
     },
     SectionStyle: {
 
         borderRadius: 5, width: '70%', marginLeft: 43, borderWidth: 1.5,
-        borderColor: '#3d933c', height: 45, marginTop: 15,
-
-
-        // shadowOffset: {
-        //     width: 0,
-        //     height: 2,
-        //     marginVertical: 5,
-        //     marginRight: 16,
-        //     marginBottom: 12
-        //
-        // },
-        // shadowOpacity: 0.25,
-        // shadowRadius: 3.84,
-        // elevation: 12,
-    },
+        borderColor: '#3d933c', height: 45, marginTop: 15,},
 
 
     imageIcon: {

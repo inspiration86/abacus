@@ -1,149 +1,6 @@
-// import React, {Component} from 'react';
-// import {View, TouchableOpacity, Image, ScrollView, StatusBar} from 'react-native';
-// import {Provider, Portal, FAB, Avatar, Card, IconButton,Button } from 'react-native-paper';
-// import Header from '../layouts/Header';
-// import {FlatGrid} from 'react-native-super-grid';
-// import Icon from 'react-native-vector-icons/FontAwesome';
-//
-// class Reminder extends Component {
-//     state = {
-//         open: false,
-//         data: [
-//             {
-//                 id: 1,
-//                 title: 'برگزاری کلاس آنلاین',
-//                 subtitle:'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان ',
-//                 image: require('../../../assets/images/icons/1792931.png'),
-//             }
-//             ,
-//             {
-//                 id: 2,
-//                 title: 'برگزاری کلاس آنلاین',
-//                 subtitle:'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان ',
-//                 image: require('../../../assets/images/icons/1792931.png'),
-//             }
-//             ,
-//             {
-//                 id: 3,
-//                 title: 'برگزاری کلاس آنلاین',
-//                 subtitle:'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان ',
-//                 image: require('../../../assets/images/icons/1792931.png'),
-//             }
-//             ,
-//             {
-//                 id: 4,
-//                 title: 'برگزاری کلاس آنلاین',
-//                 subtitle:'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان ',
-//                 image: require('../../../assets/images/icons/1792931.png'),
-//             }
-//             ,
-//             {
-//                 id: 5,
-//                 title: 'برگزاری کلاس آنلاین',
-//                 subtitle:'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان ',
-//                 image: require('../../../assets/images/icons/1792931.png'),
-//             },
-//         ],
-//     };
-//     _onStateChange = ({open}) => this.setState({open});
-//
-//     render() {
-//         const {open} = this.state;
-//         return (
-//             <View style={{flex: 1}}>
-//                 <StatusBar
-//                     hidden={false}
-//                     backgroundColor='#47b03e'
-//                 />
-//                 <View style={{marginTop:23}}>
-//                 <Header  title='یادآوری ها' />
-//                 </View>
-//                 <ScrollView>
-//                 <FlatGrid
-//                     itemDimension={200}
-//                     items={this.state.data}
-//                     style={{marginTop: 3}}
-//                     contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
-//                     renderItem={({item, index}) => (
-//                         <View>
-//                             <TouchableOpacity activeOpacity={0.9} onPress={() => {
-//                                 this.clickEventListener(item);
-//                             }}>
-//                                 <Card style={{marginTop: 5, paddingRight: 10,backgroundColor:'#ecfaed'}}>
-//                                     <Card.Title
-//                                         title={item.title}
-//                                         titleStyle={{
-//                                             textAlign: 'right',
-//                                             marginRight: 10,
-//                                             fontFamily: 'IRANSansMobile',
-//                                             fontSize: 14,
-//                                             color:'#3e843d'
-//                                         }}
-//                                         subtitle={ item.subtitle}
-//                                         subtitleStyle={{
-//                                             marginRight: 20,
-//                                             textAlign: 'right',
-//                                             fontFamily: 'IRANSansMobile',
-//                                             fontSize: 12,
-//                                         }}
-//                                         left={(props) =>
-//                                             <View>
-//                                             <Icon
-//                                                 name="edit"
-//                                                 color="#3e843d"
-//                                                 style={{fontSize: 20, marginLeft: 5, marginVertical: 8}}
-//                                             />
-//                                                 <Icon
-//                                                     name="trash"
-//                                                     color="#3e843d"
-//                                                     style={{fontSize: 20, marginLeft: 5, marginVertical: 8}}
-//                                                 />
-//                                             </View>
-//                                         }
-//                                         right={(props) => <Image
-//                                             style={{height: 50, width: 50, padding: 2, borderRadius: 10}}
-//                                             source={item.image}/>}
-//                                     />
-//                                 </Card>
-//                             </TouchableOpacity>
-//                         </View>
-//                     )}/>
-//                 </ScrollView>
-//
-//                 <Provider>
-//                     <Portal>
-//                         <FAB.Group
-//                             fabstyle={{color: '#fff', backgroundColor: '#3d933c'}}
-//                             open={open}
-//                             icon={open ? 'calendar-today' : 'plus'}
-//                             actions={[
-//                                 {icon: 'plus', onPress: () => console.log('Pressed add')},
-//                                 {icon: 'star', label: 'Star', onPress: () => console.log('Pressed star')},
-//                                 {icon: 'email', label: 'Email', onPress: () => console.log('Pressed email')},
-//                                 {icon: 'bell', label: 'Remind', onPress: () => console.log('Pressed notifications')},
-//                             ]}
-//                             onStateChange={this._onStateChange}
-//                             onPress={() => {
-//                                 if (open) {
-//                                     // do something if the speed dial is open
-//                                 }
-//                             }}
-//                         />
-//                     </Portal>
-//                 </Provider>
-//             </View>
-//
-//         );
-//     }
-// }
-//
-// export default Reminder;
-
-
-
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, ScrollView, StatusBar, StyleSheet, Text, Picker ,} from 'react-native';
-import { Provider, Portal, FAB, Avatar, Card, IconButton } from 'react-native-paper';
+import { View, TouchableOpacity, Image, ScrollView, StatusBar, StyleSheet, Text, Picker ,modal} from 'react-native';
+import { Provider, Portal, FAB, Avatar,  IconButton } from 'react-native-paper';
 import Modal from 'react-native-modalbox';
 import DatePicker, { getFormatedDate } from 'react-native-modern-datepicker';
 import Select2 from 'react-native-select-two';
@@ -189,9 +46,8 @@ const renderImage = (image) => {
         </>,
     ];
 };
-import { CardItem, Tabs, Tab, ListItem, TabHeading, Left, Body, Title, Right, Form, Input, Item, Label, Button, } from 'native-base';
+import { CardItem, Tabs, Tab, ListItem, TabHeading, Left, Body, Title, Right, Form, Input, Item, Label, Button, Card} from 'native-base';
 
-// import Header from '../layouts/Header';
 import { FlatGrid } from 'react-native-super-grid';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -199,42 +55,15 @@ class Reminder extends Component {
     state = {
         image: '',
         open: false,
+        modalVisible:false,
+        userSelected:[],
         selected: "key1",
         data: [
-            {
-                id: 1,
-                title: 'برگزاری کلاس آنلاین',
-                subtitle: 'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان ',
-                image: require('../../../assets/images/icons/1792931.png'),
-            }
-            ,
-            {
-                id: 2,
-                title: 'برگزاری کلاس آنلاین',
-                subtitle: 'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان ',
-                image: require('../../../assets/images/icons/1792931.png'),
-            }
-            ,
-            {
-                id: 3,
-                title: 'برگزاری کلاس آنلاین',
-                subtitle: 'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان ',
-                image: require('../../../assets/images/icons/1792931.png'),
-            }
-            ,
-            {
-                id: 4,
-                title: 'برگزاری کلاس آنلاین',
-                subtitle: 'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان ',
-                image: require('../../../assets/images/icons/1792931.png'),
-            }
-            ,
-            {
-                id: 5,
-                title: 'برگزاری کلاس آنلاین',
-                subtitle: 'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان ',
-                image: require('../../../assets/images/icons/1792931.png'),
-            },
+            {id:1,  title: 'برگزاری کلاس آنلاین', description: 'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان ', date:"2019-03-25 ", color:"#228B22", completed:1},
+            {id:2,  title: 'برگزاری کلاس آنلاین', description: 'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان ',    date:"2019-03-25", color:"#FF00FF", completed:2},
+            {id:3,  title: 'برگزاری کلاس آنلاین', description: 'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان ',date:"2019-03-25 ", color:"#4B0082", completed:0},
+            {id:4,  title: 'برگزاری کلاس آنلاین', description: 'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان ', date:"2019-03-25 ", color:"#20B2AA", completed:0},
+
         ],
     };
     onValueChange(value: string) {
@@ -292,7 +121,22 @@ class Reminder extends Component {
     };
 
     _onStateChange = ({ open }) => this.setState({ open });
+// ..............
+    clickEventListener = (item) => {
+        Alert.alert("Item selected: "+item.description)
+    }
 
+    __getCompletedIcon = (item) => {
+        if(item.completed == 1) {
+            // return require('../image/photo.png');
+            return <Icon   name='camera' color='green'style={{fontSize:25}}/>
+        }
+        else if(item.completed == 2) {
+            return <Icon   name='bell' color='green'style={{fontSize:25}}/>
+        }else {
+            return <Icon   name="text-height" color='green'style={{fontSize:25}}/>
+        }
+    }
     render() {
         const image = this.state;
         const { open } = this.state;
@@ -300,72 +144,70 @@ class Reminder extends Component {
             <View style={{ flex: 1 }}>
                 <StatusBar
                     hidden={false}
-                    backgroundColor='#47b03e'
+                    backgroundColor='#3e843d'
                 />
-                <View style={{marginTop:23}}>
-                <Header title={'یادآوری ها'} />
-                </View>
-                <View style={{ marginTop: 23 }}>
-                    {/* <Header  title='یادآوری ها' /> */}
-                </View>
-                <ScrollView>
-                    <FlatGrid
-                        itemDimension={200}
-                        items={this.state.data}
-                        style={{marginTop: 3}}
-                        contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
-                        renderItem={({item, index}) => (
-                            <View>
-                                <TouchableOpacity activeOpacity={0.9} onPress={() => {
-                                    this.clickEventListener(item);
-                                }}>
-                                    <Card style={{marginTop: 5, paddingRight: 10,backgroundColor:'#ecfaed'}}>
-                                        <Card.Title
-                                            title={item.title}
-                                            titleStyle={{
-                                                textAlign: 'right',
-                                                marginRight: 10,
-                                                fontFamily: 'IRANSansMobile',
-                                                fontSize: 14,
-                                                color:'#3e843d'
-                                            }}
-                                            subtitle={ item.subtitle}
-                                            subtitleStyle={{
-                                                marginRight: 20,
-                                                textAlign: 'right',
-                                                fontFamily: 'IRANSansMobile',
-                                                fontSize: 12,
-                                            }}
-                                            left={(props) =>
-                                                <View>
-                                                    <Icon
-                                                        name="edit"
-                                                        color="#3e843d"
-                                                        style={{fontSize: 20, marginLeft: 5, marginVertical: 8}}
-                                                    />
-                                                    <Icon
-                                                        name="trash"
-                                                        color="#3e843d"
-                                                        style={{fontSize: 20, marginLeft: 5, marginVertical: 8}}
-                                                    />
-                                                </View>
-                                            }
-                                            right={(props) => <Image
-                                                style={{height: 50, width: 50, padding: 2, borderRadius: 10}}
-                                                source={item.image}/>}
-                                        />
-                                    </Card>
-                                </TouchableOpacity>
-                            </View>
-                        )}/>
-                </ScrollView>
+                     <Header  title='یادآوری ها' />
+                <FlatGrid
+                    itemDimension={200}
+                    items={this.state.data}
+                    style={{marginTop: 3}}
+                    contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
+                    renderItem={({item, index}) => (
+                        <Card>
+                            <CardItem>
+                                <Left>
+                                    <Text style={styles.date}>{item.date}</Text>
+                                </Left>
+                                <Body>
+
+
+                                </Body>
+                                <Right style={{flexDirection:'row',flex:2,alignSelf:'flex-end',justifyContent:'flex-end',alignItems:'flex-end'}}>
+                                    <Text style={styles.titel}>{item.title}</Text>
+                                    <Text > { this.__getCompletedIcon(item)}</Text>
+
+                                </Right>
+                            </CardItem>
+                            <CardItem bordered>
+                                <Body>
+                                    <Text style={styles.description}>
+                                        {item.description}
+                                    </Text>
+                                </Body>
+                            </CardItem>
+                            <CardItem CardItem footer bordered style={{height:35}} >
+                                <Left>
+                                    <Button transparent >
+
+                                        <Text style={{fontSize:16,color:'#777777',marginRight:5}}>نمایش</Text>
+                                        <Icon active name="play-circle-o"  style={{fontSize:20,color:'#777777',marginRight:5}} />
+                                    </Button>
+                                </Left>
+                                <Body>
+                                    <Button transparent>
+
+                                    </Button>
+                                </Body>
+                                <Right>
+                                    <Button transparent>
+
+                                        <Icon active name="trash"  style={{fontSize:20,color:'red'}}/>
+
+                                    </Button>
+                                </Right>
+
+                            </CardItem>
+                        </Card>
+
+                    )}/>
+
 
                 <Provider>
                     <Portal>
                         <FAB.Group
                             fabstyle={{ color: '#fff', backgroundColor: '#3d933c' }}
                             open={open}
-                            icon={open ? 'calendar-today' : 'plus'}
+                            icon={open ? '' : 'plus'}
                             actions={[
                                 // {icon: 'plus', onPress: () => console.log('Pressed add')},
                                 { icon: 'text', label: 'متنی', onPress: () => this.refs.modal1.open() },
@@ -581,6 +423,7 @@ class Reminder extends Component {
                     ref={'modal2'}
                     coverScreen={true}
                     swipeToClose={false}
+                    useNativeDriver={true}
                 >
                     <LinearGradient
                         style={{ borderTopLeftRadius: 15, borderTopRightRadius: 15, }}
@@ -619,6 +462,8 @@ class Reminder extends Component {
                                     }}>عنوان:</Text></Label>
 
                                 </Item>
+
+
                                 <Item fixedLabel>
                                     <Left>
                                         <Button transparent onPress={() => this.refs.modal1.open()}>
@@ -777,7 +622,30 @@ class Reminder extends Component {
 
                     </View>
                 </Modal>
+                <Modal
+                    animationType={'fade'}
+                    transparent={true}
+                    onRequestClose={() => this.setModalVisible(false)}
+                    visible={this.state.modalVisible}>
 
+                    <View style={styles.popupOverlay}>
+                        <View style={styles.popup}>
+                            <View style={styles.popupContent}>
+                                <ScrollView contentContainerStyle={styles.modalInfo}>
+                                    <Image style={styles.image} source={{uri: this.state.userSelected.image}}/>
+                                    <Text style={styles.name}>{this.state.userSelected.name}</Text>
+                                    <Text style={styles.position}>{this.state.userSelected.position}</Text>
+                                    <Text style={styles.about}>{this.state.userSelected.about}</Text>
+                                </ScrollView>
+                            </View>
+                            <View style={styles.popupButtons}>
+                                <TouchableOpacity onPress={() => {this.setModalVisible(false) }} style={styles.btnClose}>
+                                    <Text style={styles.txtClose}>Close</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
 
             </View>
 
@@ -805,168 +673,119 @@ const styles = StyleSheet.create({
         marginTop:20,
         marginHorizontal:20
     },
-    card: {
-        padding:10,
-        marginTop:5,
-        marginBottom:5,
-        backgroundColor: '#FFFFFF',
-        flexDirection: 'row',
-        borderRadius:10,
+    tasks:{
+        flex:1,
+    },
+    cardContent: {
+        marginRight:20,
+        marginTop:2,
+    },
+    image:{
+        width:35,
+        height:35,
+        // alignSelf:'flex-end',
+        // justifyContent:'flex-end',
+        // alignItems:'flex-end',
     },
 
-    text: {
-        marginBottom: 5,
-        flexDirection: 'row',
-        flexWrap:'wrap'
+    card:{
+        shadowColor: '#00000021',
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.37,
+        shadowRadius: 7.49,
+        elevation: 12,
+
+        marginVertical:2,
+        marginHorizontal:20,
+        backgroundColor:"white",
+        flexBasis: '46%',
+        padding: 20,
+        flexDirection:'row',
+        flexWrap: 'wrap',
+        borderRadius:5,
+        justifyContent:'flex-end',
+        alignItems:'flex-end'
     },
-    content: {
+
+    description:{
+        fontSize:14,
+        flex:1,
+        color:"#777777",
+        fontFamily: 'IRANSansMobile(FaNum)',
+        marginTop:-13
+
+    },
+    titel:{
+        fontSize:12,
+        flex:1,
+        color:"green",
+        fontFamily: 'IRANSansMobile(FaNum)'
+
+    },
+    date:{
+        fontSize:14,
+        flex:1,
+        color:"#696969",
+        marginTop:3,
+        fontFamily: 'IRANSansMobile(FaNum)'
+    },
+    /************ modals ************/
+    popup: {
+        backgroundColor: 'white',
+        marginTop: 80,
+        marginHorizontal: 20,
+        borderRadius: 7,
+    },
+    popupOverlay: {
+        backgroundColor: "#00000057",
         flex: 1,
-
-        marginRight:10
+        marginTop: 30
     },
-    mainContent: {
-        marginRight: 60
+    popupContent: {
+        //alignItems: 'center',
+        margin: 5,
+        height:250,
     },
-    img: {
-        height: 50,
-        width: 50,
-        margin: 0
+    popupHeader: {
+        marginBottom: 45
+    },
+    popupButtons: {
+        marginTop: 15,
+        flexDirection: 'row',
+        borderTopWidth: 1,
+        borderColor: "#eee",
+        justifyContent:'center'
+    },
+    popupButton: {
+        flex: 1,
+        marginVertical: 16
+    },
+    btnClose:{
+        height:20,
+        backgroundColor:'#20b2aa',
+        padding:20
+    },
+    modalInfo:{
+        alignItems:'center',
+        justifyContent:'center',
+    },
+    followButton: {
+        marginTop:-40,
+        height:20,
+        width:100,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius:30,
+        backgroundColor: "green",
+    },
+    followButtonText:{
+        color: "#FFF",
+        fontSize:16,
     },
 });
 
-
 export default Reminder;
-// import React, { Component } from 'react';
-// import React, { Component } from 'react';
-// import {
-//   StyleSheet,
-//   Text,
-//   View,
-//   TouchableOpacity,
-//   Image,
-//   ScrollView,
-//   FlatList
-// } from 'react-native';
-// import Icon from 'react-native-vector-icons/FontAwesome';
-// import { Card } from 'native-base';
-// export default class Comments extends Component {
-
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       data:[
-//         {id:1, image: require('../image/ha.jpg'), name:"پرداخت قبض",  comment: 'هماهنگی برای ابا مهندس گردان '},
-//         {id:2,image: require('../image/ha.jpg'), name:"پرداخت چک",     comment: 'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان '},
-//         {id:3,image: require('../image/ha.jpg'), name:"پول مامان", comment: 'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان '},
-//         {id:4,image: require('../image/ha.jpg'), name:"پول شارز خانه",  comment: 'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان '},
-
-//       ]
-//     }
-//   }
-
-//   render() {
-//     return (
-//       <FlatList
-//         style={styles.root}
-//         data={this.state.data}
-//         extraData={this.state}
-//         ItemSeparatorComponent={() => {
-//           return (
-//             <View />
-//           )
-//         }}
-//         keyExtractor={(item)=>{
-//           return item.id;
-//         }}
-//         renderItem={(item) => {
-//           const Notification = item.item;
-//           return(
-//             <Card style={styles.container}>
-//                <View
-//                                           style={{
-
-//                                               flexDirection:'row'
-
-//                                           }}>
-//                                           <TouchableOpacity>
-//                                               <Icon
-//                                                   name="trash"
-//                                                   color="red"
-//                                                   style={{fontSize: 20, marginLeft: 5, marginTop: 5}}
-//                                               />
-//                                           </TouchableOpacity>
-//                                           <TouchableOpacity>
-//                                               <Icon
-//                                                   name="edit"
-//                                                   color="green"
-//                                                   style={{fontSize: 20, marginLeft: 5, marginTop: 5}}
-//                                               />
-//                                           </TouchableOpacity>
-
-//                                       </View>
-//               <View style={styles.content}>
-//                 <View style={styles.contentHeader}>
-
-//                   <Text  style={styles.name}>{Notification.name}</Text>
-
-//                 </View>
-//                 <Text rkType='primary3 mediumLine' style={{color:'#777777', fontFamily: 'IRANSansMobile',fontSize:12}}>{Notification.comment}</Text>
-//               </View>
-//               <Image style={styles.image} source={ Notification.image}/>
-//           </Card>
-//           );
-//         }}/>
-//     );
-//   }
-// }
-
-// const styles = StyleSheet.create({
-//   root: {
-//     backgroundColor: "#ffffff",
-//     marginTop:30,
-//     marginHorizontal:20
-//   },
-//   container: {
-//     shadowColor: '#00000021',
-//     shadowOffset: {
-//       width: 0,
-//       height: 6,
-//     },
-//     shadowOpacity: 0.37,
-//     shadowRadius: 7.49,
-//     elevation: 12,
-
-
-//     marginVertical: 20,
-//     marginTop:2,
-//     backgroundColor:"white",
-//     padding: 10,
-//     flexDirection:'row',
-//     borderRadius:15,
-//   },
-//   content: {
-//     marginLeft: 1,
-//     flex:2,
-//   },
-//   contentHeader: {
-//     flexDirection: 'row',
-//     alignItems:'flex-end',
-//     justifyContent:'flex-end',
-//     marginBottom: 1
-//   },
-
-//   image:{
-//     width:60,
-//     height:60,
-//     borderRadius:60,
-//     marginLeft:20
-//   },
-
-//   name:{
-//     fontSize:14,
-//     fontWeight:"bold",
-//     color:'green' ,
-//     fontFamily: 'IRANSansMobile',
-
-//   },
-// });

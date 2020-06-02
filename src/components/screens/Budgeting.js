@@ -34,9 +34,11 @@ function HomeScreen({navigation}) {
 
     return (
         <View style={{flex: 1}}>
-            <View style={{marginTop: 23}}>
+            <StatusBar
+                hidden={false}
+                backgroundColor='#3e843d'
+            />
                 <Header title={'بودجه بندی'}/>
-            </View>
             <View style={{flex: 1}}>
                 <ScrollView>
                     <ListItem icon>
