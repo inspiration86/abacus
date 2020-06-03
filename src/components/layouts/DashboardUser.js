@@ -25,19 +25,17 @@ import {
     faUser, faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 import List from "../screens/AdvancedSearch";
-import Report from "../screens/Report";
 import RegisterIncome from  '../screens/RegisterIncome';
 import Reminder from  '../screens/Reminder'
 import Budgeting from '../screens/Budgeting';
-import Home from '../screens/Home';
 import BottomTabNavigator from '../layouts/BottomTabNavigator';
 import {Body, Footer, Header, Icon, Left, Right} from "native-base";
 import {faList} from '@fortawesome/free-solid-svg-icons/faList';
 import LinearGradient from "react-native-linear-gradient";
 import {faSearch} from '@fortawesome/free-solid-svg-icons/faSearch';
-import {faCheckSquare} from '@fortawesome/free-solid-svg-icons/faCheckSquare';
-import {faCheckDouble} from '@fortawesome/free-solid-svg-icons/faCheckDouble';
-import {faFlagCheckered} from '@fortawesome/free-solid-svg-icons/faFlagCheckered';
+import Profile from '../screens/Profile';
+import {faUserCircle} from '@fortawesome/free-solid-svg-icons/faUserCircle';
+
 const CustomDrawerComponent = props => (
     <View style={{flex: 1}}>
         <Header style={styles.container}>
@@ -156,16 +154,16 @@ const CustomerMyDrawerNavigator = createDrawerNavigator({
             }
         },
         'لیست': {
-            screen: List,
+            screen: Profile,
             navigationOptions: {
                 headerShown: false,
                 drawerLabel: (
                     <View style={{flex: 1, flexDirection: 'row',backgroundColor:'#f5f5f5',height:55,justifyContent:'center',alignItems:'center'}}>
                         <View style={{flex: 9}}>
-                            <Text style={{fontFamily: 'IRANSansMobile', color: '#555',textAlign:'right',marginRight:30}}>جستجوی پیشرفته</Text>
+                            <Text style={{fontFamily: 'IRANSansMobile', color: '#555',textAlign:'right',marginRight:30}}>پروفایل من</Text>
                         </View>
                         <View style={{flex: 2}}>
-                            <FontAwesomeIcon icon={faSearch} size={20} style={{color: '#3d933c'}}/>
+                            <FontAwesomeIcon icon={faUserCircle} size={20} style={{color: '#3d933c'}}/>
                         </View>
                     </View>
                 ),

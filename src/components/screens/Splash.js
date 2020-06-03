@@ -35,7 +35,6 @@ export default class Splash extends Component {
     splash() {
         setTimeout(() => {
             this.props.navigation.navigate('LoginOrRegister');
-            this.props.navigation.navigate('DashboardUser');
 
         }, 6000);
     }
@@ -131,7 +130,6 @@ export default class Splash extends Component {
                         <Text style={{fontSize: 16, color: '#fff', fontFamily: 'Lalezar-Regular'}}>طراحی و پیاده سازی
                             شرکت دانش بنیان آرکا</Text>
                     </Animated.View>
-
                 </View>
                 </LinearGradient>
 

@@ -397,14 +397,15 @@ export default class RegisterDebt extends Component {
 
                     <View style={{marginTop: 8, marginHorizontal: 30}}>
                         <Card>
-                            <CardItem bordered
-                                      style={{backgroundColor: '#c5f3c1', borderStyle: 'dashed', borderWidth: 0.5}}>
+                            <CardItem bordered style={{backgroundColor: '#c5f3c1', borderStyle: 'dashed', borderWidth: 0.5}}>
                                 <Left>
-                                    <TouchableOpacity activeOpacity={0.9}>
-
+                                    <TouchableOpacity
+                                        style={{width:50,justifyContent:'center',alignItems:'center'}}
+                                        activeOpacity={0.9}
+                                        onPress={this.showMenu}>
                                         <Icon name='ellipsis-v'
                                               style={{marginTop: 5, fontSize: 25, color: '#47b03e'}}
-                                              onPress={this.showMenu}/>
+                                        />
                                     </TouchableOpacity>
                                     <Menu
                                         ref={this.setMenuRef}>
@@ -440,7 +441,7 @@ export default class RegisterDebt extends Component {
                             elevation: 5,
                             marginBottom:10
                         }}
-                                onPress={() => this.props.navigation.navigate('Register')}
+
                                 titleStyle={{color: '#fff',fontFamily:'IRANSansMobile(FaNum)',fontSize:18}}
 
                                 title="ثبت"

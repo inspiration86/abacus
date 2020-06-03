@@ -9,6 +9,8 @@ import {
     Image,
     Alert, StatusBar, ActivityIndicator
 } from 'react-native';
+import DialogInput from 'react-native-dialog-input-custom';
+
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {connect} from "react-redux";
@@ -31,7 +33,8 @@ class TestLogin extends Component {
             showAlert: false,
             showToast: false,
             visible: true,
-            messageError:''
+            messageError:'',
+            dialogVisible: false
         }
     }
 
@@ -41,6 +44,12 @@ class TestLogin extends Component {
        let x=$string.replace(persian)
     }
 
+    showDialog = () => {
+        this.setState({ dialogVisible: true });
+    };
+    handleCancel = () => {
+        this.setState({ dialogVisible: false });
+    };
     showAlert = () => {
         this.setState({
             showAlert: true
@@ -106,8 +115,10 @@ renderLogin(){
     render() { const {showAlert} = this.state;
         return (
             <View style={styles.container}>
-                <StatusBar hidden={true} translucent={true} networkActivityIndicatorVisible={true}
-                           barStyle="light-content"/>
+                <StatusBar
+                    hidden={false}
+                    backgroundColor='#3e843d'
+                />
 
                 <LinearGradient
                     style={styles.header}
@@ -150,8 +161,10 @@ renderLogin(){
                         </View>
 
                         <TouchableOpacity activeOpacity={0.8} style={styles.btnForgotPassword}
-                                          onPress={() => this.onClickListener('restore_password')}>
-                            <Text style={styles.btnText}>رمز عبور خود را فراموش کرده اید؟</Text>
+                                          onPress={this.showDialog}>
+                            <Text style={styles.btnText}
+                                  onPress={() => this.props.navigation.navigate('ResetPassword')}
+                            >رمز عبور خود را فراموش کرده اید؟</Text>
                         </TouchableOpacity>
                         {this.renderLogin()}
                         {/*<TouchableOpacity activeOpacity={0.8} style={[styles.buttonContainer, styles.loginButton]}*/}
@@ -185,6 +198,31 @@ renderLogin(){
                     }}
                 />
 
+                <DialogInput
+                    dialogIsVisible={this.state.dialogVisible}
+                    closeDialogInput={() => { this.handleCancel(false) }}
+                    submitInput={(inputText) => { this.sendInput(inputText) }}
+                    underlineColor={'#47b03e'}
+                    // outerContainerStyle={{ backgroundColor: 'rgba(0,0,0, 0.75)' }}
+                    containerStyle={{ justifyContent: 'center', marginTop: 25,  }}
+
+                    titleStyle={{ color: '#47b03e', textAlign: 'right' }}
+                    title="بازنشانی رمز"
+                    subTitleStyle={{ color: '#fff', textAlign: 'right', marginTop: 5 }}
+                    subtitle=""
+                    placeholderInput="رمز جدید خود را وارد کنید"
+                    placeholderTextColor="#777777"
+                    textInputStyle={{ marginTop: -20 ,textAlign:'right'}}
+                    inputStyle={{color:'#47b03e'}}
+                    secureTextEntry={true}
+                    buttonsStyle={{ borderColor: '#fff' }}
+                    textCancelStyle={{ color: '#47b03e', fontSize: 16 }}
+                    submitTextStyle={{ color: '#47b03e', fontSize: 16 }}
+
+                    cancelButtonText="خروج"
+                    submitButtonText="تایید"
+
+                />
             </View>
         );
     }

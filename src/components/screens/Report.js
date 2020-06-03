@@ -9,17 +9,12 @@ import {FlatGrid} from 'react-native-super-grid';
 import {Avatar, Button, Card, Title, Paragraph} from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
 import AwesomeAlert from 'react-native-awesome-alerts';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faBars} from '@fortawesome/free-solid-svg-icons/faBars';
-
 export default class Home extends Component {
     constructor(props) {
         super(props);
         console.log(this.props.navigation);
         this.state = {
-            open: false,
             showAlert: false,
-            titles: '',
             data: [
                 {
                     id: 1,
@@ -62,6 +57,31 @@ export default class Home extends Component {
             ],
 
         };
+    }
+    showError = (item) => {
+        this.setState({
+            showAlert: true,
+            titles: item,
+
+        });
+    };
+    cardNavigate=(item)=>{
+        switch (item.id)
+        {
+            case 1: this.props.screenProps.navigate('ReportDay');
+                break;
+            case 2: this.props.screenProps.navigate('ReportYear');
+                break;
+            case 3: this.props.screenProps.navigate('RegisterIncome');
+                break;
+            // case 4: this.props.screenProps.navigate('RegisterDebt');
+            //     break;
+            // case 5: this.props.screenProps.navigate('Reminder');
+            //     break;
+            // case 6: this.props.screenProps.navigate('Balance');
+            //     break;
+            default:this.showError('در نسخه های بعدی این قابلیت افزوده خواهد شد')
+        }
     }
 
     toggleDrawer = () => {
@@ -139,47 +159,35 @@ export default class Home extends Component {
                 <FlatGrid
                     itemDimension={100}
                     items={this.state.data}
-                    style={{marginTop:75,marginHorizontal: 5}}
+                    style={{marginTop:60}}
                     contentContainerStyle={{justifyContent:'center', alignItems:'center'}}
                     renderItem={({ item, index }) => (
-                        <View>
-                            {/* onPress={() => this.showAlert(item)}>*/}
-
-                            <Card style={{width:'100%',height: 120,
-                                shadowColor: '#3d933c',
-                                shadowOffset: {
-                                    width: 0,
-                                    height: 2,
-                                    marginRight: 16,
-                                    marginBottom: 12
-                                },
-                                shadowOpacity: 0.25,
-                                shadowRadius: 3.84,
-                                elevation: 12,
-                                borderColor:'#3d933c',borderRadius:15,
-                                borderWidth:1.5,alignItems: 'center', justifyContent:'center',
-                            }}
-                                  onPress={() => this.props.navigation.navigate('Report')}>
-                                <Card.Cover style={{width:80,height: 75,backgroundColor:'#fff',marginTop:5}} source={item.image} />
-                                <Card.Title title={item.title}     titleStyle={{
-                                    fontSize: 13,
-                                    color: '#111',
-                                    fontFamily: 'IRANSansMobile(FaNum)',
-                                    marginHorizontal: -10,
-                                    marginTop: -10
-                                }}/>
-
-                            </Card>
-                        </View>
+                        <TouchableOpacity activeOpacity={0.8}
+                                          onPress={() => this.cardNavigate(item)}>
+                            <View>
+                                <Card style={{width:'100%',height: 120,
+                                    shadowColor: '#3d933c',
+                                    shadowOffset: {
+                                        width: 0,
+                                        height: 2,
+                                        marginRight: 16,
+                                        marginBottom: 12
+                                    },
+                                    shadowOpacity: 0.25,
+                                    shadowRadius: 3.84,
+                                    elevation: 12,
+                                    borderColor:'#3d933c',borderRadius:15,
+                                    borderWidth:1.5,
+                                }}
+                                >
+                                    {/*onPress={() => this.props.navigation.navigate('Report')}>*/}
+                                    <Card.Cover style={{width:80,height: 75,alignSelf:'center',backgroundColor:'#fff',marginTop:5}} source={item.image} />
+                                    <Card.Title title={item.title}
+                                                titleStyle={styles.title}/>
+                                </Card>
+                            </View>
+                        </TouchableOpacity>
                     )} />
-
-                {/*<Button icon="plus-circle"*/}
-                {/*        style={styles.buttonstyle}*/}
-                {/*        mode="contained"*/}
-                {/*>*/}
-                {/*    <Text style={{fontSize: 16,fontFamily: 'IRANSansMobile'}}>گزارشگیری</Text>*/}
-                {/*</Button>*/}
-
 
                 <AwesomeAlert
                     show={showAlert}
@@ -188,11 +196,11 @@ export default class Home extends Component {
                     closeOnTouchOutside={true}
                     closeOnHardwareBackPress={false}
                     showConfirmButton={true}
-                    titleStyle={{fontSize: 16, fontFamily: 'IRANSansMobile(FaNum)', textAlign: 'justify'}}
+                    titleStyle={{fontSize: 16, fontFamily: 'IRANSansMobile(FaNum)', textAlign: 'center'}}
                     messageStyle={{fontSize: 15, fontFamily: 'IRANSansMobile(FaNum)'}}
                     confirmText="تایید"
                     confirmButtonColor="#3d933c"
-                    confirmButtonStyle={{width: 90}}
+                    confirmButtonStyle={{width: 100}}
                     confirmButtonTextStyle={{
                         fontSize: 17,
                         fontFamily: 'IRANSansMobile(FaNum)',
@@ -202,24 +210,10 @@ export default class Home extends Component {
                         this.hideAlert();
                     }}
                 />
-
-
-                {/*
-    {/*<View style={{flex:3,marginTop:10}}>*/}
-                {/*<IconButton*/}
-                {/*    icon="camera"*/}
-                {/*    color='#3d933c'*/}
-                {/*    size={20}*/}
-                {/*    onPress={() => console.log('Pressed')}*/}
-                {/*/>*/}
-
-
             </View>
         );
     }
 }
-
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -291,5 +285,13 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-    }
+    },
+    title: {
+        fontSize:13,
+        textAlign: "center",
+        margin: 10,
+        color: '#111',
+        fontFamily: 'IRANSansMobile(FaNum)',
+        flex:2
+    },
 });

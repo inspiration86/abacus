@@ -75,7 +75,7 @@ export default class LoginOrRegister extends Component {
                     <Card
                         style={{
                             marginTop:40,
-                            backgroundColor:'#d6f5d3',
+                            backgroundColor:'#fff',
                             width:width,height:height, alignSelf: 'center',
                             borderRadius: 60,
                             shadowColor: '#3d933c',

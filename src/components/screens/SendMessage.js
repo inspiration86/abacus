@@ -6,8 +6,11 @@ import CodeInput from 'react-native-confirmation-code-input';
 import { faSms} from "@fortawesome/free-solid-svg-icons";
 import {Button} from 'react-native-elements';
 
-import {StyleSheet, View, Text, Platform, Alert, TouchableOpacity, ScrollView} from 'react-native';
+import {StyleSheet, View, Text, Platform, Alert, TouchableOpacity, ScrollView, StatusBar} from 'react-native';
 import CountDown from 'react-native-countdown-component';
+import {faFrownOpen} from '@fortawesome/free-solid-svg-icons/faFrownOpen';
+import {faForward} from '@fortawesome/free-solid-svg-icons/faForward';
+import {faArrowRight} from '@fortawesome/free-solid-svg-icons/faArrowRight';
 class SendMessage extends Component {
     constructor(props){
         super(props);
@@ -90,6 +93,9 @@ onRegister(){
         return (
 
             <View style={{justifyContent: 'center', marginTop: '10%',}}>
+                <StatusBar
+                    hidden={false}
+                    backgroundColor='#3e843d'/>
        <ScrollView>
                 <View style={{justifyContent: 'center',alignItems:'center',marginBottom:20,marginTop:30}}>
                     <FontAwesomeIcon icon={faSms} size={70} style={{color:'#47b03e',marginBottom:10}}/>
@@ -118,12 +124,11 @@ onRegister(){
                     </View>
 
                     <Divider style={{backgroundColor: '#33b5e5'}}/>
-                    <View style={{height: 170, marginTop: 20, flexDirection: 'row',}}>
+                    <View style={{height: 170, marginTop: 10, flexDirection: 'row',}}>
                         <View style={{
                             flex: 1,
                             borderRadius: 10,
                             borderColor: '#dddddd',
-                            marginTop: 30,
                             width: 160,
                             height: 120,
                         }}
@@ -144,17 +149,36 @@ onRegister(){
                                 containerStyle={{marginTop: 25}}
                                 codeInputStyle={{borderWidth: 1.5, fontSize: 30,borderRadius:10}}
                             />
-
                         </View>
-
-
                     </View>
+                    <View style={styles.MainContainer}>
+                        <CountDown
+                            until={180}
+                            onFinish={this.onDoneCountdown}
+                            onPress={this.onPressCountdown}
+                            size={23}
+                            timeToShow={['M','S']}
+                            digitTxtStyle={{color: '#fff',marginTop:-10}}
+                            digitStyle={{backgroundColor: '#47b03e'}}
+                            timeLabelStyle={{color:'#fff',marginTop:10}}
+                            timeLabels={{m: 'دقیقه', s: 'ثانیه'}}/>
+                    </View>
+
+                        {/*{setTimeout(()=>{*/}
+                            <Text style={{marginTop:-5,marginBottom:5,color:'#47b03e', fontFamily:'IRANSansMobile(FaNum)',fontSize:15,alignSelf:'center'}} onPress={()=> this.onSendSMS()}>ارسال مجدد کد</Text>
+                        {/*},6000)}*/}
+
+                </View>
+
+<View style={{justifyContent:'center',
+    alignItems:'center',}}>
                     <Button buttonStyle={{
                         marginTop: 10,
-                        marginLeft:25,
+                        justifyContent:'center',
+                        alignItems:'center',
                         backgroundColor: '#47b03e',
                         borderRadius: 30,
-                        width: '80%',
+                        width: '35%',
                         height: 45,
                         shadowColor: '#43c164',
                         shadowOffset: {
@@ -169,32 +193,11 @@ onRegister(){
                             onPress={() => this.onRegister()}
                             titleStyle={{color: '#fff',fontFamily:'IRANSansMobile(FaNum)',fontSize:18}}
 
-                            title="ثبت نهایی"
-                    />
+                            title={<FontAwesomeIcon icon={faArrowRight} size={30} style={{color:'#fff'}}/>}
 
-                        {/*{setTimeout(()=>{*/}
-                            <Text style={{marginHorizontal:10,color:'#777', fontFamily:'IRANSansMobile(FaNum)',fontSize:15}} onPress={()=> this.onSendSMS()}>ارسال مجدد کد</Text>
-                        {/*},6000)}*/}
-
-                </View>
-                <View style={{flex:1,justifyContent: 'center',alignItems:'center',marginTop:5}}>
-
-                    <View style={styles.MainContainer}>
-
-                        <CountDown
-                            until={180}
-                            onFinish={this.onDoneCountdown}
-                            onPress={this.onPressCountdown}
-                            size={23}
-                            timeToShow={['M','S']}
-                            digitTxtStyle={{color: '#fff',marginTop:-10}}
-                            digitStyle={{backgroundColor: '#47b03e'}}
-                            timeLabelStyle={{color:'#fff',marginTop:10}}
-                            timeLabels={{m: 'دقیقه', s: 'ثانیه'}}
                         />
+</View>
 
-                    </View>
-                </View>
        </ScrollView>
             </View>
         );

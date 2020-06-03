@@ -5852,6 +5852,11 @@ react-native-datepicker-dialog@^0.0.9:
   resolved "https://registry.yarnpkg.com/react-native-datepicker-dialog/-/react-native-datepicker-dialog-0.0.9.tgz#6e1f890a9b40937cea9e0c762fd542afb9fc3f37"
   integrity sha1-bh+JCptAk3zqngx2L9VCr7n8Pzc=
 
+react-native-dialog-input-custom@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-dialog-input-custom/-/react-native-dialog-input-custom-1.0.3.tgz#e25e2ebcdbe957be6a08a32383390e1d4aa181d2"
+  integrity sha512-FGANx9V+sGqLHIQ7OlgUA5xZ3NayQ/dl92evYS+dCx3IX7re7rXsi+BTLyhCcDu59Y7n8wSePQ3X+HgfOS7TzQ==
+
 react-native-drawer@2.5.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/react-native-drawer/-/react-native-drawer-2.5.1.tgz#08b9314184f48c724f1b467f8859797369798654"
