@@ -81,7 +81,7 @@ class TestLogin extends Component {
                 if(password.length<5){
                     Alert.alert(
                         "",
-                        "حداکثر طول رمز عبور 6 کاراکتر است");
+                        "حداقل طول رمز عبور 6 کاراکتر است");
                 }
             else {
           this.props.loginUser({mobile, password, navigation});

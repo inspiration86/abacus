@@ -99,7 +99,7 @@ const RootStack = createStackNavigator({
         },
     },
     {
-        initialRouteName: 'Splash',
+        initialRouteName: 'LoginOrRegister',
     },
     {
         defaultNavigationOptions: {headerShown: false}

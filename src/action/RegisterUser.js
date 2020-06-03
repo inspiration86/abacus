@@ -19,6 +19,34 @@ export const passwordChanged = (text) => {
         payload: text
     }
 }
+export const findUser = ({mobile,password,navigation}) => {
+    return (dispatch) => {
+        dispatch({type: USER_REGISTER_ATTEMP})
+        fetch('http://194.5.175.25:2000/api/v1/findmobile', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                mobile: mobile,
+
+            }),
+        }).then((response) => response.json()).then((responseJson) => {
+            console.log(responseJson)
+            if (responseJson.success === false) {
+                registerUserSuccess(dispatch, navigation,mobile);
+                this.props.navigation.navigate('SendMessage',{mobile:mobile,password:password})
+
+            } else {
+                registerUserFail(dispatch,responseJson.data);
+            }
+        }).catch((error) => {
+            console.error('yyy');
+        });
+    }
+
+}
 export const registerUser = ({mobile, password, navigation}) => {
     return (dispatch) => {
 

@@ -12,10 +12,12 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faBars} from '@fortawesome/free-solid-svg-icons/faBars';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
-export default class Home extends Component {
+import {connect} from "react-redux";
+import {mobileChanged, passwordChanged, userGetData} from "../../action/LoginUser.js";
+class Home extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props.screenProps);
+      console.log(this.props.dataLogin)
         this.state = {
             open: false,
             showAlert: false,
@@ -288,7 +290,12 @@ export default class Home extends Component {
     }
 }
 
-
+const mapStateToProps = state => {
+    return {
+        dataLogin: state.loginUser.dataLogin
+    }
+}
+export default connect(mapStateToProps)(Home);
 const styles = StyleSheet.create({
     container: {
         flex: 1,

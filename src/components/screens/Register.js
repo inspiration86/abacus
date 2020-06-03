@@ -41,7 +41,13 @@ import {
              Alert.alert(
                  "",
                  "اطلاعات رو به طور کامل وارد نمائید");
+         }else
+         if (password.length<6 ){
+             Alert.alert(
+                 "",
+                 "حداقل طول رمز عبور 6 کاراکتر است");
          }
+
          else {
              fetch('http://194.5.175.25:2000/api/v1/findmobile', {
                  method: 'POST',
@@ -66,9 +72,7 @@ import {
              // this.props.registerUser({mobile, password, navigation});
          }
      }
-     validationMobile(){
 
-     }
      renderRegister(){
          if(this.props.loading){
              return(<ActivityIndicator/>);

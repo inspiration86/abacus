@@ -3,7 +3,7 @@ import {
     PASSWORD_CHANGED,
     USER_LOGIN_ATTEMP,
     USER_LOGIN_FAIL,
-    USER_LOGIN_SUCCESS
+    USER_LOGIN_SUCCESS,USER_GET_DATA
 } from './TypeLoginUser';
 import {NavigationActions} from 'react-navigation';
 
@@ -19,9 +19,9 @@ export const passwordChanged = (text) => {
         payload: text
     }
 }
-export const failMessageChanged = (text) => {
+export const userGetData = (text) => {
     return {
-        type: USER_LOGIN_FAIL,
+        type: USER_GET_DATA,
         payload: text
     }
 }
@@ -40,10 +40,10 @@ export const loginUser = ({mobile, password, navigation}) => {
                 password: password,
             }),
         }).then((response) => response.json()).then((responseJson) => {
-            console.log(responseJson)
-            if (responseJson.success === true) {
 
-                loginSellerSuccess(dispatch, navigation);
+            if (responseJson.success === true) {
+               userGetData('sddsd')
+                loginSellerSuccess(dispatch, navigation,responseJson.data);
             } else {
 
                 loginSellerFail(dispatch,responseJson.data);
@@ -54,9 +54,9 @@ export const loginUser = ({mobile, password, navigation}) => {
     }
 
 }
-const loginSellerSuccess = (dispatch, navigation) => {
+const loginSellerSuccess = (dispatch, navigation,data) => {
 
-    dispatch({type: USER_LOGIN_SUCCESS});
+    dispatch({type: USER_LOGIN_SUCCESS,payload:data});
     const NavigationAction = NavigationActions.navigate({routeName: 'DashboardUser', params: {},})
     navigation.dispatch(NavigationAction);
 
