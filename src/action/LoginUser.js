@@ -3,10 +3,12 @@ import {
     PASSWORD_CHANGED,
     USER_LOGIN_ATTEMP,
     USER_LOGIN_FAIL,
-    USER_LOGIN_SUCCESS,USER_GET_DATA
+    USER_LOGIN_SUCCESS,USER_GET_DATA,USER_RESET_PASSWORD_SUCCESS
 } from './TypeLoginUser';
+import AwesomeAlert from 'react-native-awesome-alerts';
+import React from 'react';
 import {NavigationActions} from 'react-navigation';
-
+import {Alert, View} from "react-native";
 export const mobileChanged = (text) => {
     return {
         type: MOBILE_CHANGED,
@@ -54,6 +56,40 @@ export const loginUser = ({mobile, password, navigation}) => {
     }
 
 }
+export const resetPasswordUser = ({mobile ,navigation}) => {
+    return (dispatch) => {
+
+        // dispatch({type: USER_LOGIN_ATTEMP})
+        fetch('http://194.5.175.25:2000/api/v1/resetpassword', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                mobile: mobile,
+
+            }),
+        }).then((response) => response.json()).then((responseJson) => {
+
+            if (responseJson.success === true) {
+                resetPasswordSuccess(dispatch, navigation);
+            } else {
+
+                Alert.alert('',responseJson.data,[{text:'بله'}]);
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
+    }
+
+}
+const resetPasswordSuccess = (dispatch, navigation) => {
+
+    const NavigationAction = NavigationActions.navigate({routeName: 'Login', params: {},})
+    navigation.dispatch(NavigationAction);
+
+}
 const loginSellerSuccess = (dispatch, navigation,data) => {
 
     dispatch({type: USER_LOGIN_SUCCESS,payload:data});
@@ -64,4 +100,21 @@ const loginSellerSuccess = (dispatch, navigation,data) => {
 const loginSellerFail = (dispatch,error) => {
     dispatch({type: USER_LOGIN_FAIL,payload:error});
 
+}
+export const message=()=>{
+    return(<View><AwesomeAlert
+            show={true}
+            showProgress={false}
+            title="اطلاعات  را به طور کامل وارد نمائید"
+            message="fgdfgdfgfd"
+            closeOnTouchOutside={true}
+            closeOnHardwareBackPress={false}
+            showConfirmButton={true}
+            titleStyle={{fontSize:14,fontFamily:'IRANSansMobile(FaNum)'}}
+            messageStyle={{fontSize:15,fontFamily:'IRANSansMobile(FaNum)'}}
+            confirmText="بله"
+            confirmButtonColor="#3d933c"
+            confirmButtonStyle={{}}
+            confirmButtonTextStyle={{fontSize:17,fontFamily:'IRANSansMobile(FaNum)'}}/></View>
+    )
 }

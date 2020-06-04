@@ -27,6 +27,7 @@
     "react-native-countdown-component": "^2.7.1",
     "react-native-countdown-timer": "^0.0.1",
     "react-native-datepicker-dialog": "^0.0.9",
+    "react-native-dialog-input-custom": "^1.0.3",
     "react-native-elements": "^2.0.0",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-image-picker": "^2.3.1",

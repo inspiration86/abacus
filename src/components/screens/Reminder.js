@@ -539,25 +539,28 @@ class Reminder extends Component {
                                 </ListItem>
                                 {/* .........................imagepicker.................................. */}
 
-                                <View style={{ marginTop: 8 }}>
+                                <View style={{marginTop: 8}}>
                                     <Card>
-                                        <CardItem bordered style={{ backgroundColor: '#e0e0e0', borderStyle: 'dashed', borderWidth: 0.5, }}>
+                                        <CardItem bordered style={{backgroundColor: '#c5f3c1', borderStyle: 'dashed', borderWidth: 0.5}}>
                                             <Left>
-                                                <Icon name='ellipsis-v' style={{  marginTop: 5, marginLeft:-5, fontSize:20,color:'#47b03e'}} onPress={this.showMenu} />
+                                                <TouchableOpacity
+                                                    style={{width:50,justifyContent:'center',alignItems:'center'}}
+                                                    activeOpacity={0.9}
+                                                    onPress={this.showMenu}>
+                                                    <Icon name='ellipsis-v'
+                                                          style={{marginTop: 5, fontSize: 25, color: '#47b03e'}}
+                                                    />
+                                                </TouchableOpacity>
                                                 <Menu
                                                     ref={this.setMenuRef}>
-
                                                     <MenuItem onPress={this.hideMenu}>ویرایش</MenuItem>
                                                     <MenuItem onPress={this.hideMenu}>حذف</MenuItem>
-
                                                 </Menu>
+                                                <Body onPress>
+                                                    <Text style={{color: '#777'}} onPress={this.handleClick.bind(this)}>پیوست
+                                                        فایل</Text>
+                                                </Body>
                                             </Left>
-                                            <Body></Body>
-
-                                            <Right style={{ alignItems:'flex-end',justifyContent:'flex-end' }}>
-                                                <Text style={{ color: '#777', textAlign: 'right' }} onPress={this.handleClick.bind(this)}>پیوست فایل</Text>
-                                            </Right>
-
                                         </CardItem>
                                     </Card>
 

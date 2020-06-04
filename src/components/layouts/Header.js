@@ -13,7 +13,7 @@ export default class Header extends React.Component {
     render() {
         return (
             <View>
-                <Appbar.Header  style={{backgroundColor:'#47b03e',marginTop:23}}>
+                <Appbar.Header  style={{backgroundColor:'#47b03e'}}>
                     <Appbar.Content
                         titleStyle={{
                             color: '#fff',
@@ -21,9 +21,7 @@ export default class Header extends React.Component {
                             fontSize: 20,
                             textAlign:'center',
                         }}
-                        title={this.props.title}
-                    />
-
+                        title={this.props.title}/>
                         <Appbar.Action  style={{    justifyContent: 'flex-end', alignItems: 'flex-end',marginTop:-10}} color={'#fff'}
                                        size={40} icon={'chevron-right'} onPress={this.props.onBackPress} />
                 </Appbar.Header>

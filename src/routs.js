@@ -15,6 +15,11 @@ import RegisterCost from "./components/screens/RegisterCost";
 import Budgeting from "./components/screens/Budgeting";
 import Reminder from "./components/screens/Reminder";
 import Balance from "./components/screens/Balance";
+import ResetPassword from "./components/screens/ResetPassword";
+import Profile from "./components/screens/Profile";
+import ReportDay from "./components/screens/ReportDay";
+import ReportYear from "./components/screens/ReportYear";
+
 const RootStack = createStackNavigator({
         Splash: {screen: Splash,navigationOptions: ({navigation}) => ({
             headerShown: false
@@ -93,6 +98,30 @@ const RootStack = createStackNavigator({
         },
         SendMessage: {
             screen: SendMessage,
+            navigationOptions: ({navigation}) => ({
+                headerShown: false
+            })
+        },
+        ResetPassword: {
+            screen: ResetPassword,
+            navigationOptions: ({navigation}) => ({
+                headerShown: false
+            })
+        },
+        Profile: {
+            screen: Profile,
+            navigationOptions: ({navigation}) => ({
+                headerShown: false
+            })
+        },
+        ReportDay: {
+            screen: ReportDay,
+            navigationOptions: ({navigation}) => ({
+                headerShown: false
+            })
+        },
+        ReportYear: {
+            screen: ReportYear,
             navigationOptions: ({navigation}) => ({
                 headerShown: false
             })

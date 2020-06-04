@@ -213,12 +213,10 @@ class Home extends Component {
                       style={{marginTop:60}}
                               contentContainerStyle={{justifyContent:'center', alignItems:'center'}}
                         renderItem={({ item, index }) => (
+                            <TouchableOpacity activeOpacity={0.8}
+                                              onPress={() => this.cardNavigate(item)}>
                     <View>
-                        <TouchableOpacity activeOpacity={0.8}
-                                          onPress={() => this.cardNavigate(item)}>
-
-                                         {/*onPress={() => this.props.navigation.navigate('RegisterDebt')}>*/}
-                    <Card style={{width:'100%',height: 120,
+                        <Card style={{width:'100%',height: 120,
                         shadowColor: '#3d933c',
                         shadowOffset: {
                             width: 0,
@@ -230,27 +228,19 @@ class Home extends Component {
                         shadowRadius: 3.84,
                         elevation: 12,
                         borderColor:'#3d933c',borderRadius:15,
-                        borderWidth:1.5,alignItems: 'center', justifyContent:'center',
+                        borderWidth:1.5,
                       }}
                          >
                           {/*onPress={() => this.props.navigation.navigate('Report')}>*/}
-                        <Card.Cover style={{width:80,height: 75,backgroundColor:'#fff',marginTop:5}} source={item.image} />
+                        <Card.Cover style={{width:80,height: 75,alignSelf:'center',backgroundColor:'#fff',marginTop:5}} source={item.image} />
                         <Card.Title title={item.title}
-                            titleStyle={styles.titelRespnsive}
+                            titleStyle={styles.title}
                         />
 
                     </Card>
-                        </TouchableOpacity>
                 </View>
+                            </TouchableOpacity>
                             )} />
-
-                {/*<Button icon="plus-circle"*/}
-                {/*        style={styles.buttonstyle}*/}
-                {/*        mode="contained"*/}
-                {/*>*/}
-                {/*    <Text style={{fontSize: 16,fontFamily: 'IRANSansMobile'}}>گزارشگیری</Text>*/}
-                {/*</Button>*/}
-
 
                 <AwesomeAlert
                     show={showAlert}
@@ -273,22 +263,11 @@ class Home extends Component {
                         this.hideAlert();
                     }}
                 />
-
-
-                {/*
-    {/*<View style={{flex:3,marginTop:10}}>*/}
-                {/*<IconButton*/}
-                {/*    icon="camera"*/}
-                {/*    color='#3d933c'*/}
-                {/*    size={20}*/}
-                {/*    onPress={() => console.log('Pressed')}*/}
-                {/*/>*/}
-
-
             </View>
         );
     }
 }
+
 
 const mapStateToProps = state => {
     return {
@@ -296,6 +275,7 @@ const mapStateToProps = state => {
     }
 }
 export default connect(mapStateToProps)(Home);
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -369,14 +349,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-   titelRespnsive: {
-        fontSize: RFValue(12, 580),
+   title: {
+       // fontSize: RFValue(11, 580),
+       fontSize:13,
         textAlign: "center",
-      // alignSelf:'center',
         margin: 10,
        color: '#111',
        fontFamily: 'IRANSansMobile(FaNum)',
-       marginHorizontal: -10,
-flex:2
+      // marginHorizontal: -15,
+       flex:2
    },
 });

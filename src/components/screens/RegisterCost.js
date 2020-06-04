@@ -71,14 +71,19 @@ const items = [
 ];
 
 //.........const............
+const Income = [
+    {id: 1, name: 'آرکا'},
+    {id: 2, name: 'دانشگاه'},
+    {id: 3, name: 'آموزشگاه'},
+    {id: 4, name: 'اجاره'},
+
+];
 const typeIncome = [
     {id: 1, name: 'نقد'},
     {id: 2, name: 'کارت'},
     {id: 3, name: 'چک'},
     {id: 4, name: 'طلا'},
     {id: 5, name: 'بورس'},
-    {id: 6, name: 'اجاره'},
-    {id: 7, name: 'یارانه'},
 ];
 const acount = [
     {id: 1, name: 'بانک ملی'},
@@ -257,7 +262,7 @@ export default class RegisterIncome extends Component {
                     hidden={false}
                     backgroundColor='#3e843d'
                 />
-                <Header title="ثبت درآمدها" onBackPress={() => {
+                <Header title="ثبت هزینه ها" onBackPress={() => {
                     this.props.navigation.goBack();
                 }}/>
 
@@ -265,7 +270,7 @@ export default class RegisterIncome extends Component {
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <Text
                         style={{marginTop: 15, textAlign: 'center', fontSize: 15, fontFamily: 'IRANSansMobile'}}> برای
-                        ثبت درامد های روزانه خود فرم
+                        ثبت هزینه های روزانه خود فرم
                         زیر را پرکنید </Text>
 
                     {/* .....................datepicker....................................... */}
@@ -320,20 +325,66 @@ export default class RegisterIncome extends Component {
                             <FontAwesomeIcon color={'#47b03e'} size={20} icon={faCoins} style={{marginLeft: 8, marginTop: 10}}/>
 
                             <TextInput
-                                style={styles.inputs}
+                              style={[styles.inputs,{marginTop:-25}]}
                                 placeholder="مبلغ"
                                 underlineColorAndroid="transparent"
                             />
                         </View>
                         <View style={{marginRight: 20, marginTop: 12, flex: 2}}>
                             <Text style={{fontSize: 14, flex: 2, fontFamily: 'IRANSansMobile'}}> مبلغ </Text>
-                            {/* <Image style={styles.imageIcon} source={require('../../../assets/images/icons/639365.png')} /> */}
                         </View>
                     </View>
+
+                    {/*.........................select2...............................  */}
+
+                    <View style={{flexDirection: 'row',flex:1}}>
+                        <View style={{flexDirection: 'row', flex: 2.2, marginTop: 10,marginLeft:27}}>
+                            <Select2
+
+                                style={{
+                                    borderRadius: 5,
+                                    width: '108%',
+                                    marginLeft: 16,
+                                    borderColor: '#3d933c',
+                                    borderWidth: 1.5,
+                                }}
+                                isSelectSingle={true}
+                                colorTheme='#3d933c'
+                                popupTitle="انتخاب روش پرداخت"
+                                cancelButtonText="انصراف"
+                                newButtonText="جدید"
+                                selectButtonText="تایید"
+                                title="تعیین کنید هزینه از کدام درآمد پرداخت شده"
+                                searchPlaceHolderText="جستجو روش پرداختی"
+                                data={Income}
+                                onSelect={data => {
+                                    this.setState({data});
+                                }}
+                                onRemoveItem={data => {
+                                    this.setState({data});
+                                }}
+                            />
+                        </View>
+                        <View style={{marginTop: 15, fontSize: 16, flex: 1}}>
+                            <Text style={{fontSize: 14, marginRight: 5, fontFamily: 'IRANSansMobile',flex: 2}}>از درآمد</Text>
+                        </View>
+
+                    </View>
                     {/*...........................category.....................*/}
-                    <View style={{flexDirection: 'row'}}>
-                        <View style={[styles. SectionStyle,{justifyContent:'center'}]}
-                        >
+
+                    <View style={{flexDirection: 'row',flex:1}}>
+                        <View style={{flexDirection: 'row', flex: 2.2, marginTop: 10}}>
+                            <TouchableOpacity onPress={() => this.refs.modal5.open()}>
+                                <Icon name="plus-circle" size={25} color='#47b03e'
+                                      style={{marginLeft: 7, marginTop: 7}}/>
+                            </TouchableOpacity>
+                            <View style={{justifyContent:'center',
+                                borderRadius: 5,
+                                height:48,
+                                width: '100%',
+                                marginLeft: 16,
+                                borderColor: '#3d933c',
+                                borderWidth: 1.5,}}>
 
                             <SectionedMultiSelect
                                 itemFontFamily={{ fontWeight: 'bold',}}
@@ -360,16 +411,13 @@ export default class RegisterIncome extends Component {
                                 onSelectedItemsChange={this.onSelectedItemsChange}
                                 selectedItems={this.state.selectedItems}
                             />
-                            <Divider/>
+                        </View>
+                        </View>
+                        <View style={{marginTop: 15, fontSize: 16, flex: 1}}>
+                            <Text style={{fontSize: 14, marginRight: 15, fontFamily: 'IRANSansMobile',flex: 2}}>هزینه</Text>
+                        </View>
 
-                        </View>
-                        <View style={{marginRight: 20, marginTop: 12, flex: 2}}>
-                            <Text style={{fontSize: 14, flex:2, fontFamily: 'IRANSansMobile'}}>دسته </Text>
-                            {/* <Image style={styles.imageIcon} source={require('../../../assets/images/icons/639365.png')} /> */}
-                        </View>
                     </View>
-
-
 
                     {/*.........................select2...............................  */}
 
@@ -390,12 +438,12 @@ export default class RegisterIncome extends Component {
                                 }}
                                 isSelectSingle={true}
                                 colorTheme='#3d933c'
-                                popupTitle="انتخاب نوع دریافتی"
+                                popupTitle="انتخاب روش پرداخت"
                                 cancelButtonText="انصراف"
                                 newButtonText="جدید"
                                 selectButtonText="تایید"
-                                title="نوع دریافتی"
-                                searchPlaceHolderText="جستجو نوع دریافتی"
+                                title="روش پرداخت"
+                                searchPlaceHolderText="جستجو روش پرداختی"
                                 data={typeIncome}
                                 onSelect={data => {
                                     this.setState({data});
@@ -406,8 +454,7 @@ export default class RegisterIncome extends Component {
                             />
                         </View>
                         <View style={{marginTop: 15, fontSize: 16, flex: 1}}>
-                            <Text style={{fontSize: 14, marginRight: 15, fontFamily: 'IRANSansMobile',flex: 2}}> دریافت </Text>
-                            {/* <Image style={[styles.imageIcon,{marginLeft:-40}]} source={require('../../../assets/images/icons/2503483.png')} /> */}
+                            <Text style={{fontSize: 14, marginRight: 5, fontFamily: 'IRANSansMobile',flex: 2}}>روش پرداخت </Text>
                         </View>
 
                     </View>
@@ -466,17 +513,13 @@ export default class RegisterIncome extends Component {
                         </View>
                         <View style={{marginTop: 15, flex: 1}}>
                             <Text style={{
-                                fontSize: 14, marginRight:20, fontFamily: 'IRANSansMobile(FaNum)',flex: 2
-                            }}>شرح</Text>
-                            {/* <Image style={styles.imageIcon} source={require('../image/des.png')} /> */}
+                                fontSize: 14, marginRight:20, fontFamily: 'IRANSansMobile(FaNum)',flex: 2}}>شرح</Text>
                         </View>
                     </View>
                     {/* .........................imagepicker.................................. */}
-
                     <View style={{marginTop: 8, marginHorizontal: 30}}>
                         <Card>
-                            <CardItem bordered
-                                      style={{backgroundColor: '#c5f3c1', borderStyle: 'dashed', borderWidth: 0.5}}>
+                            <CardItem bordered style={{backgroundColor: '#c5f3c1', borderStyle: 'dashed', borderWidth: 0.5}}>
                                 <Left>
                                     <TouchableOpacity
                                         style={{width:50,justifyContent:'center',alignItems:'center'}}
@@ -529,85 +572,188 @@ export default class RegisterIncome extends Component {
 
 
                 </ScrollView>
+
+                {/*........................modal5......................*/}
+                <Modal
+                    style={[styles.modal4]}
+                    position={'bottom'}
+                    ref={'modal5'}
+                    coverScreen={true}>
+                    <LinearGradient
+                        style={{ borderTopLeftRadius: 15, borderTopRightRadius: 15, }}
+                        start={{ x: 0.3, y: 0.0 }} end={{ x: 0.5, y: 1.0 }}
+                        locations={[0.1, 0.6, 0.9]}
+                        colors={['#3e843d', '#3ede30', '#47b03e']}>
+                        <View style={{
+                            paddingVertical: 7,
+                            alignItems: 'center'
+                            ,justifyContent:'center',
+                        }}>
+
+                            <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>
+                                اضافه کردن دسته و زیر دسته                            </Text>
+                        </View>
+                    </LinearGradient>
+                    <View style={{flexDirection: 'row', marginTop: 20}}>
+                        <View style={styles.SectionStyle}>
+                        <TextInput
+                            style={styles.inputs}
+                            placeholder="نام دسته جدید را وارد نمایید"
+                            underlineColorAndroid="transparent"
+                        />
+                    </View>
+                        <View style={{marginTop: 20, flex: 1}}>
+                            <Text style={{fontSize: 16, marginRight: 2}}> دسته:</Text>
+                        </View>
+                    </View>
+                    <View style={{flexDirection: 'row', marginTop: 20}}>
+                        <View style={styles.SectionStyle}>
+                            <TextInput
+                                style={styles.inputs}
+                                placeholder="نام زیر دسته جدید را وارد نمایید"
+                                underlineColorAndroid="transparent"
+                            />
+                        </View>
+                        <View style={{marginTop: 20, flex: 1}}>
+                            <Text style={{fontSize: 16, marginRight: 7}}> زیر دسته:</Text>
+                        </View>
+                    </View>
+                    <Button buttonStyle={{
+                        marginTop: 20,
+                        marginLeft:25,
+                        backgroundColor: '#47b03e',
+                        borderRadius: 30,
+                        width: '80%',
+                        height: 45,
+                        shadowColor: '#43c164',
+                        shadowOffset: {
+                            width: 0,
+                            height: 6,
+                        },
+                        shadowOpacity: 0.37,
+                        shadowRadius: 7.49,
+                        elevation: 5,
+                        marginBottom:20
+                    }}
+                            onPress={() => this.props.navigation.navigate('Register')}
+                            titleStyle={{color: '#fff',fontFamily:'IRANSansMobile(FaNum)',fontSize:18}}
+
+                            title="ثبت"
+                    />
+                </Modal>
+
                 {/*............ ........modal4................................. */}
                 <Modal
                     style={[styles.modal4]}
                     position={'bottom'}
                     ref={'modal4'}
-                    coverScreen={true}
-                >
-                    <View style={styles.popup}>
-                        <Text style={{color: '#3d933c', marginBottom: 10, fontSize: 16}}> اضافه کردن نوع حساب</Text>
-                    </View>
+                    coverScreen={true}>
+                    <LinearGradient
+                        style={{ borderTopLeftRadius: 15, borderTopRightRadius: 15, }}
+                        start={{ x: 0.3, y: 0.0 }} end={{ x: 0.5, y: 1.0 }}
+                        locations={[0.1, 0.6, 0.9]}
+                        colors={['#3e843d', '#3ede30', '#47b03e']}>
+                        <View style={{
+                            paddingVertical: 7,
+                            alignItems: 'center'
+                            ,justifyContent:'center',
+                        }}>
+
+                            <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>
+                                اضافه کردن نوع حساب                             </Text>
+                        </View>
+                    </LinearGradient>
                     <View style={{flexDirection: 'row', marginTop: 20}}>
                         <View style={styles.SectionStyle}>
                             <TextInput
                                 style={styles.inputs}
-                                placeholder="اضافه کردن حساب"
+                                placeholder="نام حساب جدید را وارد نمایید"
                                 underlineColorAndroid="transparent"
                             />
                         </View>
                         <View style={{marginTop: 20, flex: 1}}>
-                            <Text style={{fontSize: 16, marginRight: 7}}> حساب:</Text>
-                            {/* <Image style={[styles.imageIcon,{marginLeft:-40}]} source={require('../../../assets/images/icons/wallet.png')} /> */}
+                            <Text style={{fontSize: 16, marginRight: 2}}> حساب:</Text>
                         </View>
                     </View>
-                    <TouchableOpacity style={{
-                        marginTop: 40,
-                    }}>
-                        <LinearGradient
-                            start={{x: 0.48, y: 0.0}} end={{x: 0.5, y: 1.0}}
-                            locations={[0.1, 0.6, 0.9]}
-                            colors={['#3e843d', '#3ede30', '#47b03e']}
-                            style={{
-                                borderRadius: 5, width: '70%', marginLeft: 41,
-                                height: 45, marginTop: 5,
-                            }}>
-                            <Text style={{color: '#fff', textAlign: 'center', fontSize: 20, marginTop: 10}}>ثبت</Text>
-                        </LinearGradient>
-                    </TouchableOpacity>
+
+                    <Button buttonStyle={{
+                        marginTop: 20,
+                        marginLeft:25,
+                        backgroundColor: '#47b03e',
+                        borderRadius: 30,
+                        width: '80%',
+                        height: 45,
+                        shadowColor: '#43c164',
+                        shadowOffset: {
+                            width: 0,
+                            height: 6,
+                        },
+                        shadowOpacity: 0.37,
+                        shadowRadius: 7.49,
+                        elevation: 5,
+                        marginBottom:20
+                    }}
+                            onPress={() => this.props.navigation.navigate('Register')}
+                            titleStyle={{color: '#fff',fontFamily:'IRANSansMobile(FaNum)',fontSize:18}}
+
+                            title="ثبت"
+                    />
                 </Modal>
                 {/*............ ........modal3................................. */}
 
                 <Modal
-                    style={[styles.modal3]}
+                    style={[styles.modal4]}
                     position={'bottom'}
-                    coverScreen={true}
                     ref={'modal3'}
-                >
-                    <View style={styles.popup}>
-                        <Text style={{color: '#3d933c', marginBottom: 10, fontSize: 16}}>اضافه کردن نوع دریافتی</Text>
-                    </View>
+                    coverScreen={true}>
+                    <LinearGradient
+                        style={{ borderTopLeftRadius: 15, borderTopRightRadius: 15, }}
+                        start={{ x: 0.3, y: 0.0 }} end={{ x: 0.5, y: 1.0 }}
+                        locations={[0.1, 0.6, 0.9]}
+                        colors={['#3e843d', '#3ede30', '#47b03e']}>
+                        <View style={{
+                            paddingVertical: 7,
+                            alignItems: 'center'
+                            ,justifyContent:'center',
+                        }}>
+
+                            <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>
+                                اضافه کردن روش پرداختی جدید                           </Text>
+                        </View>
+                    </LinearGradient>
                     <View style={{flexDirection: 'row', marginTop: 20}}>
                         <View style={styles.SectionStyle}>
                             <TextInput
                                 style={styles.inputs}
-                                placeholder="اضافه کردن نوع دریافتی"
+                                placeholder="نام روش پرداخت جدید را وارد نمایید"
                                 underlineColorAndroid="transparent"
                             />
                         </View>
-                        <View style={{marginTop: 20, fontSize: 16, flex: 1}}>
-                            <Text style={{fontSize: 16, marginRight: 5, marginTop: 10}}> دریافت :</Text>
-                            {/* <Image style={[styles.imageIcon,{marginLeft:-40}]} source={require('../../../assets/images/icons/2503483.png')} /> */}
+                        <View style={{marginTop: 20, flex: 1}}>
+                            <Text style={{fontSize: 16,}}> روش پرداخت:</Text>
                         </View>
                     </View>
-                    <View style={{
-                        marginTop: 40,
-                    }}>
-                        <LinearGradient
-                            start={{x: 0.48, y: 0.0}} end={{x: 0.5, y: 1.0}}
-                            locations={[0.1, 0.6, 0.9]}
-                            colors={['#3e843d', '#3ede30', '#47b03e']}
-                            style={{
-                                borderRadius: 5, width: '70%', marginLeft: 41,
-                                height: 45, marginTop: 5,
-                            }}>
-                            <Text style={{color: '#fff', textAlign: 'center', fontSize: 20, marginTop: 20}}>ثبت</Text>
+                    <Button buttonStyle={{
+                        marginTop: 20,
+                        marginLeft:25,
+                        backgroundColor: '#47b03e',
+                        borderRadius: 30,
+                        width: '80%',
+                        height: 45,
+                        shadowColor: '#43c164',
+                        shadowOffset: {
+                            width: 0,
+                            height: 6,
+                        },
+                        shadowOpacity: 0.37,
+                        shadowRadius: 7.49,
+                        elevation: 5,
+                        marginBottom:20
+                    }}
+                            titleStyle={{color: '#fff',fontFamily:'IRANSansMobile(FaNum)',fontSize:18}}
 
-                        </LinearGradient>
-
-                    </View>
-
+                            title="ثبت"
+                    />
                 </Modal>
             </View>
         );
@@ -659,7 +805,6 @@ const styles = StyleSheet.create({
         // borderWidth: 1,
         borderColor: '#DD2C00',
         borderRadius: 5,
-        marginTop:-30
     },
     popupButtons: {
 
@@ -694,9 +839,9 @@ const styles = StyleSheet.create({
     //     borderRadius: 10
     // },
     modal4: {
-        height: 250,
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
+        height: 300,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
     },
     modal: {
         justifyContent: 'center',
