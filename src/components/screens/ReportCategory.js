@@ -23,22 +23,18 @@ import Header from '../layouts/Header';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import {Divider} from 'react-native-paper';
 
-export default class Budgeting extends Component {
+
+
+export default class ReportCategory extends React.Component {
+
     render() {
-        return <AppContainer/>;
-    }
-}
-
-
-function HomeScreen({navigation}) {
-
     return (
         <View style={{flex: 1}}>
             <StatusBar
                 hidden={false}
                 backgroundColor='#3e843d'
             />
-                <Header title={'بودجه بندی'} onBackPress={() => {this.props.navigation.goBack();}}/>
+            <Header title={' گزارش براساس دسته ها'}/>
             <View style={{flex: 1}}>
                 <ScrollView>
                     <ListItem icon>
@@ -164,169 +160,11 @@ function HomeScreen({navigation}) {
             </View>
 
 
-            <Button iconLeft full style={{backgroundColor: '#47b03e'}}
-                    onPress={() => navigation.navigate('DefineBudget')}>
 
-                <Text style={{color: '#fff', fontSize: 19, fontFamily: 'IRANSansMobile(FaNum)'}}>
-                    تعریف بودجه</Text>
-                <Icon name='add-circle' style={{marginLeft: 30, fontSize: 27}}/>
-            </Button>
         </View>
     );
-}
+}}
 
-function DefineBudgeting({navigation}) {
-    const options = [
-        {label: 'SS', value: 'خانه'},
-        {label: 'غذا و خاروبار', value: 'خانه'},
-        {label: 'قبوض', value: 'خانه'},
-        {label: 'ماشين', value: 'خانه'},
-    ];
-    const items = [
-        {
-            name: ' شخصي',
-            id: 0,
-            children: [{
-                name: <Text style={{
-                    color: '#777',
-                    fontFamily: 'IRANSansMobile(FaNum)',
-                    marginHorizontal: 70,
-                }}>خانه </Text>,
-                id: 10,
-            }, {
-                name: 'موبايل',
-                id: 17,
-            }, {
-                name: 'خودكار',
-                id: 13,
-            }, {
-                name: 'دفتر',
-                id: 14,
-            }],
-        },
-        {
-            name: 'وسايل برقي',
-            id: 1,
-            children: [{
-                name: 'تلويزيون',
-                id: 20,
-            }, {
-                name: 'لپ تاپ',
-                id: 21,
-            }, {
-                name: 'يخچال',
-                id: 22,
-            }],
-        },
-
-    ];
-    const [selectedItems, setSelectedItems] = useState([]);
-    let modalRef;
-    const openModal = () => modalRef.show();
-    const saveModalRef = ref => modalRef = ref;
-    const onSelectedOption = value => {
-        console.log(`You selected: ${value}`);
-    };
-
-    function handleOrangeClick(selectedItems) {
-
-        setSelectedItems(selectedItems);
-    }
-
-    return (
-        <View style={styles.container}>
-            <CardItem cardBody style={{marginTop:50}}>
-                <Image source={require('../../../assets/images/icons/818203.png')} style={{height: 200, flex: 1}}/>
-            </CardItem>
-            <View style={{
-                borderStyle: 'solid',
-                borderWidth: 1.5,
-                borderColor: '#00C851',
-                borderRadius: 10,
-                marginHorizontal: 10,
-                marginTop: 20,
-            }}>
-                <Card>
-                    <SectionedMultiSelect
-                        itemFontFamily={{ fontWeight: 'bold',}}
-                        subItemFontFamily={{ fontWeight: 'bold',color:'#555'}}
-                        items={items}
-                        confirmText={{
-                            fontSize: 50,
-                            fontFamily: 'IRANSansMobile(FaNum)',
-                            backgroundColor: 'green',
-                        }}
-                        colors={{primary: '#47b03e'}}
-                        single={true}
-                        showChips={true}
-                        uniqueKey='id'
-                        subKey='children'
-                        selectText='دسته مورد نظر خود را انتخاب نمائيد'
-                        showDropDowns={true}
-                        readOnlyHeadings={true}
-                        confirmText="بستن"
-                        text="#2e2e2e"
-                        numberOfLines="3"
-                        success="green"
-                        searchPlaceholderText="جستجو"
-                        onSelectedItemsChange={handleOrangeClick}
-                        selectedItems={selectedItems}
-                    />
-                    <Divider/>
-                    <CardItem>
-                        <Body>
-                            <Item fixedLabel>
-                                <Left>
-
-                                    <View style={{flex: 1, marginTop: 10, marginLeft: 10}}>
-                                        <Text style={{
-                                            color: '#777',
-                                            fontFamily: 'IRANSansMobile(FaNum)',
-                                        }}>ریال</Text>
-
-                                    </View>
-                                </Left>
-                                <Input style={{color: '#777', fontFamily: 'IRANSansMobile(FaNum)'}}/>
-                                <Label><Text style={{
-                                    color: '#777', fontFamily: 'IRANSansMobile(FaNum)', paddingRight: 20,
-                                }}>هزینه :</Text></Label>
-
-                            </Item>
-                        </Body>
-                    </CardItem>
-                    <CardItem footer style={{justifyContent: 'flex-end'}}>
-                        <Text style={{fontFamily: 'IRANSansMobile(FaNum)'}}>بودجه بندی به صورت ماهانه می
-                            باشد</Text>
-                    </CardItem>
-                    <Button iconRight full style={{backgroundColor: '#47b03e'}}>
-                        <Text style={{color: '#fff', fontSize: 19, fontFamily: 'IRANSansMobile(FaNum)'}}> ثبت
-                            بودجه</Text>
-                        <Icon name='add-circle' style={{marginLeft: 30, fontSize: 27}}/>
-                    </Button>
-                </Card>
-            </View>
-        </View>
-    );
-}
-
-const AppNavigator = createStackNavigator({
-        Home: {
-            screen: HomeScreen,
-            navigationOptions: ({navigation}) => ({
-                headerShown: false,
-            }),
-        },
-        DefineBudget: {
-            screen: DefineBudgeting,
-            navigationOptions: ({navigation}) => ({
-                headerShown: false,
-            }),
-        },
-
-    },
-);
-
-const AppContainer = createAppContainer(AppNavigator);
 const styles = StyleSheet.create({
 
     container: {

@@ -15,6 +15,7 @@ import RegisterCost from "./components/screens/RegisterCost";
 import Budgeting from "./components/screens/Budgeting";
 import Reminder from "./components/screens/Reminder";
 import Balance from "./components/screens/Balance";
+import Report from "./components/screens/Report";
 import ResetPassword from "./components/screens/ResetPassword";
 import Profile from "./components/screens/Profile";
 import ReportDay from "./components/screens/ReportDay";
@@ -114,21 +115,27 @@ const RootStack = createStackNavigator({
                 headerShown: false
             })
         },
-        ReportDay: {
-            screen: ReportDay,
-            navigationOptions: ({navigation}) => ({
-                headerShown: false
-            })
-        },
-        ReportYear: {
-            screen: ReportYear,
-            navigationOptions: ({navigation}) => ({
-                headerShown: false
-            })
-        },
+        // Report: {
+        //     screen: Report,
+        //     navigationOptions: ({navigation}) => ({
+        //         headerShown: false
+        //     })
+        // },
+        // ReportDay: {
+        //     screen: ReportDay,
+        //     navigationOptions: ({navigation}) => ({
+        //         headerShown: false
+        //     })
+        // },
+        // ReportYear: {
+        //     screen: ReportYear,
+        //     navigationOptions: ({navigation}) => ({
+        //         headerShown: false
+        //     })
+        // },
     },
     {
-        initialRouteName: 'LoginOrRegister',
+        initialRouteName: 'Splash',
     },
     {
         defaultNavigationOptions: {headerShown: false}

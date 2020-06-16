@@ -8,7 +8,7 @@ import {
     StatusBar,
     Text,
     Image,
-    ScrollView,
+    ScrollView, Alert
 } from 'react-native';
 import {Button} from 'react-native-elements';
 import Modal from 'react-native-modalbox';
@@ -16,36 +16,15 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import ImagePicker from 'react-native-image-picker';
 import moment from 'moment';
 import Select2 from 'react-native-select-two';
-import SectionedMultiSelect from 'react-native-sectioned-multi-select';
-import DateTimePicker from 'react-native-modal-datetime-picker';
 import DatePicker, {getFormatedDate} from 'react-native-modern-datepicker';
-import Menu, {MenuItem, MenuDivider} from 'react-native-material-menu';
 import Header from '../layouts/Header';
 import LinearGradient from 'react-native-linear-gradient';
-import {Card, List, Content, ListItem,Left, Body, Right, Title,CardItem} from 'native-base';
+import {Card, List, Content, ListItem, Left, Body, Right, Title, CardItem} from 'native-base';
 import Modaldate from 'react-native-modal';
-import {Divider} from 'react-native-paper';
-
+import RNFetchBlob from 'rn-fetch-blob';
+import {connect} from "react-redux";
+import AwesomeAlert from "react-native-awesome-alerts";
 //.........const............
-const typeIncome = [
-    {id: 1, name: 'نقد'},
-    {id: 2, name: 'کارت'},
-    {id: 3, name: 'چک'},
-    {id: 4, name: 'طلا'},
-    {id: 5, name: 'بورس'},
-    {id: 6, name: 'اجاره'},
-    {id: 7, name: 'یارانه'},
-];
-const acount = [
-    {id: 1, name: 'بانک ملی'},
-    {id: 2, name: 'بانک صادرات'},
-    {id: 3, name: 'بانک تجارت'},
-    {id: 4, name: 'بانک پارسیان'},
-    {id: 5, name: 'حساب آرکا'},
-    {id: 6, name: 'حساب دانشگاه لرستان'},
-    {id: 7, name: 'حساب جهاد دانشگاهی'},
-];
-
 const renderImage = (image) => {
     console.log(image);
     return [
@@ -74,39 +53,62 @@ const renderImage = (image) => {
         </>,
     ];
 };
-export default class RegisterDebt extends Component {
+
+class RegisterDebt extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            DateText: '',
-            TimeText: '',
+            showAlertSuccess: false,
+            textMessageBox:'',
+            user_id: this.props.dataLogin['id'],
             DateHolder: null,
             PickerValueHolder: '',
-            image: '',
             isModalVisible1: false,
             isModalVisible2: false,
             show: true,
             isVisableBoxImage: 'none',
+            //..............RegisterDebt...............
+            // DateText: '',
+            DateStartTextDebt: '',
+            DateEndTextDebt: '',
+            amount_Debt: '',
+            Lender_Account_Debt: '',
+            Detail_Debt: '',
+            Acount_Debt: '',
+
+            // ............lenderaccont..........................
+            lender_name_Debt: '',
+            acount_num_Debt: '',
+            card_num_Debt: '',
+            // ............accont..........................
+            acount_name_Debt: '',
+            acount_num_Debt: '',
+            card_num_Debt: '',
+            // ........uplode......
+            imagepath: '',
+            image: '',
+            // .......
+            lender_acount: [],
+            acount: [],
         };
+        this.ShowLenderAcountRecord();
+        this.ShowAcountRecord();
     }
-
-    _menu = null;
-
-    setMenuRef = ref => {
-        this._menu = ref;
-    };
-
-    hideMenu = () => {
-        this._menu.hide();
-    };
-
-    showMenu = () => {
-        this._menu.show();
-    };
 
     renderAsset(image) {
         return renderImage(image);
     }
+    showAlertSuccess = () => {
+        this.setState({
+            showAlertSuccess: true
+        });
+    };
+
+    hideAlertSuccess = () => {
+        this.setState({
+            showAlertSuccess: false
+        });
+    };
 
     ShowHideComponent = () => {
         if (this.state.show == true) {
@@ -126,11 +128,9 @@ export default class RegisterDebt extends Component {
     };
 
 
-
-    // ..................datepicker..................
+    // // ..................datepicker..................
 
     DatePickerMainFunctionCall = () => {
-
         let DateHolder = this.state.DateHolder;
 
         if (!DateHolder || DateHolder == null) {
@@ -152,31 +152,15 @@ export default class RegisterDebt extends Component {
     onDatePickedFunction = (date) => {
         this.setState({
             dobDate: date,
-            DateText: moment(date).format('DD-MMM-YYYY'),
+            DateStartTextDebt: moment(date).format('DD-MMM-YYYY'),
         });
-
     };
-
-
-    //.......................metodTimepicker..............................
-    _showDateTimePicker = () => this.setState({isDateTimePickerVisible: true});
-
-    _hideDateTimePicker = () => this.setState({isDateTimePickerVisible: false});
-
-    _handleDatePicked = (time) => {
-        const mdate = time.toString().split(' ');
-        this.setState({TimeText: mdate[4]});
-        this._hideDateTimePicker();
-    };
-    onTimePickedFunction = (date) => {
+    onDatePickedFunction2 = (date) => {
         this.setState({
             dobDate: date,
-            TimeText: moment(date).format('DD-MMM-YYYY'),
+            DateEndTextDebt: moment(date).format('DD-MMM-YYYY'),
         });
-
     };
-
-
     // ..............imagepicker............................
     handleClick = () => {
         const options = {
@@ -197,7 +181,19 @@ export default class RegisterDebt extends Component {
                 console.log('ImagePicker Error: ', response.error);
             } else {
                 this.setState({image: response.uri});
-                // console.log(this.state.image);
+                RNFetchBlob.fetch('POST', 'http://194.5.175.25:2000/Api/v1/image', {
+                    Authorization: "Bearer access-token",
+                    otherHeader: "image",
+                    'Content-Type': 'multipart/form-data',
+
+                }, [
+                    // element with property `filename` will be transformed into `file` in form data
+                    {name: 'image', filename: response.fileName, data: response.data},
+                ]).then((response) => response.json()).then((responseJson) => {
+                        if (responseJson.success === true)
+                            this.setState({imagepath: responseJson.data['path']});
+                    }
+                ).done();
                 if (this.state.image != null) {
 
                     this.setState({isVisableBoxImag: 'flex'});
@@ -209,6 +205,135 @@ export default class RegisterDebt extends Component {
 
     };
 
+    // .............. RegisterC0st..............
+    OnUserRegistrDebt = () => {
+        if (this.state.DateStartTextDebt === '' || this.state.DateEndTextDebt === '' ||
+            this.state.amount_Debt === '' || this.state.Lender_Account_Debt === '' ||
+            this.state.Lender_Account_Debt === '' || this.state.Detail_Debt === '') {
+            this.showAlertSuccess();
+            this.setState({textMessageBox:'اطلاعات را به طور کامل وارد نمائید'});
+
+            // alert('لطفا اطلاعات را کامل وارد نمائید');
+        } else {
+            fetch('http://194.5.175.25:2000/api/v1/debt', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user_id: this.state.user_id,
+                    date_debt: this.state.DateStartTextDebt,
+                    date_giveback: this.state.DateEndTextDebt,
+                    amount: this.state.amount_Debt,
+                    lender: this.state.Lender_Account_Debt,
+                    acount: this.state.Acount_Debt,
+                    detail: this.state.Detail_Debt,
+                    image: this.state.imagepath
+
+                })
+
+            }).then((response) => response.json())
+                .then((responseJson) => {
+                    this.setState({textMessageBox:'بدهی با موفقیت ثبت گردید'});
+                    this.showAlertSuccess();
+                    this.clearInputText();
+                }).catch((error) => {
+                console.error(error);
+            });
+        }
+    }
+    //   .............Registrlender................
+    onUserRegistrlenderAcount = () => {
+        if (this.state.lender_name_Debt === '' || this.state.acount_num_Debt === '' || this.state.card_num_Debt === '') {
+            Alert.alert("اطلاعات را به طور کاامل وارد کنید");
+
+        } else{
+            fetch('http://194.5.175.25:2000/api/v1/lender', {
+
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user_id: this.state.user_id,
+                    lender_name: this.state.lender_name_Debt,
+                    acount_num: this.state.acount_num_Debt,
+                    card_num: this.state.card_num_Debt,
+
+
+                })
+
+            }).then((response) => response.json())
+                .then((responseJson) => {
+                    this.setState({textMessageBox:'اطلاعات صاحب حساب با موفقیت ثبت شد'});
+                    this.showAlertSuccess();
+                    this.refs.modal4.close();
+                    this.ShowLenderAcountRecord();
+
+
+                }).catch((error) => {
+                console.error(error);
+            });
+        }
+    }
+    //   ..............ShowAcont...................
+    ShowAcountRecord = () => {
+        const acount= this.state.acount;
+        for(var i=0;i< acount.length;i++){
+            acount.splice(this.state.acount[i],acount.length);
+        }
+
+        fetch('http://194.5.175.25:2000/api/v1/acount/' + this.state.user_id)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+                for (var i = 0; i < responseJson.data.length; i++) {
+                    this.state.acount.push({
+                        id: responseJson.data[i]['_id'],
+                        name: responseJson.data[i]['acount_name']
+                    })
+                }
+
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+    //   ..............ShowLenderAcont...................
+    ShowLenderAcountRecord = () => {
+
+        const lender_acount= this.state.lender_acount;
+        for(var i=0;i< lender_acount.length;i++){
+            lender_acount.splice(this.state.lender_acount[i],lender_acount.length);
+        }
+        fetch('http://194.5.175.25:2000/api/v1/lender/' + this.state.user_id)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+                for (var i = 0; i < responseJson.data.length; i++) {
+                    this.state.lender_acount.push({
+                        id: responseJson.data[i]['_id'],
+                        name: responseJson.data[i]['lender_name']
+                    })
+                }
+
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+//Clear Input Texts
+    clearInputText(){
+        setTimeout(() => {
+            this._textInput.setNativeProps({ text: '' });
+            this._textInputDetail.setNativeProps({ text: '' });
+            this.setState({DateStartTextDebt:''});
+            this.setState({DateEndTextDebt:''});
+
+        },3);
+    }
     // ..................code............
     render() {
         const image = this.state;
@@ -218,7 +343,7 @@ export default class RegisterDebt extends Component {
                     hidden={false}
                     backgroundColor='#3e843d'
                 />
-                <Header title="ثبت بدهی" onBackPress={() => {
+              <Header title="ثبت بدهی" onBackPress={() => {
                     this.props.navigation.goBack();
                 }}/>
 
@@ -233,15 +358,20 @@ export default class RegisterDebt extends Component {
 
 
                     <View style={{flexDirection: 'row', marginTop: 20}}>
+
                         <TouchableOpacity activeOpacity={0.8} style={styles.SectionStyle} onPress={this.toggleModald}>
-                            <Icon name="sort-desc" size={20} color="#777777" style={{marginLeft: 8, marginTop: 2}}/>
+                            <Icon name="calendar" size={20} color="#47b03e" style={{marginLeft: 8, marginTop: 10}}/>
                             <Text style={[styles.inputs, {
-                                marginTop: -8,
-                                textAlign: 'center',
+                                marginTop: -18
                             }]}> {this.state.DateStartTextDebt}</Text>
                         </TouchableOpacity>
                         <View style={{marginRight: 10, marginTop: 12, flex: 1}}>
-                            <Text style={{fontSize: 13, flex: 1,fontFamily: 'IRANSansMobile',marginHorizontal:-5}}> تاریخ دریافت</Text>
+                            <Text style={{
+                                fontSize: 13,
+                                flex: 1,
+                                fontFamily: 'IRANSansMobile',
+                                marginHorizontal: -5
+                            }}> تاریخ دریافت</Text>
                             {/* <Image style={styles.imageIcon} source={require('../../../assets/images/icons/date.png')} /> */}
                         </View>
                     </View>
@@ -254,11 +384,11 @@ export default class RegisterDebt extends Component {
                                 <DatePicker isGregorian={false}
                                             mode="date"
                                             options={{
-                                                defaultFont: 'Shabnam-Light',
-                                                headerFont: 'Shabnam-Medium',
+                                                defaultFont: 'IRANSansMobile(FaNum)',
+                                                headerFont: 'IRANSansMobile(FaNum)',
                                             }}
                                             onDateChange={date => {
-                                                this.setState({ DateStartTextDebt: date });
+                                                this.setState({DateStartTextDebt: date});
                                                 this.toggleModald();
                                             }
 
@@ -266,7 +396,8 @@ export default class RegisterDebt extends Component {
 
                                             placeholder="Select date"
                                 />
-                                <Button title="انصراف" onPress={this.toggleModald} color='green'/>
+                                <Button title="انصراف" onPress={this.toggleModald}
+                                        buttonStyle={{backgroundColor: '#47b03e'}}/>
                             </View>
                         </Modaldate>
                     </View>
@@ -276,14 +407,19 @@ export default class RegisterDebt extends Component {
 
                     <View style={{flexDirection: 'row', marginTop: 5}}>
                         <TouchableOpacity activeOpacity={0.8} style={styles.SectionStyle} onPress={this.toggleModal}>
-                            <Icon name="sort-desc" size={20} color="#777777" style={{marginLeft: 8, marginTop: 2}}/>
+                            <Icon name="calendar" size={20} color="#47b03e" style={{marginLeft: 8, marginTop: 10}}/>
                             <Text style={[styles.inputs, {
-                                marginTop: -8,
-                                textAlign: 'center',
+                                marginTop: -18
                             }]}> {this.state.DateEndTextDebt}</Text>
                         </TouchableOpacity>
                         <View style={{marginRight: 10, marginTop: 12, flex: 1}}>
-                            <Text style={{fontSize: 13, flex: 1,fontFamily: 'IRANSansMobile',marginHorizontal:-20 ,marginRight:-10}}>  تاریخ تسویه</Text>
+                            <Text style={{
+                                fontSize: 13,
+                                flex: 1,
+                                fontFamily: 'IRANSansMobile',
+                                marginHorizontal: -20,
+                                marginRight: -10
+                            }}> تاریخ تسویه</Text>
                             {/* <Image style={styles.imageIcon} source={require('../../../assets/images/icons/date.png')} /> */}
                         </View>
                     </View>
@@ -296,8 +432,8 @@ export default class RegisterDebt extends Component {
                                 <DatePicker isGregorian={false}
                                             mode="date"
                                             options={{
-                                                defaultFont: 'Shabnam-Light',
-                                                headerFont: 'Shabnam-Medium',
+                                                defaultFont: 'IRANSansMobile(FaNum)',
+                                                headerFont: 'IRANSansMobile(FaNum)',
                                             }}
                                             onDateChange={date => {
                                                 this.setState({DateEndTextDebt: date});
@@ -308,7 +444,8 @@ export default class RegisterDebt extends Component {
 
                                             placeholder="Select date"
                                 />
-                                <Button title="انصراف" onPress={this.toggleModal} color='green'/>
+                                <Button title="انصراف" onPress={this.toggleModal}
+                                        buttonStyle={{backgroundColor: '#47b03e'}}/>
                             </View>
                         </Modaldate>
                     </View>
@@ -319,56 +456,56 @@ export default class RegisterDebt extends Component {
                             <TextInput
                                 style={styles.inputs}
                                 placeholder="مبلغ"
+                                keyboardType='numeric'
                                 underlineColorAndroid="transparent"
+                                ref={component => this._textInput = component}
+                                onChangeText={amount => this.setState({amount_Debt: amount})}
+
                             />
                         </View>
                         <View style={{marginRight: 10, marginTop: 12, flex: 1}}>
-                            <Text style={{fontSize: 14, flex: 1,fontFamily: 'IRANSansMobile',}}> مبلغ بدهی</Text>
+                            <Text style={{fontSize: 14, flex: 1, fontFamily: 'IRANSansMobile',}}> مبلغ بدهی</Text>
                             {/* <Image style={styles.imageIcon} source={require('../../../assets/images/icons/639365.png')} /> */}
                         </View>
                     </View>
-
-                    {/* .........................timepicker....................................... */}
-
-
-
-                    {/*...........................category.....................*/}
-
-
-
-
-
                     {/* .........................select2....................................... */}
                     <View style={{flexDirection: 'row'}}>
 
-                        <View style={{flexDirection: 'row', flex: 1, marginTop: 15,marginLeft:5}}>
-
+                        <View style={{flexDirection: 'row', flex: 2, marginTop: 15}}>
+                            <TouchableOpacity onPress={() => this.refs.modal4.open()}>
+                                <Icon name="plus-circle" size={25} color='#47b03e'
+                                      style={{marginLeft: 9, marginTop: 3, flex: 2}}/>
+                            </TouchableOpacity>
                             <Select2
                                 style={{
                                     borderRadius: 5,
-                                    width: '140%',
-                                    marginLeft: 16,
+                                    // width: '138%',
+                                    marginLeft: 1,
                                     borderColor: '#3d933c',
                                     borderWidth: 1.5,
                                 }}
                                 isSelectSingle={true}
                                 colorTheme='#3d933c'
-                                popupTitle="انتخاب حساب"
+                                popupTitle="انتخاب  صاحب حساب"
                                 cancelButtonText="انصراف"
                                 selectButtonText="تایید"
-                                title="انتخاب حساب"
-                                searchPlaceHolderText="جستجو حساب"
-                                data={acount}
-                                onSelect={data => {
-                                    this.setState({data});
-                                }}
-                                onRemoveItem={data => {
-                                    this.setState({data});
+                                title="انتخاب  صاحب حساب"
+                                listEmptyTitle="اطلاعاتی موجود نیست"
+                                searchPlaceHolderText="جستجو صاحب حساب"
+                                data={this.state.lender_acount}
+                                onSelect={lender => {
+                                    for (var i = 0; i < this.state.lender_acount.length; i++) {
+                                        if (this.state.lender_acount[i]['id'] == lender) {
+                                            //   Alert.alert(this.state.acount[i]['name'])
+                                            this.setState({Lender_Account_Debt: this.state.lender_acount[i]['name']});
+                                        }
+                                    }
                                 }}
                             />
                         </View>
                         <View style={{marginTop: 15, flex: 1}}>
-                            <Text style={{fontSize: 13, flex: 1,fontFamily: 'IRANSansMobile',marginHorizontal:10}}> نوع حساب</Text>
+                            <Text style={{fontSize: 14, marginRight: 8, fontFamily: 'IRANSansMobile', flex: 2}}>طرف
+                                حساب</Text>
                             {/* <Image style={[styles.imageIcon,{marginLeft:-40}]} source={require('../../../assets/images/icons/wallet.png')} /> */}
                         </View>
                     </View>
@@ -381,37 +518,30 @@ export default class RegisterDebt extends Component {
                                 multiline={true}
                                 placeholder="توضیحات"
                                 numberOfLines={1}
+                                ref={component => this._textInputDetail = component}
                                 style={{
                                     margin: 4,
-                                    marginTop: 2,
+                                    marginTop: 2, fontFamily: 'IRANSansMobile(FaNum)',
                                     fontSize: 12, width: '98%', textAlign: 'center',
                                 }}
-                                underlineColorAndroid="transparent"/>
+                                underlineColorAndroid="transparent"
+                                onChangeText={detail => this.setState({Detail_Debt: detail})}
+                            />
                         </View>
                         <View style={{marginTop: 15, flex: 2}}>
-                            <Text style={{fontSize: 13, flex: 1,fontFamily: 'IRANSansMobile',marginHorizontal:15}}>شرح بدهی</Text>
+                            <Text style={{fontSize: 13, flex: 1, fontFamily: 'IRANSansMobile', marginHorizontal: 15}}>شرح
+                                بدهی</Text>
                             {/* <Image style={styles.imageIcon} source={require('../image/des.png')} /> */}
                         </View>
                     </View>
                     {/* .........................imagepicker.................................. */}
-
                     <View style={{marginTop: 8, marginHorizontal: 30}}>
                         <Card>
-                            <CardItem bordered style={{backgroundColor: '#c5f3c1', borderStyle: 'dashed', borderWidth: 0.5}}>
+                            <CardItem bordered
+                                      style={{backgroundColor: '#c5f3c1', borderStyle: 'dashed', borderWidth: 0.5}}>
                                 <Left>
-                                    <TouchableOpacity
-                                        style={{width:50,justifyContent:'center',alignItems:'center'}}
-                                        activeOpacity={0.9}
-                                        onPress={this.showMenu}>
-                                        <Icon name='ellipsis-v'
-                                              style={{marginTop: 5, fontSize: 25, color: '#47b03e'}}
-                                        />
-                                    </TouchableOpacity>
-                                    <Menu
-                                        ref={this.setMenuRef}>
-                                        <MenuItem onPress={this.hideMenu}>ویرایش</MenuItem>
-                                        <MenuItem onPress={this.hideMenu}>حذف</MenuItem>
-                                    </Menu>
+
+
                                     <Body onPress>
                                         <Text style={{color: '#777'}} onPress={this.handleClick.bind(this)}>پیوست
                                             فایل</Text>
@@ -426,7 +556,7 @@ export default class RegisterDebt extends Component {
 
                         <Button buttonStyle={{
                             marginTop: 20,
-                            marginLeft:25,
+                            marginLeft: 25,
                             backgroundColor: '#47b03e',
                             borderRadius: 30,
                             width: '80%',
@@ -439,10 +569,11 @@ export default class RegisterDebt extends Component {
                             shadowOpacity: 0.37,
                             shadowRadius: 7.49,
                             elevation: 5,
-                            marginBottom:10
+                            marginBottom: 10
                         }}
+                                onPress={this.OnUserRegistrDebt}
 
-                                titleStyle={{color: '#fff',fontFamily:'IRANSansMobile(FaNum)',fontSize:18}}
+                                titleStyle={{color: '#fff', fontFamily: 'IRANSansMobile(FaNum)', fontSize: 18}}
 
                                 title="ثبت"
                         />
@@ -450,92 +581,131 @@ export default class RegisterDebt extends Component {
 
 
                 </ScrollView>
-                {/*............ ........modal4................................. */}
+                {/*....................نام حساب جدید ................................. */}
                 <Modal
                     style={[styles.modal4]}
                     position={'bottom'}
                     ref={'modal4'}
-                    coverScreen={true}
-                >
-                    <View style={styles.popup}>
-                        <Text style={{color: '#3d933c', marginBottom: 10, fontSize: 16}}> اضافه کردن نوع حساب</Text>
-                    </View>
+                    coverScreen={true}>
+                    <LinearGradient
+                        style={{
+                            borderTopLeftRadius: 15, borderTopRightRadius: 15, alignItems: 'center'
+                            , justifyContent: 'center',
+                        }}
+                        start={{x: 0.3, y: 0.0}} end={{x: 0.5, y: 1.0}}
+                        locations={[0.1, 0.6, 0.9]}
+                        colors={['#3e843d', '#3ede30', '#47b03e']}>
+                        <View style={{
+                            paddingVertical: 7,
+
+                        }}>
+
+                            <Text style={{fontSize: 20, color: '#fff', fontFamily: 'Far_Aref', alignSelf: 'center'}}>
+                                اضافه کردن صاحب حساب </Text>
+                        </View>
+                    </LinearGradient>
                     <View style={{flexDirection: 'row', marginTop: 20}}>
                         <View style={styles.SectionStyle}>
                             <TextInput
                                 style={styles.inputs}
-                                placeholder="اضافه کردن حساب"
+                                placeholder="نام  صاحب حساب جدید را وارد نمایید"
                                 underlineColorAndroid="transparent"
+                                onChangeText={lender_name => this.setState({lender_name_Debt: lender_name})}
+
                             />
                         </View>
                         <View style={{marginTop: 20, flex: 1}}>
-                            <Text style={{fontSize: 16, marginRight: 7}}> حساب:</Text>
-                            {/* <Image style={[styles.imageIcon,{marginLeft:-40}]} source={require('../../../assets/images/icons/wallet.png')} /> */}
+                            <Text style={{fontSize: 12, marginRight: 2, fontFamily: 'IRANSansMobile(FaNum)'}}> نام صاحب
+                                حساب</Text>
                         </View>
                     </View>
-                    <TouchableOpacity style={{
-                        marginTop: 40,
-                    }}>
-                        <LinearGradient
-                            start={{x: 0.48, y: 0.0}} end={{x: 0.5, y: 1.0}}
-                            locations={[0.1, 0.6, 0.9]}
-                            colors={['#3e843d', '#3ede30', '#47b03e']}
-                            style={{
-                                borderRadius: 5, width: '70%', marginLeft: 41,
-                                height: 45, marginTop: 5,
-                            }}>
-                            <Text style={{color: '#fff', textAlign: 'center', fontSize: 20, marginTop: 10}}>ثبت</Text>
-                        </LinearGradient>
-                    </TouchableOpacity>
-                </Modal>
-                {/*............ ........modal3................................. */}
-
-                <Modal
-                    style={[styles.modal3]}
-                    position={'bottom'}
-                    coverScreen={true}
-                    ref={'modal3'}
-                >
-                    <View style={styles.popup}>
-                        <Text style={{color: '#3d933c', marginBottom: 10, fontSize: 16}}>اضافه کردن نوع دریافتی</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginTop: 20}}>
+                    <View style={{flexDirection: 'row', marginTop: 3}}>
                         <View style={styles.SectionStyle}>
                             <TextInput
                                 style={styles.inputs}
-                                placeholder="اضافه کردن نوع دریافتی"
+                                placeholder=" شماره حساب خود را وارد کنید"
                                 underlineColorAndroid="transparent"
+                                onChangeText={acount_num => this.setState({acount_num_Debt: acount_num})}
+
                             />
                         </View>
-                        <View style={{marginTop: 20, fontSize: 16, flex: 1}}>
-                            <Text style={{fontSize: 16, marginRight: 5, marginTop: 10}}> دریافت :</Text>
-                            {/* <Image style={[styles.imageIcon,{marginLeft:-40}]} source={require('../../../assets/images/icons/2503483.png')} /> */}
+                        <View style={{marginTop: 20, flex: 1}}>
+                            <Text style={{fontSize: 12, marginRight: 2, fontFamily: 'IRANSansMobile(FaNum)'}}> شماره
+                                حساب</Text>
                         </View>
                     </View>
-                    <View style={{
-                        marginTop: 40,
-                    }}>
-                        <LinearGradient
-                            start={{x: 0.48, y: 0.0}} end={{x: 0.5, y: 1.0}}
-                            locations={[0.1, 0.6, 0.9]}
-                            colors={['#3e843d', '#3ede30', '#47b03e']}
-                            style={{
-                                borderRadius: 5, width: '70%', marginLeft: 41,
-                                height: 45, marginTop: 5,
-                            }}>
-                            <Text style={{color: '#fff', textAlign: 'center', fontSize: 20, marginTop: 20}}>ثبت</Text>
+                    <View style={{flexDirection: 'row', marginTop: 3}}>
 
-                        </LinearGradient>
+                        <View style={styles.SectionStyle}>
+                            <TextInput
+                                style={styles.inputs}
+                                placeholder="شماره کارت خود را وارد کنید "
+                                underlineColorAndroid="transparent"
+                                onChangeText={card_num => this.setState({card_num_Debt: card_num})}
 
+                            />
+                        </View>
+                        <View style={{marginTop: 20, flex: 1}}>
+                            <Text style={{fontSize: 12, marginRight: 2, fontFamily: 'IRANSansMobile(FaNum)'}}> شماره
+                                کارت:</Text>
+                        </View>
                     </View>
 
+
+                    <Button buttonStyle={{
+                        marginTop: 20,
+                        marginLeft: 25,
+                        backgroundColor: '#47b03e',
+                        borderRadius: 30,
+                        width: '80%',
+                        height: 45,
+                        shadowColor: '#43c164',
+                        shadowOffset: {
+                            width: 0,
+                            height: 6,
+                        },
+                        shadowOpacity: 0.37,
+                        shadowRadius: 7.49,
+                        elevation: 5,
+                        marginBottom: 20
+                    }}
+                            onPress={this.onUserRegistrlenderAcount}
+                            titleStyle={{color: '#fff', fontFamily: 'IRANSansMobile(FaNum)', fontSize: 18}}
+
+                            title="ثبت"
+                    />
                 </Modal>
+                {/*....................پیغام با موفیقت ثبت شد................................. */}
+                <AwesomeAlert
+                    show={this.state.showAlertSuccess}
+                    showProgress={false}
+                    // title="اطلاعات  را به طور کامل وارد نمائید"
+                    message={this.state.textMessageBox}
+                    closeOnTouchOutside={true}
+                    closeOnHardwareBackPress={false}
+                    showConfirmButton={true}
+                    titleStyle={{fontSize:14,fontFamily:'IRANSansMobile(FaNum)'}}
+                    messageStyle={{fontSize:15,fontFamily:'IRANSansMobile(FaNum)'}}
+                    confirmText="بله"
+                    confirmButtonColor="#3d933c"
+                    confirmButtonStyle={{}}
+                    confirmButtonTextStyle={{fontSize:17,fontFamily:'IRANSansMobile(FaNum)'}}
+                    onConfirmPressed={() => {
+                        this.hideAlertSuccess();
+                    }}
+                />
+
             </View>
         );
     }
 }
 
-
+const mapStateToProps = state => {
+    return {
+        dataLogin: state.loginUser.dataLogin,
+    }
+}
+export default connect(mapStateToProps)(RegisterDebt);
 const styles = StyleSheet.create({
 
     container: {
@@ -546,10 +716,10 @@ const styles = StyleSheet.create({
     },
     SectionStyle: {
 
-        borderRadius: 5, width: '70%', marginLeft: 20, borderWidth: 1.5,
+        borderRadius: 5, width: '67%', marginLeft: 30, borderWidth: 1.5,
         borderColor: '#3d933c', height: 45, marginTop: 15,
 
-
+        fontFamily: 'IRANSansMobile(FaNum)'
         // shadowOffset: {
         //     width: 0,
         //     height: 2,
@@ -580,7 +750,7 @@ const styles = StyleSheet.create({
         // borderWidth: 1,
         borderColor: '#DD2C00',
         borderRadius: 5,
-
+        fontFamily: 'IRANSansMobile(FaNum)'
     },
     popupButtons: {
 
@@ -615,9 +785,9 @@ const styles = StyleSheet.create({
     //     borderRadius: 10
     // },
     modal4: {
-        height: 250,
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
+        height: 350,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
     },
     modal: {
         justifyContent: 'center',

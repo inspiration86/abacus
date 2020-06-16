@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, StatusBar} from 'react-native';
 import {createAppContainer} from 'react-navigation';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
 import Home from '../screens/Home';
@@ -9,60 +9,54 @@ import ReportYear from '../screens/ReportYear';
 import RegisterCost from "../screens/RegisterCost";
 import RegisterDebt from "../screens/RegisterDebt";
 import RegisterIncome from '../screens/RegisterIncome';
-import Balance from "../screens/Balance";
-import Reminder from "../screens/Reminder";
-import Budgeting from "../screens/Budgeting";
+import ReportPerformance from '../screens/ReportPerformance';
+
 import Report from "../screens/Report";
+import ReportMounth from "../screens/ReportMounth";
+import ReportCategory from "../screens/ReportCategory";
 import {createStackNavigator} from 'react-navigation-stack';
-import Icon from 'react-native-vector-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faBell, faCalculator, faChartPie, faHome} from '@fortawesome/free-solid-svg-icons';
 const RootStack = createStackNavigator({
-        Home: {
-            screen: Home,
+        Report: {
+            screen: Report,
             navigationOptions: ({navigation}) => ({
                 headerShown: false
             })
         },
-        RegisterIncome: {
-            screen: RegisterIncome,
+        ReportMounth: {
+            screen: ReportMounth,
             navigationOptions: ({navigation}) => ({
                 headerShown: false
             })
         },
-        RegisterDebt: {
-            screen: RegisterDebt,
+        ReportDay: {
+            screen: ReportDay,
             navigationOptions: ({navigation}) => ({
                 headerShown: false
             })
         },
-        RegisterCost: {
-            screen: RegisterCost,
+        ReportYear: {
+            screen: ReportYear,
             navigationOptions: ({navigation}) => ({
                 headerShown: false
             })
         },
-        Budgeting: {
-            screen: Budgeting,
+        ReportCategory: {
+            screen: ReportCategory,
             navigationOptions: ({navigation}) => ({
                 headerShown: false
             })
         },
-        Reminder: {
-            screen: Reminder,
-            navigationOptions: ({navigation}) => ({
-                headerShown: false
-            })
-        },
-        Balance: {
-            screen: Balance,
+        ReportPerformance: {
+            screen: ReportPerformance,
             navigationOptions: ({navigation}) => ({
                 headerShown: false
             })
         },
     },
     {
-        initialRouteName:"Home",
+        initialRouteName:"Report",
         defaultNavigationOptions: {headerShown: false}
     }
 );
@@ -71,7 +65,7 @@ const RootStack = createStackNavigator({
         super(props);
     }
     render() {
-        return     <AppContainer screenProps={this.props.navigation}/>;
+        return <AppContainer screenProps={this.props.navigation} />;
     }
 }
 const AppMaterialTopTabNavigator = createMaterialBottomTabNavigator(
@@ -86,7 +80,7 @@ const AppMaterialTopTabNavigator = createMaterialBottomTabNavigator(
                     </View>),
             }
         },
-        'گزارشگیری':{screen:Report,
+        'گزارشگیری':{screen:RootStack,
             navigationOptions:{
                 tabBarLabel:'گزارشگیری',
                 tabBarIcon: ({ tintColor }) => (

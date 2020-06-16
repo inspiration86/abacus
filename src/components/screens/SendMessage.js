@@ -14,7 +14,7 @@ import {
     TouchableOpacity,
     ScrollView,
     StatusBar,
-    ActivityIndicator
+    ActivityIndicator, TextInput,
 } from 'react-native';
 import CountDown from 'react-native-countdown-component';
 import {faFrownOpen} from '@fortawesome/free-solid-svg-icons/faFrownOpen';
@@ -164,6 +164,7 @@ class SendMessage extends Component {
                                     compareWithCode={this.state.codeOTD}
                                     activeColor='#47b03e'
                                     inactiveColor='#777'
+                                    keyboardType='numeric'
                                     autoFocus={false}
                                     ignoreCase={true}
                                     inputPosition='center'

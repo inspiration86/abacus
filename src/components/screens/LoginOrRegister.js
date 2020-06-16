@@ -51,8 +51,10 @@ export default class LoginOrRegister extends Component {
         const {showAlert} = this.state;
         return (
             <View style={styles.container}>
-                <StatusBar hidden={true} translucent={true} networkActivityIndicatorVisible={true}
-                           barStyle="light-content"/>
+                <StatusBar
+                    hidden={false}
+                    backgroundColor='#3e843d'
+                />
                 <LinearGradient start={{x: -0.1, y: 0.9}} end={{x: 0.6, y: 1.0}}
                                 locations={[0,0.5,0.9]}
                                 style={styles.header}

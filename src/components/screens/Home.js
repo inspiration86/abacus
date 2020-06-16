@@ -26,7 +26,7 @@ class Home extends Component {
                 {
                     id: 1,
                     title: 'بودجه بندی',
-                    image: require('../../../assets/images/icons/budget.png'),
+                    image: require('../../../assets/images/icons/money.png'),
 
                 }
                 ,
@@ -118,7 +118,7 @@ class Home extends Component {
 
         });
     };
-    showError = (item) => {
+    showMessage = (item) => {
         this.setState({
             showAlert: true,
             titles: item,
@@ -145,7 +145,7 @@ class Home extends Component {
                 break;
             case 6: this.props.screenProps.navigate('Balance');
                 break;
-            default:this.showError('در نسخه های بعدی این قابلیت افزوده خواهد شد')
+            default:this.showMessage(`در نسخه های بعدی این قابلیت افزوده خواهد شد`)
         }
     }
 
@@ -155,10 +155,9 @@ class Home extends Component {
         return (
             <View style={styles.container}>
                 <StatusBar
-                    hidden={true}
+                    hidden={false}
                     backgroundColor='#3e843d'
                 />
-
                 <LinearGradient start={{x: 0.40, y: 0.0}} end={{x: 0.5, y: 1.0}}
                                 locations={[0, 0.5, 0.6]}
                                 colors={['#3e843d', '#3ede30', '#47b03e']} style={{
@@ -213,7 +212,7 @@ class Home extends Component {
                       style={{marginTop:60}}
                               contentContainerStyle={{justifyContent:'center', alignItems:'center'}}
                         renderItem={({ item, index }) => (
-                            <TouchableOpacity activeOpacity={0.8}
+                            <TouchableOpacity activeOpacity={0.9}
                                               onPress={() => this.cardNavigate(item)}>
                     <View>
                         <Card style={{width:'100%',height: 120,
@@ -356,7 +355,7 @@ const styles = StyleSheet.create({
         margin: 10,
        color: '#111',
        fontFamily: 'IRANSansMobile(FaNum)',
-      // marginHorizontal: -15,
+ marginHorizontal:'-10%',
        flex:2
    },
 });

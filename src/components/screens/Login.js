@@ -154,6 +154,7 @@ renderLogin(){
                             <Icon style={styles.inputIcon} name='lock' color='#43c164' size={25}/>
                             <TextInput style={styles.inputs}
                                        placeholder="رمز عبور"
+                                       keyboardType='numeric'
                                        secureTextEntry={true}
                                        value={this.props.password}
                                        underlineColorAndroid='transparent'

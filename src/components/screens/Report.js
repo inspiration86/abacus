@@ -68,14 +68,14 @@ export default class Home extends Component {
     cardNavigate=(item)=>{
         switch (item.id)
         {
-            case 1: this.props.screenProps.navigate('ReportDay');
+            case 1: this.props.navigation.navigate('ReportDay');
                 break;
-            case 2: this.props.screenProps.navigate('ReportYear');
+            case 2: this.props.navigation.navigate('ReportMounth');
                 break;
-            case 3: this.props.screenProps.navigate('RegisterIncome');
+            case 3: this.props.navigation.navigate('ReportYear');
                 break;
-            // case 4: this.props.screenProps.navigate('RegisterDebt');
-            //     break;
+             case 4: this.props.navigation.navigate('ReportCategory');
+              break;
             // case 5: this.props.screenProps.navigate('Reminder');
             //     break;
             // case 6: this.props.screenProps.navigate('Balance');
@@ -112,7 +112,7 @@ export default class Home extends Component {
         return (
             <View style={styles.container}>
                 <StatusBar
-                    hidden={true}
+                    hidden={false}
                     backgroundColor='#3e843d'
                 />
                 <LinearGradient start={{x: 0.40, y: 0.0}} end={{x: 0.5, y: 1.0}}
@@ -159,19 +159,19 @@ export default class Home extends Component {
                 <FlatGrid
                     itemDimension={100}
                     items={this.state.data}
-                    style={{marginTop:60}}
-                    contentContainerStyle={{justifyContent:'center', alignItems:'center'}}
+                    style={{marginTop:60  ,
+                    }}
+                    contentContainerStyle={{justifyContent:'center', alignItems:'center',marginVertical: 15}}
                     renderItem={({ item, index }) => (
-                        <TouchableOpacity activeOpacity={0.8}
+                        <TouchableOpacity activeOpacity={0.99}
                                           onPress={() => this.cardNavigate(item)}>
-                            <View>
                                 <Card style={{width:'100%',height: 120,
                                     shadowColor: '#3d933c',
                                     shadowOffset: {
                                         width: 0,
                                         height: 2,
                                         marginRight: 16,
-                                        marginBottom: 12
+                                        marginBottom: 12,
                                     },
                                     shadowOpacity: 0.25,
                                     shadowRadius: 3.84,
@@ -185,7 +185,6 @@ export default class Home extends Component {
                                     <Card.Title title={item.title}
                                                 titleStyle={styles.title}/>
                                 </Card>
-                            </View>
                         </TouchableOpacity>
                     )} />
 
@@ -292,6 +291,8 @@ const styles = StyleSheet.create({
         margin: 10,
         color: '#111',
         fontFamily: 'IRANSansMobile(FaNum)',
+        marginHorizontal: -15,
+
         flex:2
     },
 });

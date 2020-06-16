@@ -13,7 +13,7 @@ export default class Header extends React.Component {
     render() {
         return (
             <View>
-                <Appbar.Header  style={{backgroundColor:'#47b03e'}}>
+                <Appbar.Header  style={{backgroundColor:'#47b03e',marginTop:23}}>
                     <Appbar.Content
                         titleStyle={{
                             color: '#fff',

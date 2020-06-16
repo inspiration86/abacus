@@ -512,7 +512,7 @@ export default class advanced extends Component {
 
 
                         </ScrollView>
-                        <Button full style={{backgroundColor: '#47b03e'}}>
+                        <Button full style={{backgroundColor: '#47b03e'}} onPress={()=>this.props.screenProps.navigate('Reminder')}>
                             <Text
                                 style={{color: '#fff', fontSize: 16, fontFamily: 'IRANSansMobile(FaNum)'}}>جستجو</Text>
                         </Button>

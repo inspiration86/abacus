@@ -146,7 +146,7 @@ class Reminder extends Component {
                     hidden={false}
                     backgroundColor='#3e843d'
                 />
-                     <Header  title='یادآوری ها' />
+                     <Header  title='یادآوری ها' onBackPress={() => {this.props.navigation.goBack();}} />
                 <FlatGrid
                     itemDimension={200}
                     items={this.state.data}
