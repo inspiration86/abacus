@@ -6,11 +6,7 @@ import Home from '../screens/Home';
 import AdvancedSearch from '../screens/AdvancedSearch';
 import ReportDay from '../screens/ReportDay';
 import ReportYear from '../screens/ReportYear';
-import RegisterCost from "../screens/RegisterCost";
-import RegisterDebt from "../screens/RegisterDebt";
-import RegisterIncome from '../screens/RegisterIncome';
 import ReportPerformance from '../screens/ReportPerformance';
-
 import Report from "../screens/Report";
 import ReportMounth from "../screens/ReportMounth";
 import ReportCategory from "../screens/ReportCategory";

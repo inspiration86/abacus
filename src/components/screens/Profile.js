@@ -18,6 +18,8 @@ import RNFetchBlob from 'rn-fetch-blob';
 import DialogInput from 'react-native-dialog-input-custom';
 import {connect} from "react-redux";
 import AwesomeAlert from "react-native-awesome-alerts";
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faUtensils} from '@fortawesome/free-solid-svg-icons';
 // .................code................
 class profile extends Component {
     constructor(props) {
@@ -174,10 +176,18 @@ class profile extends Component {
                         this.showAlertSuccess();
                         this.ShowProfileRecord()
                     }
+                    else if (responseJson.success === false){
+                        this.setState({textMessageBox: 'با این شماره همراه قبلا ثبت نام شده است'});
+                        this.showAlertSuccess();
+
+                    }
                 }).catch((error) => {
                 console.error(error);
             });
+
+
         }
+
     }
     //   ..............Show...................
     ShowProfileRecord () {
@@ -232,7 +242,6 @@ class profile extends Component {
                     }
                 ).done();
                 if (this.state.image != null) {
-
                     this.setState({ isVisableBoxImag: 'flex' });
                 } else {
                     console.log('image empty');
@@ -290,7 +299,7 @@ class profile extends Component {
                 <View style={{ marginTop: 40, flex: 1, }}>
                     <ScrollView showsVerticalScrollIndicator={false}>
                         <View>
-                            <Item fixedLabel>
+                            <Item >
                                 <Left>
                                     <Button transparent>
                                         <Icon active name="mobile"  style={styles.icon} />
@@ -342,7 +351,7 @@ class profile extends Component {
                             </Item>
                             <Item fixedLabel>
                                 <Left>
-                                    <Button transparent>
+                                    <Button style={{backgroundColor: '#33b5e5'}}>
                                         <Icon Type='FontAwesome5' name="bank" style={styles.icon} />
                                     </Button>
                                 </Left>

@@ -16,10 +16,18 @@ import { Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { StackNavigator, SafeAreaView } from 'react-navigation';
 import { PieChart } from 'react-native-charts-wrapper';
+import {connect} from 'react-redux';
 class ReportDay extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
+            user_id: this.props.dataLogin['id'],
+            sumOfIncome: 0,
+            sumOfCost: 0,
+            week:'',
+            day: '',
+            year: '',
+            month: '',
             legend: {
                 enabled: true,
                 textSize: 15,
@@ -29,31 +37,7 @@ class ReportDay extends React.Component {
                 orientation:   'HORIZONTAL',
                 wordWrapEnabled: true,
             },
-            data: {
-                dataSets: [{
-                    values: [{ value: 45, label: 'نقد' },
-                        { value: 21, label: 'کارت به کارت' },
-                        { value: 15, label: 'طلا' },
-                        { value: 9, label: 'اجاره' },
-                        { value: 15, label: 'یارانه' }],
-
-                    label: '',
-                    config: {
-                        colors: [processColor('#66d808'), processColor('#c6b807'), processColor('#ffdc2e'), processColor('#8CEAFF'), processColor('#FF8C9D')],
-                        valueTextSize: 16,
-                        valueTextColor: processColor('green'),
-                        sliceSpace: 1,
-                        selectionShift: 2,
-                        // form: 'SQUARE',
-                        // xValuePosition: "OUTSIDE_SLICE",
-                        // yValuePosition: "OUTSIDE_SLICE",
-                        valueFormatter: "#.#'%'",
-                        valueLineColor: processColor('green'),
-                        valueLinePart1Length:5
-                    }
-                }],
-
-            },
+            data:{},
             // highlights: [{ x: 1 }],
             // description: {
             //     text: '',
@@ -62,31 +46,7 @@ class ReportDay extends React.Component {
             //
             // },
 
-            datap: {
-                dataSets: [{
-                    values: [{ value: 45, label: 'کنسرت' },
-                        { value: 2, label: 'رستوران' },
-                        { value: 13, label: 'طلا' },
-                        { value: 19, label: 'اجاره' },
-                        { value: 15, label: 'ارانه' }],
-
-                    label: '',
-                    config: {
-                        colors: [processColor('#66d808'), processColor('#c6b807'), processColor('#ffdc2e'), processColor('#8CEAFF'), processColor('#FF8C9D')],
-                        valueTextSize: 16,
-                        valueTextColor: processColor('green'),
-                        sliceSpace: 1,
-                        selectionShift: 0,
-                        form: 'SQUARE',
-                        // xValuePosition: "OUTSIDE_SLICE",
-                        // yValuePosition: "OUTSIDE_SLICE",
-                        valueFormatter: "#.#'%'",
-                        valueLineColor: processColor('green'),
-                        valueLinePart1Length: 0.80
-                    }
-                }],
-
-            },
+            dataCost: {},
 
             highlights: [{ x: 50 }],
             description: {
@@ -119,6 +79,426 @@ class ReportDay extends React.Component {
         }
 
         console.log(event.nativeEvent)
+    }
+    displayIncome = () => {
+        var week = new Array('يكشنبه', 'دوشنبه', 'سه شنبه', 'چهارشنبه', 'پنج شنبه', 'جمعه', 'شنبه');
+        var months = new Array('فروردين', 'ارديبهشت', 'خرداد', 'تير', 'مرداد', 'شهريور', 'مهر', 'آبان', 'آذر', 'دي', 'بهمن', 'اسفند');
+        var today = new Date();
+        var d = today.getDay();
+        var day = today.getDate();
+        var month = today.getMonth() + 1;
+        var year = today.getYear();
+        year = (window.navigator.geolocation > 0) ? year : 1900 + year;
+        if (year === 0) {
+            year = 2000;
+        }
+        if (year < 100) {
+            year += 1900;
+        }
+        var y = 1;
+        for (var i = 0; i < 3000; i += 4) {
+            if (year === i) {
+                y = 2;
+            }
+        }
+        for (var i = 1; i < 3000; i += 4) {
+            if (year === i) {
+                y = 3;
+            }
+        }
+        if (y === 1) {
+            year -= ((month < 3) || ((month === 3) && (day < 21))) ? 622 : 621;
+            switch (month) {
+                case 1:
+                    (day < 21) ? (month = 10, day += 10) : (month = 11, day -= 20);
+                    break;
+                case 2:
+                    (day < 20) ? (month = 11, day += 11) : (month = 12, day -= 19);
+                    break;
+                case 3:
+                    (day < 21) ? (month = 12, day += 9) : (month = 1, day -= 20);
+                    break;
+                case 4:
+                    (day < 21) ? (month = 1, day += 11) : (month = 2, day -= 20);
+                    break;
+                case 5:
+                case 6:
+                    (day < 22) ? (month -= 3, day += 10) : (month -= 2, day -= 21);
+                    break;
+                case 7:
+                case 8:
+                case 9:
+                    (day < 23) ? (month -= 3, day += 9) : (month -= 2, day -= 22);
+                    break;
+                case 10:
+                    (day < 23) ? (month = 7, day += 8) : (month = 8, day -= 22);
+                    break;
+                case 11:
+                case 12:
+                    (day < 22) ? (month -= 3, day += 9) : (month -= 2, day -= 21);
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (y === 2) {
+            year -= ((month < 3) || ((month == 3) && (day < 20))) ? 622 : 621;
+            switch (month) {
+                case 1:
+                    (day < 21) ? (month = 10, day += 10) : (month = 11, day -= 20);
+                    break;
+                case 2:
+                    (day < 20) ? (month = 11, day += 11) : (month = 12, day -= 19);
+                    break;
+                case 3:
+                    (day < 20) ? (month = 12, day += 10) : (month = 1, day -= 19);
+                    break;
+                case 4:
+                    (day < 20) ? (month = 1, day += 12) : (month = 2, day -= 19);
+                    break;
+                case 5:
+                    (day < 21) ? (month = 2, day += 11) : (month = 3, day -= 20);
+                    break;
+                case 6:
+                    (day < 21) ? (month = 3, day += 11) : (month = 4, day -= 20);
+                    break;
+                case 7:
+                    (day < 22) ? (month = 4, day += 10) : (month = 5, day -= 21);
+                    break;
+                case 8:
+                    (day < 22) ? (month = 5, day += 10) : (month = 6, day -= 21);
+                    break;
+                case 9:
+                    (day < 22) ? (month = 6, day += 10) : (month = 7, day -= 21);
+                    break;
+                case 10:
+                    (day < 22) ? (month = 7, day += 9) : (month = 8, day -= 21);
+                    break;
+                case 11:
+                    (day < 21) ? (month = 8, day += 10) : (month = 9, day -= 20);
+                    break;
+                case 12:
+                    (day < 21) ? (month = 9, day += 10) : (month = 10, day -= 20);
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (y === 3) {
+            year -= ((month < 3) || ((month === 3) && (day < 21))) ? 622 : 621;
+            switch (month) {
+                case 1:
+                    (day < 20) ? (month = 10, day += 11) : (month = 11, day -= 19);
+                    break;
+                case 2:
+                    (day < 19) ? (month = 11, day += 12) : (month = 12, day -= 18);
+                    break;
+                case 3:
+                    (day < 21) ? (month = 12, day += 10) : (month = 1, day -= 20);
+                    break;
+                case 4:
+                    (day < 21) ? (month = 1, day += 11) : (month = 2, day -= 20);
+                    break;
+                case 5:
+                case 6:
+                    (day < 22) ? (month -= 3, day += 10) : (month -= 2, day -= 21);
+                    break;
+                case 7:
+                case 8:
+                case 9:
+                    (day < 23) ? (month -= 3, day += 9) : (month -= 2, day -= 22);
+                    break;
+                case 10:
+                    (day < 23) ? (month = 7, day += 8) : (month = 8, day -= 22);
+                    break;
+                case 11:
+                case 12:
+                    (day < 22) ? (month -= 3, day += 9) : (month -= 2, day -= 21);
+                    break;
+                default:
+                    break;
+            }
+        }
+        this.setState({week: week[d]});
+        this.setState({day: day});
+        this.setState({year: year});
+        this.setState({month: months[month - 1]});
+
+        let countMonth = month - 1;
+        var monthNumber;
+        if (countMonth < 10) {
+            monthNumber = '0' + countMonth;
+        }
+        let countDay = day - 1;
+        var dayNumber;
+        if (countDay < 10) {
+            dayNumber = '0' + countDay;
+        }
+        //console.log(dayNumber)
+        let x = [];
+        fetch('http://194.5.175.25:2000/api/v1/reportDayIncome/' + this.state.user_id, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                year: year.toString(),
+                month: monthNumber.toString(),
+                day: dayNumber.toString(),
+            }),
+        }).then((response) => response.json())
+            .then((responseJson) => {
+
+                if (responseJson.success === true) {
+                    let count = responseJson.data.length;
+                    for (var i = 0; i < count; i++) {
+                        console.log(responseJson.data[i].sum);
+                        this.state.sumOfIncome += responseJson.data[i].sum;
+                        x.push({label: responseJson.data[i]._id, value: responseJson.data[i].sum});
+                    }
+                    this.setState({
+                        data: {
+                            dataSets: [{
+                                values: x,
+                                label: '',
+                                config: {
+                                    colors: [processColor('#66d808'), processColor('#c6b807'), processColor('#ffdc2e'), processColor('#8CEAFF'), processColor('#FF8C9D')],
+                                    valueTextSize: 16,
+                                    valueTextColor: processColor('green'),
+                                    sliceSpace: 1,
+                                    selectionShift: 0,
+                                    form: 'SQUARE',
+                                    // xValuePosition: "OUTSIDE_SLICE",
+                                    // yValuePosition: "OUTSIDE_SLICE",
+                                    valueFormatter: '#.#\'%\'',
+                                    valueLineColor: processColor('green'),
+                                    valueLinePart1Length: 0.80,
+                                },
+                            }],
+
+                        },
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+        this.setState({
+            xx: x,
+        });
+    };
+    displayCost = () => {
+        var week = new Array('يكشنبه', 'دوشنبه', 'سه شنبه', 'چهارشنبه', 'پنج شنبه', 'جمعه', 'شنبه');
+        var months = new Array('فروردين', 'ارديبهشت', 'خرداد', 'تير', 'مرداد', 'شهريور', 'مهر', 'آبان', 'آذر', 'دي', 'بهمن', 'اسفند');
+        var today = new Date();
+        var d = today.getDay();
+        var day = today.getDate();
+        var month = today.getMonth() + 1;
+        var year = today.getYear();
+        year = (window.navigator.geolocation > 0) ? year : 1900 + year;
+        if (year === 0) {
+            year = 2000;
+        }
+        if (year < 100) {
+            year += 1900;
+        }
+        var y = 1;
+        for (var i = 0; i < 3000; i += 4) {
+            if (year === i) {
+                y = 2;
+            }
+        }
+        for (var i = 1; i < 3000; i += 4) {
+            if (year === i) {
+                y = 3;
+            }
+        }
+        if (y === 1) {
+            year -= ((month < 3) || ((month === 3) && (day < 21))) ? 622 : 621;
+            switch (month) {
+                case 1:
+                    (day < 21) ? (month = 10, day += 10) : (month = 11, day -= 20);
+                    break;
+                case 2:
+                    (day < 20) ? (month = 11, day += 11) : (month = 12, day -= 19);
+                    break;
+                case 3:
+                    (day < 21) ? (month = 12, day += 9) : (month = 1, day -= 20);
+                    break;
+                case 4:
+                    (day < 21) ? (month = 1, day += 11) : (month = 2, day -= 20);
+                    break;
+                case 5:
+                case 6:
+                    (day < 22) ? (month -= 3, day += 10) : (month -= 2, day -= 21);
+                    break;
+                case 7:
+                case 8:
+                case 9:
+                    (day < 23) ? (month -= 3, day += 9) : (month -= 2, day -= 22);
+                    break;
+                case 10:
+                    (day < 23) ? (month = 7, day += 8) : (month = 8, day -= 22);
+                    break;
+                case 11:
+                case 12:
+                    (day < 22) ? (month -= 3, day += 9) : (month -= 2, day -= 21);
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (y === 2) {
+            year -= ((month < 3) || ((month == 3) && (day < 20))) ? 622 : 621;
+            switch (month) {
+                case 1:
+                    (day < 21) ? (month = 10, day += 10) : (month = 11, day -= 20);
+                    break;
+                case 2:
+                    (day < 20) ? (month = 11, day += 11) : (month = 12, day -= 19);
+                    break;
+                case 3:
+                    (day < 20) ? (month = 12, day += 10) : (month = 1, day -= 19);
+                    break;
+                case 4:
+                    (day < 20) ? (month = 1, day += 12) : (month = 2, day -= 19);
+                    break;
+                case 5:
+                    (day < 21) ? (month = 2, day += 11) : (month = 3, day -= 20);
+                    break;
+                case 6:
+                    (day < 21) ? (month = 3, day += 11) : (month = 4, day -= 20);
+                    break;
+                case 7:
+                    (day < 22) ? (month = 4, day += 10) : (month = 5, day -= 21);
+                    break;
+                case 8:
+                    (day < 22) ? (month = 5, day += 10) : (month = 6, day -= 21);
+                    break;
+                case 9:
+                    (day < 22) ? (month = 6, day += 10) : (month = 7, day -= 21);
+                    break;
+                case 10:
+                    (day < 22) ? (month = 7, day += 9) : (month = 8, day -= 21);
+                    break;
+                case 11:
+                    (day < 21) ? (month = 8, day += 10) : (month = 9, day -= 20);
+                    break;
+                case 12:
+                    (day < 21) ? (month = 9, day += 10) : (month = 10, day -= 20);
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (y === 3) {
+            year -= ((month < 3) || ((month === 3) && (day < 21))) ? 622 : 621;
+            switch (month) {
+                case 1:
+                    (day < 20) ? (month = 10, day += 11) : (month = 11, day -= 19);
+                    break;
+                case 2:
+                    (day < 19) ? (month = 11, day += 12) : (month = 12, day -= 18);
+                    break;
+                case 3:
+                    (day < 21) ? (month = 12, day += 10) : (month = 1, day -= 20);
+                    break;
+                case 4:
+                    (day < 21) ? (month = 1, day += 11) : (month = 2, day -= 20);
+                    break;
+                case 5:
+                case 6:
+                    (day < 22) ? (month -= 3, day += 10) : (month -= 2, day -= 21);
+                    break;
+                case 7:
+                case 8:
+                case 9:
+                    (day < 23) ? (month -= 3, day += 9) : (month -= 2, day -= 22);
+                    break;
+                case 10:
+                    (day < 23) ? (month = 7, day += 8) : (month = 8, day -= 22);
+                    break;
+                case 11:
+                case 12:
+                    (day < 22) ? (month -= 3, day += 9) : (month -= 2, day -= 21);
+                    break;
+                default:
+                    break;
+            }
+        }
+        this.setState({day: day});
+        this.setState({year: year});
+        this.setState({month: months[month - 1]});
+        console.log(month - 1);
+        let countMonth = month - 1;
+        var monthNumber;
+        if (countMonth < 10) {
+            monthNumber = '0' + countMonth;
+        }
+        let countDay = day - 1;
+        var dayNumber;
+        if (countDay < 10) {
+            dayNumber = '0' + countDay;
+        }
+        let x = [];
+        fetch('http://194.5.175.25:2000/api/v1/reportDaycost/' + this.state.user_id, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                year: year.toString(),
+                month: monthNumber.toString(),
+                day: dayNumber.toString(),
+            }),
+        }).then((response) => response.json())
+            .then((responseJson) => {
+
+                if (responseJson.success === true) {
+                    let count = responseJson.data.length;
+                    for (var i = 0; i < count; i++) {
+                        console.log(responseJson.data[i].sum);
+                        this.state.sumOfCost += responseJson.data[i].sum;
+                        x.push({label: responseJson.data[i]._id, value: responseJson.data[i].sum});
+                    }
+                    this.setState({
+                        dataCost: {
+                            dataSets: [{
+                                values: x,
+                                label: '',
+                                config: {
+                                    colors: [processColor('#66d808'), processColor('#c6b807'), processColor('#ffdc2e'), processColor('#8CEAFF'), processColor('#FF8C9D')],
+                                    valueTextSize: 16,
+                                    valueTextColor: processColor('green'),
+                                    sliceSpace: 1,
+                                    selectionShift: 0,
+                                    form: 'SQUARE',
+                                    // xValuePosition: "OUTSIDE_SLICE",
+                                    // yValuePosition: "OUTSIDE_SLICE",
+                                    valueFormatter: '#.#\'%\'',
+                                    valueLineColor: processColor('green'),
+                                    valueLinePart1Length: 0.80,
+                                },
+                            }],
+
+                        },
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+        this.setState({
+            xx: x,
+        });
+    };
+    componentDidMount(): void {
+        this.displayCost();
+        this.displayIncome();
     }
 
     render() {
@@ -154,7 +534,7 @@ class ReportDay extends React.Component {
                                     logEnabled={true}
                                     chartBackgroundColor={processColor('#FFF')}
                                     chartDescription={this.state.description}
-                                    data={this.state.datap}
+                                    data={this.state.dataCost}
                                     legend={this.state.legend}
                                     highlights={this.state.highlights}
 
@@ -189,12 +569,12 @@ class ReportDay extends React.Component {
                                                       <View style={{ flex: 1, flexDirection: 'row' }}>
                                                           <View style={{ flex: 3, marginTop: 17, alignItems: 'flex-start', paddingLeft: 15 }}>
 
-                                                              <Text style={{ fontSize: 14, color: 'red', fontFamily: 'IRANSansMobile(FaNum)' }}> هزینه:  <Text style={{ fontSize: 16, color: '#777777', fontFamily: 'IRANSansMobile(FaNum)' }}> {item.priceincom}</Text></Text>
+                                                              <Text style={{ fontSize: 14, color: 'red', fontFamily: 'IRANSansMobile(FaNum)' }}> هزینه:  <Text style={{ fontSize: 16, color: '#777777', fontFamily: 'IRANSansMobile(FaNum)' }}> {this.state.sumOfCost}</Text></Text>
 
                                                           </View>
                                                           <View style={{ flex: 3, marginTop: 12 }}>
-                                                              <Text style={{ fontSize: 14, color: '#777777', fontFamily: 'IRANSansMobile(FaNum)' }}>{item.day}</Text>
-                                                              <Text style={{ fontSize: 13, color: '#777777', fontFamily: 'IRANSansMobile(FaNum)', marginTop: 3, textAlign: 'right' }}>{item.date}</Text>
+                                                              <Text style={{ fontSize: 14, color: '#777777', fontFamily: 'IRANSansMobile(FaNum)' }}>{this.state.week}-{this.state.month}</Text>
+                                                              <Text style={{ fontSize: 13, color: '#777777', fontFamily: 'IRANSansMobile(FaNum)', marginTop: 3, textAlign: 'right' }}>{this.state.year}</Text>
 
 
                                                           </View>
@@ -263,12 +643,12 @@ class ReportDay extends React.Component {
                                                       <View style={{ flex: 1, flexDirection: 'row' }}>
                                                           <View style={{ flex: 3, marginTop: 17, alignItems: 'flex-start', paddingLeft: 15 }}>
 
-                                                              <Text style={{ fontSize: 14, color: 'green', fontFamily: 'IRANSansMobile(FaNum)' }}> درآمدها:  <Text style={{ fontSize: 16, color: '#777777', fontFamily: 'IRANSansMobile(FaNum)' }}> {item.priceincom}</Text></Text>
+                                                              <Text style={{ fontSize: 14, color: 'green', fontFamily: 'IRANSansMobile(FaNum)' }}> درآمدها:  <Text style={{ fontSize: 16, color: '#777777', fontFamily: 'IRANSansMobile(FaNum)' }}> {this.state.sumOfIncome}</Text></Text>
 
                                                           </View>
                                                           <View style={{ flex: 3, marginTop: 12 }}>
-                                                              <Text style={{ fontSize: 14, color: '#777777', fontFamily: 'IRANSansMobile(FaNum)' }}>{item.day}</Text>
-                                                              <Text style={{ fontSize: 13, color: '#777777', fontFamily: 'IRANSansMobile(FaNum)', marginTop: 3, textAlign: 'right' }}>{item.date}</Text>
+                                                              <Text style={{ fontSize: 14, color: '#777777', fontFamily: 'IRANSansMobile(FaNum)' }}>{this.state.week}-{this.state.month}</Text>
+                                                              <Text style={{ fontSize: 13, color: '#777777', fontFamily: 'IRANSansMobile(FaNum)', marginTop: 3, textAlign: 'right' }}>{this.state.year}</Text>
                                                           </View>
                                                       </View>
 
@@ -285,6 +665,13 @@ class ReportDay extends React.Component {
         );
     }
 }
+const  mapStateToProps = state => {
+    return {
+        dataLogin: state.loginUser.dataLogin,
+
+    };
+};
+export default connect(mapStateToProps)(ReportDay);
 
 const styles = StyleSheet.create({
 
@@ -322,4 +709,3 @@ const styles = StyleSheet.create({
 
 });
 
-export default ReportDay;

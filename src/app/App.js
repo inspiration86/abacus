@@ -13,7 +13,7 @@ class App extends Component {
     render(){
         return(
             <Provider store={createStore(reducers,{},applyMiddleware(ReduxThunk))}>
-            <RootStack navi={this.props}/>
+                <RootStack navi={this.props}/>
             </Provider>
         )
     }

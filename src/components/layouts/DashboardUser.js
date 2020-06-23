@@ -4,30 +4,32 @@ import {createAppContainer,} from 'react-navigation';
 import React from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
+    faAward,
     faBalanceScale,
     faBars,
-    faBell, faCalculator, faCalendarPlus, faCartPlus, faChartPie,
+    faBell, faCalculator, faCalendarPlus, faCartPlus, faChartPie, faCoins,
     faComment,
     faCreditCard, faDollyFlatbed,
-    faEdit,
+    faEdit, faExternalLinkAlt, faFileContract,
     faFunnelDollar,
-    faHome, faImage,
+    faHome, faIcons, faImage,
     faLayerGroup,
-    faListAlt, faMobile, faMobileAlt,
+    faListAlt, faListOl, faMobile, faMobileAlt,
     faMoneyBill,
     faPhone,
     faPlusCircle,
-    faRubleSign,
+    faRubleSign, faSave,
     faSign,
     faSignOutAlt,
     faSkiing,
     faTasks,
     faUser, faUsers,
 } from '@fortawesome/free-solid-svg-icons';
-import List from "../screens/AdvancedSearch";
-import RegisterIncome from  '../screens/RegisterIncome';
-import Reminder from  '../screens/Reminder'
-import Budgeting from '../screens/Budgeting';
+import ListIncome from '../screens/ListIncome';
+import ListCost from '../screens/ListCost';
+import ListDebt from '../screens/ListDebt';
+import ContactUs from '../screens/ContactUs';
+
 import BottomTabNavigator from '../layouts/BottomTabNavigator';
 import {Body, Footer, Header, Icon, Left, Right} from "native-base";
 import {faList} from '@fortawesome/free-solid-svg-icons/faList';
@@ -35,6 +37,8 @@ import LinearGradient from "react-native-linear-gradient";
 import {faSearch} from '@fortawesome/free-solid-svg-icons/faSearch';
 import Profile from '../screens/Profile';
 import {faUserCircle} from '@fortawesome/free-solid-svg-icons/faUserCircle';
+import {faMoneyBillWaveAlt} from '@fortawesome/free-solid-svg-icons/faMoneyBillWaveAlt';
+import {faPhoneSquare} from '@fortawesome/free-solid-svg-icons/faPhoneSquare';
 
 const CustomDrawerComponent = props => (
     <View style={{flex: 1}}>
@@ -50,9 +54,9 @@ const CustomDrawerComponent = props => (
                 colors={['#3e843d','#3ede30','#47b03e']}
                 style={{
                     padding:10,
-borderBottomColor:'#47b03e',
+                    borderBottomColor:'#47b03e',
                     borderBottomWidth:5,
-width: '108%',
+                    width: '108%',
                 }}>
                 <View style={{flex: 1, flexDirection: 'column'}}>
                     <View style={{flex: 2, justifyContent: 'center', alignItems: 'flex-end', marginTop: 20,marginRight:40}}>
@@ -69,7 +73,6 @@ width: '108%',
                     </View>
                 </View>
             </LinearGradient>
-            {/*</ImageBackground>*/}
         </Header>
 
         <ScrollView>
@@ -79,7 +82,7 @@ width: '108%',
         <Footer style={styles.containerfooter}>
             <View style={{flexDirection: 'row-reverse', flex: 1,backgroundColor:'#eeeeee',paddingHorizontal:10}}>
                 <View style={{flex: 1, justifyContent: 'center', alignItems: 'flex-end',marginHorizontal:20}}>
-                     <FontAwesomeIcon color={'#3d933c'} icon={faSignOutAlt} style={styles.containericon}/>
+                    <FontAwesomeIcon color={'#3d933c'} icon={faSignOutAlt} style={styles.containericon}/>
                 </View>
                 <View style={{flex: 1, justifyContent: 'center', alignItems: 'flex-end'}}>
                     <Text style={{color: '#777', fontFamily: 'IRANSansMobile',}}>خروج</Text>
@@ -177,16 +180,16 @@ const CustomerMyDrawerNavigator = createDrawerNavigator({
             }
         },
         'گزارشگیری': {
-            screen: RegisterIncome,
+            screen: ListIncome,
             navigationOptions: {
                 headerShown: false,
                 drawerLabel: (
                     <View style={{flex: 1, flexDirection: 'row',backgroundColor:'#fff',height:55,justifyContent:'center',alignItems:'center'}}>
                         <View style={{flex: 9}}>
-                            <Text style={{fontFamily: 'IRANSansMobile', color: '#555',textAlign:'right',marginRight:30}}>گزارش گیری</Text>
+                            <Text style={{fontFamily: 'IRANSansMobile', color: '#555',textAlign:'right',marginRight:30}}>لیست درآمدها</Text>
                         </View>
                         <View style={{flex: 2}}>
-                            <FontAwesomeIcon icon={faList} size={20} style={{color: '#3d933c'}}/>
+                            <FontAwesomeIcon icon={faCoins} size={20} style={{color: '#3d933c'}}/>
                         </View>
                     </View>
                 ),
@@ -196,13 +199,13 @@ const CustomerMyDrawerNavigator = createDrawerNavigator({
             }
         },
         'بودجه بندی': {
-            screen: Budgeting,
+            screen: ListCost,
             navigationOptions: {
                 headerShown: false,
                 drawerLabel: (
                     <View style={{flex: 1, flexDirection: 'row',backgroundColor:'#f5f5f5',height:55,justifyContent:'center',alignItems:'center'}}>
                         <View style={{flex: 9}}>
-                            <Text style={{fontFamily: 'IRANSansMobile', color: '#555',textAlign:'right',marginRight:30}}>بودجه بندی</Text>
+                            <Text style={{fontFamily: 'IRANSansMobile', color: '#555',textAlign:'right',marginRight:30}}>لیست هزینه ها</Text>
                         </View>
                         <View style={{flex: 2}}>
                             <FontAwesomeIcon icon={faCalculator} size={20} style={{color: '#3d933c'}}/>
@@ -215,16 +218,35 @@ const CustomerMyDrawerNavigator = createDrawerNavigator({
             }
         },
         'یادآوری': {
-            screen: Reminder,
+            screen: ListDebt,
             navigationOptions: {
                 headerShown: false,
                 drawerLabel: (
                     <View style={{flex: 1, flexDirection: 'row',height:55,justifyContent:'center',alignItems:'center'}}>
                         <View style={{flex: 9}}>
-                            <Text style={{fontFamily: 'IRANSansMobile', color: '#555',textAlign:'right',marginRight:30}}> یادآوری</Text>
+                            <Text style={{fontFamily: 'IRANSansMobile', color: '#555',textAlign:'right',marginRight:30}}> لیست بدهی</Text>
                         </View>
                         <View style={{flex: 2}}>
-                            <FontAwesomeIcon icon={faBell} size={20} style={{color: '#3d933c'}}/>
+                            <FontAwesomeIcon icon={faList} size={20} style={{color: '#3d933c'}}/>
+                        </View>
+                    </View>
+                ),
+            },
+            contentOptions: {
+                activeTintColor: '#fff',
+            }
+        },
+        'درباره ما': {
+            screen: ContactUs,
+            navigationOptions: {
+                headerShown: false,
+                drawerLabel: (
+                    <View style={{flex: 1, flexDirection: 'row',height:55,backgroundColor:'#f5f5f5',justifyContent:'center',alignItems:'center'}}>
+                        <View style={{flex: 9}}>
+                            <Text style={{fontFamily: 'IRANSansMobile', color: '#555',textAlign:'right',marginRight:30}}>تماس با ما</Text>
+                        </View>
+                        <View style={{flex: 2}}>
+                            <FontAwesomeIcon icon={faPhoneSquare} size={20} style={{color: '#3d933c'}}/>
                         </View>
                     </View>
                 ),

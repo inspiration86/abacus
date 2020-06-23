@@ -6,9 +6,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer} from 'react-navigation';
 import {Text, ScrollView} from 'react-native';
 import {Card, List, Content, ListItem, Icon, Left, Body, Right, Title, Button} from 'native-base';
-
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-
 import {
     faCar,
     faDollarSign, faHome, faMoneyBill,

@@ -15,12 +15,11 @@ import RegisterCost from "./components/screens/RegisterCost";
 import Budgeting from "./components/screens/Budgeting";
 import Reminder from "./components/screens/Reminder";
 import Balance from "./components/screens/Balance";
-import Report from "./components/screens/Report";
+import ListIncome from "./components/screens/ListIncome";
+import ListCost from "./components/screens/ListCost";
+import ListDebt from "./components/screens/ListDebt";
 import ResetPassword from "./components/screens/ResetPassword";
 import Profile from "./components/screens/Profile";
-import ReportDay from "./components/screens/ReportDay";
-import ReportYear from "./components/screens/ReportYear";
-
 const RootStack = createStackNavigator({
         Splash: {screen: Splash,navigationOptions: ({navigation}) => ({
             headerShown: false
@@ -109,30 +108,30 @@ const RootStack = createStackNavigator({
                 headerShown: false
             })
         },
+        ListDebt: {
+            screen: ListDebt,
+            navigationOptions: ({navigation}) => ({
+                headerShown: false
+            })
+        },
+        ListCost: {
+            screen: ListCost,
+            navigationOptions: ({navigation}) => ({
+                headerShown: false
+            })
+        },
+        ListIncome: {
+            screen: ListIncome,
+            navigationOptions: ({navigation}) => ({
+                headerShown: false
+            })
+        },
         Profile: {
             screen: Profile,
             navigationOptions: ({navigation}) => ({
                 headerShown: false
             })
         },
-        // Report: {
-        //     screen: Report,
-        //     navigationOptions: ({navigation}) => ({
-        //         headerShown: false
-        //     })
-        // },
-        // ReportDay: {
-        //     screen: ReportDay,
-        //     navigationOptions: ({navigation}) => ({
-        //         headerShown: false
-        //     })
-        // },
-        // ReportYear: {
-        //     screen: ReportYear,
-        //     navigationOptions: ({navigation}) => ({
-        //         headerShown: false
-        //     })
-        // },
     },
     {
         initialRouteName: 'Splash',

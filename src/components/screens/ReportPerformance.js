@@ -62,13 +62,13 @@ export default class ReportPerformance extends React.Component {
 
             },
 
-            highlights: [{ x: 1 }],
-            description: {
-                text: '',
-                textSize: 15,
-                textColor: processColor('darkgray'),
-
-            },
+            // highlights: [{ x: 1 }],
+            // description: {
+            //     text: '',
+            //     textSize: 15,
+            //     textColor: processColor('darkgray'),
+            //
+            // },
 
             datap: {
                 dataSets: [{
