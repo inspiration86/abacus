@@ -20,10 +20,10 @@ export default class Splash extends Component {
         this.animatedValue2 = new Animated.Value(0);
         this.animatedValue3 = new Animated.Value(0);
 
-        this.state = {
-            logourl: require('../../../assets/images/user.jpg'),
-            backgroundurl: require('../../../assets/images/avatar.png'),
-        };
+        // this.state = {
+        //     logourl: require('../../../assets/images/user.jpg'),
+        //     backgroundurl: require('../../../assets/images/avatar.png'),
+        // };
     }
 
     componentDidMount() {
@@ -33,8 +33,8 @@ export default class Splash extends Component {
     }
     splash() {
         setTimeout(() => {
-          //this.props.navigation.navigate('DashboardUser');
-            this.props.navigation.navigate('LoginOrRegister');
+            //this.props.navigation.navigate('DashboardUser');
+            this.props.navigation.navigate('Slider');
 
         }, 6000);
     }
@@ -71,7 +71,7 @@ export default class Splash extends Component {
         });
         const introtext = this.animatedValue1.interpolate({
             inputRange: [0, 1],
-            outputRange: [-800, 50],
+            outputRange: [-500, 10],
         });
 
         return (
@@ -84,53 +84,42 @@ export default class Splash extends Component {
                 <LinearGradient start={{x: -0.1, y: 0.9}} end={{x: 0.6, y: 1.0}}
                                 locations={[0,0.5,0.9]}
                                 colors={['#3e843d','#3ede30','#47b03e']} style={{flex:5,alignItems:'center',justifyContent:'center'}}>
+                    <Animated.View style={[{ flex: 1, justifyContent: 'center',marginTop:250,
+                        alignItems: 'center',},{transform: [{scale: scale}]}]}>
+                        <Image
+                            source={require('../../../assets/images/icons/857385.png')}
+                            style={{width: 140, height: 140}}
+                        />
+                        <Text style={styles.text}>چرتکه</Text>
+                    </Animated.View>
 
-                    <View style={{
-                        flex: 3, justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
-                        <Animated.View style={{opacity}}>
-                            <Text style={{fontSize:20,fontFamily:'Lalezar-Regular',color:'#fff'}}>اپلیکیشن مالی حسابداری شخصی</Text>
-                        </Animated.View>
-                    </View>
-                    <View style={{
-                        flex: 3, justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
+
                     <View style={{
                         flex: 1, justifyContent: 'center',
                         alignItems: 'center',
+                        marginTop:180,
                     }}>
-                        <Image
-                        source={require('../../../assets/images/icons/857385.png')}
-                        style={{width: 90, height: 90}}
-                    />
+
+                        <Animated.View   style={[styles.inputContainer,{bottom: introtext,}]}>
+                            <Text style={{fontSize:20,fontFamily:'Lalezar-Regular',color:'green',}}>اپلیکیشن مالی حسابداری شخصی</Text>
+                        </Animated.View>
                     </View>
 
 
-                <View style={{
-                    flex: 1, justifyContent: 'center',
-                    alignItems: 'center',
-                }}>
-                    <Animated.View style={{bottom: introtext, position: 'absolute'}}>
-                        <Text style={styles.text}>چرتکه</Text>
-                    </Animated.View>
-                </View>
+
+                    <View style={{
+                        flex: 4, justifyContent: 'center',
+                        alignItems: 'center',
+                    }}>
+
+                        <Animated.View style={[{opacity}]}>
+                            <Text style={{fontSize: 16, color: '#fff', fontFamily: 'Lalezar-Regular'}}>طراحی و پیاده سازی
+                                شرکت دانش بنیان آرکا</Text>
+                        </Animated.View>
+                        <Animated.View style={{transform: [{scale: scale}]}}>
+                            <Text style={styles.textversion}>نسخه 1.0.0</Text>
+                        </Animated.View>
                     </View>
-
-
-                <View style={{
-                    flex: 4, justifyContent: 'center',
-                    alignItems: 'center',
-                }}>
-                    <Animated.View style={{transform: [{scale: scale}]}}>
-                        <Text style={styles.textversion}>نسخه 1.0.0</Text>
-                    </Animated.View>
-                    <Animated.View style={{opacity}}>
-                        <Text style={{fontSize: 16, color: '#fff', fontFamily: 'Lalezar-Regular'}}>طراحی و پیاده سازی
-                            شرکت دانش بنیان آرکا</Text>
-                    </Animated.View>
-                </View>
                 </LinearGradient>
 
             </View>
@@ -161,9 +150,31 @@ const styles = StyleSheet.create({
     },
     textversion: {
         fontSize: 12,
-        marginTop: 50,
+        marginTop:5,
         color: '#fff',
         // fontFamily: 'GreatVibes-Regular',
         fontFamily: 'IRANSansMobile(FaNum)',
+    },
+    inputContainer: {
+        backgroundColor: '#FFFFFF',
+        borderRadius:100,
+        textAlign:'center',
+
+        width:300,
+        height:30,
+
+        flexDirection: 'row',
+        alignItems:'center',
+        justifyContent:'center',
+
+        shadowColor: "#808080",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+
+        elevation:19,
     },
 });

@@ -349,7 +349,7 @@ class AdvancedSearch extends Component {
                     <Tab heading={<TabHeading style={{ backgroundColor: '#fff' }}>
 
                         <Text style={{ color: 'green', fontWeight: 'bold', fontFamily: 'IRANSansMobile(FaNum)', marginRight: 7 }}>هزینه ها</Text>
-                        <Image style={{ width: 30, height: 30 }} source={require('../image/coin.png')} />
+                        <Image style={{ width: 30, height: 30 }} source={require('../../../assets/images/icons/2506838.png')} />
 
                     </TabHeading>}>
                         <ScrollView showsVerticalScrollIndicator={false}>
@@ -381,8 +381,8 @@ class AdvancedSearch extends Component {
                                     <DatePicker isGregorian={false}
                                                 mode='datepicker'
                                                 options={{
-                                                    defaultFont: 'Shabnam-Light',
-                                                    headerFont: 'Shabnam-Medium',
+                                                    defaultFont: 'IRANSansMobile(FaNum)',
+                                                    headerFont: 'IRANSansMobile(FaNum)',
                                                 }}
                                                 onDateChange={date => {
                                                     this.setState({ DateStartTextCost: date });
@@ -425,8 +425,8 @@ class AdvancedSearch extends Component {
                                     <DatePicker isGregorian={false}
                                                 mode='datepicker'
                                                 options={{
-                                                    defaultFont: 'Shabnam-Light',
-                                                    headerFont: 'Shabnam-Medium',
+                                                    defaultFont: 'IRANSansMobile(FaNum)',
+                                                    headerFont: 'IRANSansMobile(FaNum)',
                                                 }}
                                                 onDateChange={date => {
                                                     this.setState({ DateEndTextCost: date });
@@ -695,7 +695,7 @@ class AdvancedSearch extends Component {
                     </Tab>
                     <Tab heading={<TabHeading style={{ backgroundColor: '#fff' }}>
                         <Text style={{ color: '#3e843d', fontFamily: 'IRANSansMobile(FaNum)', marginRight: 7 }}> درآمدها</Text>
-                        <Image style={{ width: 30, height: 30 }} source={require('../image/incom.png')} />
+                        <Image style={{ width: 30, height: 30 }} source={require('../../../assets/images/icons/1420341.png')} />
 
                     </TabHeading>}>
                         <ScrollView showsVerticalScrollIndicator={false}>
