@@ -8,7 +8,7 @@ import ReportDay from '../screens/ReportDay';
 import ReportYear from '../screens/ReportYear';
 import ReportPerformance from '../screens/ReportPerformance';
 import Report from "../screens/Report";
-import ReportMounth from "../screens/ReportMounth";
+import ReportMonth from "../screens/ReportMonth";
 import ReportCategory from "../screens/ReportCategory";
 import {createStackNavigator} from 'react-navigation-stack';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -20,8 +20,8 @@ const RootStack = createStackNavigator({
                 headerShown: false
             })
         },
-        ReportMounth: {
-            screen: ReportMounth,
+        ReportMonth: {
+            screen: ReportMonth,
             navigationOptions: ({navigation}) => ({
                 headerShown: false
             })
@@ -46,6 +46,12 @@ const RootStack = createStackNavigator({
         },
         ReportPerformance: {
             screen: ReportPerformance,
+            navigationOptions: ({navigation}) => ({
+                headerShown: false
+            })
+        },
+        AdvancedSearch: {
+            screen: AdvancedSearch,
             navigationOptions: ({navigation}) => ({
                 headerShown: false
             })

@@ -14,7 +14,6 @@ import RegisterDebt from "./components/screens/RegisterDebt";
 import RegisterCost from "./components/screens/RegisterCost";
 import Budgeting from "./components/screens/Budgeting";
 import Reminder from "./components/screens/Reminder";
-import Balance from "./components/screens/Balance";
 import ListIncome from "./components/screens/ListIncome";
 import ListCost from "./components/screens/ListCost";
 import ListDebt from "./components/screens/ListDebt";
@@ -86,12 +85,6 @@ const RootStack = createStackNavigator({
         },
         Reminder: {
             screen: Reminder,
-            navigationOptions: ({navigation}) => ({
-                headerShown: false
-            })
-        },
-        Balance: {
-            screen: Balance,
             navigationOptions: ({navigation}) => ({
                 headerShown: false
             })

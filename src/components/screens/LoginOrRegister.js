@@ -9,9 +9,7 @@ import {Button, Input} from 'react-native-elements';
 import {Avatar, Card, Title, Paragraph} from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
 import AwesomeAlert from 'react-native-awesome-alerts';
-
 import Icon from 'react-native-vector-icons/FontAwesome';
-
 const {width, height} = Dimensions.get('window');
 export default class LoginOrRegister extends Component {
     constructor(props) {
@@ -61,7 +59,7 @@ export default class LoginOrRegister extends Component {
                                 colors={['#3e843d','#3ede30','#47b03e']} >
                     <View style={styles.headerContent}>
                         <Image style={{width: 90, height: 90}}
-                               source={require('../../../assets/images/icons/857385.png')}/>
+                               source={require('../../../assets/images/icons/abacus.png')}/>
 
                         <Text style={{
                             fontSize: 40,
@@ -72,8 +70,7 @@ export default class LoginOrRegister extends Component {
                         </Text>
 
                     </View>
-                    {/*d6f5d3*/}
-                    {/*c5f3c1*/}
+
                     <Card
                         style={{
                             marginTop:40,
@@ -95,7 +92,7 @@ export default class LoginOrRegister extends Component {
                         }}>
                         <View style={{marginTop: 110}}>
                             <Button buttonStyle={{
-                                marginVertical: 20,
+                                marginVertical: 10,
                                 backgroundColor: '#47b03e',
                                 borderRadius: 30,
                                 width: '100%',
@@ -116,7 +113,7 @@ export default class LoginOrRegister extends Component {
                                     title="ورود"
                             />
                             <Button buttonStyle={{
-                                marginVertical: 15,
+                                marginVertical: 10,
                                 backgroundColor: '#47b03e',
                                 borderRadius: 30,
                                 width: '100%',

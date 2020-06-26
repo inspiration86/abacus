@@ -14,26 +14,21 @@ import { Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {  SafeAreaView } from 'react-navigation';
 import { PieChart } from 'react-native-charts-wrapper';
-export default class ReportYear extends React.Component {
-
-    constructor() {
-        super();
-
+import {connect} from 'react-redux';
+class ReportYear extends React.Component {
+    constructor(props) {
+        super(props);
         this.state = {
+            user_id: this.props.dataLogin['id'],
             resultIncome: [],
             sumOfIncome: 0,
             AvgOfDayIncome: 0,
             AvgOfDayCost:0,
             sumOfCost: 0,
-
-
             year: '',
-
-            // user_id: this.props.dataLogin['id'],
             legend: {
                 enabled: true,
                 textSize: 15,
-
                 direction: 'RIGHT_TO_LEFT',
                 horizontalAlignment: 'CENTER',
                 verticalAlignment: 'BOTTOM',
@@ -227,9 +222,7 @@ export default class ReportYear extends React.Component {
         }
 
         let x = [];
-        let id
-        id = '5ee8e38613983412c8dd544c';
-        fetch('http://194.5.175.25:2000/api/v1/reportYearIncome/' +id , {
+        fetch('http://194.5.175.25:2000/api/v1/reportYearIncome/' +this.state.user_id , {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -432,9 +425,7 @@ export default class ReportYear extends React.Component {
         }
 
         let x = [];
-        let id ;
-        id = '5ee8e38613983412c8dd544c';
-        fetch('http://194.5.175.25:2000/api/v1/reportYearCost/' + id, {
+        fetch('http://194.5.175.25:2000/api/v1/reportYearCost/' + this.state.user_id, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -517,8 +508,11 @@ export default class ReportYear extends React.Component {
                     <Tab heading={<TabHeading style={{ backgroundColor: '#fff' }}>
 
                         <Text style={{ color: 'green', fontWeight: 'bold', fontFamily: 'IRANSansMobile(FaNum)', marginRight: 7 }}>هزینه ها</Text>
-                        <Image style={{ width: 30, height: 30 }} source={require('../image/coin.png')} />
-
+                        <Image style={{
+                            width: 30,
+                            height:30,
+                            marginLeft:10
+                        }} source={require('../../../assets/images/icons/coin.png')} />
                     </TabHeading>}>
                         <View style={{ flex: 1, backgroundColor: '#DCDCDC', }}>
                             <Card style={styles.cardStyle}>
@@ -591,8 +585,11 @@ export default class ReportYear extends React.Component {
                     </Tab>
                     <Tab heading={<TabHeading style={{ backgroundColor: '#fff' }}>
                         <Text style={{ color: '#3e843d', fontFamily: 'IRANSansMobile(FaNum)', marginRight: 7 }}> درآمدها</Text>
-                        <Image style={{ width: 30, height: 30 }} source={require('../image/incom.png')} />
-
+                        <Image style={{
+                            width: 30,
+                            height:30,
+                            marginLeft:10
+                        }} source={require('../../../assets/images/icons/incom.png')} />
                     </TabHeading>}>
                         <View style={{ flex: 1, backgroundColor: '#DCDCDC', }}>
                             <Card style={styles.cardStyle}>
@@ -667,7 +664,13 @@ export default class ReportYear extends React.Component {
         );
     }
 }
+const  mapStateToProps = state => {
+    return {
+        dataLogin: state.loginUser.dataLogin,
 
+    };
+};
+export default connect(mapStateToProps)(ReportYear);
 const styles = StyleSheet.create({
 
     chart: {

@@ -13,8 +13,6 @@ import Select2 from 'react-native-select-two';
 import { FlatGrid } from 'react-native-super-grid';
 import DatePicker, { getFormatedDate } from 'react-native-modern-datepicker';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
-import Header from '../layouts/Header';
-
 import LinearGradient from 'react-native-linear-gradient';
 
 import {
@@ -37,8 +35,6 @@ import {
 } from 'native-base';
 import { Divider } from 'react-native-paper';
 import {connect} from 'react-redux';
-
-
 class AdvancedSearch extends Component {
     constructor(props) {
         super(props);
@@ -336,10 +332,6 @@ class AdvancedSearch extends Component {
                     locations={[0.1, 0.6, 0.9]}
                     colors={['#3e843d', '#3ede30', '#47b03e']}>
                     <View style={styles.headerContent}>
-                        {/* <Image
-                            source={require('../../../assets/images/icons/1312175.png')}
-                            style={{width: 50, height: 50}}
-                        /> */}
                         <Text style={{ fontSize: 30, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>
                             جستجوی پیشرفته
                         </Text>
@@ -349,7 +341,7 @@ class AdvancedSearch extends Component {
                     <Tab heading={<TabHeading style={{ backgroundColor: '#fff' }}>
 
                         <Text style={{ color: 'green', fontWeight: 'bold', fontFamily: 'IRANSansMobile(FaNum)', marginRight: 7 }}>هزینه ها</Text>
-                        <Image style={{ width: 30, height: 30 }} source={require('../../../assets/images/icons/2506838.png')} />
+                        <Image style={{ width: 30, height: 30 }} source={require('../../../assets/images/icons/coin.png')} />
 
                     </TabHeading>}>
                         <ScrollView showsVerticalScrollIndicator={false}>
@@ -620,16 +612,12 @@ class AdvancedSearch extends Component {
                                         contentContainerStyle={{}}
                                         renderItem={({ item, index }) => (
                                             <Card style={styles.card} key={0}>
-                                                <View style={{flexDirection:'row-reverse',flex:1,backgroundColor:'#7cb342',marginHorizontal:-10}}>
+                                                <View style={{flexDirection:'row-reverse',flex:1,backgroundColor:'#47b03e',marginHorizontal:-10}}>
                                                     <View style={{ flex: 1,marginTop:5}}>
-
                                                         <Text style={styles.title2}>مبلغ:</Text>
-
                                                     </View>
-
                                                     <View style={{ flex: 1,marginTop:5, alignItems: 'flex-start', }}>
-                                                        <Text style={styles.title2}>{item.amount} </Text>
-
+                                                        <Text style={styles.title2}>{[item.amount,'  ریال']} </Text>
                                                     </View>
 
 
@@ -695,7 +683,7 @@ class AdvancedSearch extends Component {
                     </Tab>
                     <Tab heading={<TabHeading style={{ backgroundColor: '#fff' }}>
                         <Text style={{ color: '#3e843d', fontFamily: 'IRANSansMobile(FaNum)', marginRight: 7 }}> درآمدها</Text>
-                        <Image style={{ width: 30, height: 30 }} source={require('../../../assets/images/icons/1420341.png')} />
+                        <Image style={{ width: 30, height: 30 }} source={require('../../../assets/images/icons/incom.png')} />
 
                     </TabHeading>}>
                         <ScrollView showsVerticalScrollIndicator={false}>
@@ -967,7 +955,7 @@ class AdvancedSearch extends Component {
                                         contentContainerStyle={{}}
                                         renderItem={({ item, index }) => (
                                             <Card style={styles.card} key={0}>
-                                                <View style={{flexDirection:'row-reverse',flex:1,backgroundColor:'#7cb342',marginHorizontal:-10}}>
+                                                <View style={{flexDirection:'row-reverse',flex:1,backgroundColor:'#47b03e',marginHorizontal:-10}}>
                                                     <View style={{ flex: 1,marginTop:5}}>
 
                                                         <Text style={styles.title2}>مبلغ:</Text>
@@ -975,7 +963,7 @@ class AdvancedSearch extends Component {
                                                     </View>
 
                                                     <View style={{ flex: 1,marginTop:5, alignItems: 'flex-start', }}>
-                                                        <Text style={styles.title2}>{item.amount} </Text>
+                                                        <Text style={styles.title2}>{[item.amount,'  ریال']}</Text>
 
                                                     </View>
 

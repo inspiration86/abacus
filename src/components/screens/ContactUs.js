@@ -3,6 +3,7 @@ import {Image, ImageBackground, ScrollView, Text, View} from "react-native";
 import {List} from 'react-native-paper';
 import {Icon} from "native-base";
 import Header from "../layouts/Header";
+import { Divider } from 'react-native-elements';
 class ContactUs extends Component {
     render() {
         return (
@@ -41,7 +42,7 @@ class ContactUs extends Component {
                             titleStyle={{fontSize:15,textAlign:'right', fontFamily: 'IRANSansMobile(FaNum)',}}
                             right={props => <List.Icon {...props} icon="phone" style={{color:'#47b03e'}}/>}
                         />
-                        {/*<Divider/>*/}
+                        <Divider/>
                         <List.Item
                             title="ارتباط با ما در تلگرام"
                             description="(ساعت پاسخگویی پشتیبانی تلگرامی از ساعت 9 الی 23)"
@@ -50,32 +51,32 @@ class ContactUs extends Component {
                             titleStyle={{fontSize:15,textAlign:'right', fontFamily: 'IRANSansMobile(FaNum)',marginRight:20}}
                             right={props => <Icon type="FontAwesome"  name="send-o"  style={{color:'#47b03e',fontSize: 25,marginRight:10,marginTop:10}}/>}
                         />
-                        {/*<Divider/>*/}
+                        <Divider/>
                         <List.Item
                             title="abacusapp"
                             titleStyle={{color:'#555',fontSize:15,textAlign:'right', fontFamily: 'IRANSansMobile(FaNum)',marginRight:20}}
                             right={props => <Icon type="FontAwesome"  name="instagram"  style={{color:'#47b03e',fontSize: 25,marginRight:10,marginTop:5}}/>}
                         />
-                        {/*<Divider/>*/}
+                        <Divider/>
                         <List.Item
                             title="abacusapp"
 
                             titleStyle={{fontSize:15,textAlign:'right', fontFamily: 'IRANSansMobile(FaNum)',marginRight:20}}
                             right={props => <Icon type="FontAwesome"  name="send-o"  style={{color:'#47b03e',fontSize: 25,marginRight:10}}/>}
                         />
-                        {/*<Divider/>*/}
+                        <Divider/>
                         <List.Item
                             title="ایمیل: info@abacusapp.ir"
                             titleStyle={{color:'#777', fontSize:15,textAlign:'right', fontFamily: 'IRANSansMobile(FaNum)',marginRight:20}}
                             right={props => <Icon type="FontAwesome"  name="envelope"  style={{color:'#47b03e',fontSize: 25,marginRight:10,marginTop:5}}/>}
                         />
-                        {/*<Divider/>*/}
+                        <Divider/>
                         <List.Item
                             title="وب سایت:http://abacusapp.ir"
                             titleStyle={{color:'#777',fontSize:15,textAlign:'right', fontFamily: 'IRANSansMobile(FaNum)',marginRight:20}}
                             right={props => <Icon type="FontAwesome"  name="chrome"  style={{color:'#47b03e',fontSize: 25,marginRight:10,marginTop:5}}/>}
                         />
-                        {/*<Divider/>*/}
+                        <Divider/>
                         <List.Item
                             title=" وب سایت شرکت آرکا:   http://arkainvent.com"
                             titleStyle={{color:'#777',fontSize:15,textAlign:'right', fontFamily: 'IRANSansMobile(FaNum)',marginRight:20}}
@@ -83,7 +84,7 @@ class ContactUs extends Component {
                         />
                         <View style={{backgroundColor:'ff4500',flex:1}}>
                             <Text style={{
-                                fontFamily: 'IRANSansMobile(FaNum)',
+                                fontFamily: 'Far_Aref',
                                 fontSize: 12,
                                 color: '#555',
                                 paddingVertical: 15,

@@ -8,13 +8,11 @@ import {
     ScrollView, FlatList, Image, Alert,
 } from 'react-native';
 import {Container, Header, Tab, Tabs, TabHeading} from 'native-base';
-
 import LinearGradient from 'react-native-linear-gradient';
 import {FlatGrid} from 'react-native-super-grid';
 import {Card} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {StackNavigator, SafeAreaView} from 'react-navigation';
-
 import {PieChart} from 'react-native-charts-wrapper';
 import {connect} from 'react-redux';
 
@@ -519,11 +517,11 @@ class reportMonth extends React.Component {
                     <Tab heading={<TabHeading style={{backgroundColor: '#fff'}}>
                         <Text style={{color: 'green', fontWeight: 'bold', fontFamily: 'IRANSansMobile'}}>هزینه
                             ها</Text>
-                        <Icon name="money" style={{color: 'green', marginLeft: 5, fontSize: 20}}/>
-                        {/* <Image style={{
-              width: 50,
-              height: 50,
-            }} source={require('../image/get-cash.png')} /> */}
+                        <Image style={{
+                            width: 30,
+                            height:30,
+                            marginLeft:10
+                        }} source={require('../../../assets/images/icons/coin.png')} />
 
                     </TabHeading>}>
                         <View style={{flex: 1, backgroundColor: '#DCDCDC'}}>
@@ -627,9 +625,11 @@ class reportMonth extends React.Component {
                                 fontWeight: 'bold',
                                 fontFamily: 'IRANSansMobile',
                             }}>درآمدها</Text>
-                            <Icon name="credit-card" style={{color: 'green', fontSize: 20, marginLeft: 5}}/>
-                            {/* <Image style={{width:40,height:40}} source={require('../image/payment.png')} /> */}
-
+                            <Image style={{
+                                width: 30,
+                                height:30,
+                                marginLeft:10
+                            }} source={require('../../../assets/images/icons/incom.png')} />
                         </TabHeading>}>
                         <View style={{flex: 1, backgroundColor: '#DCDCDC'}}>
                             <Card style={styles.cardStyle}>
@@ -734,11 +734,7 @@ const    mapStateToProps = state => {
             dd: [],
         };
     };
-export default connect(mapStateToProps)
-
-(
-    reportMonth,
-)
+export default connect(mapStateToProps)(reportMonth)
 ;
 const styles = StyleSheet.create({
 

@@ -152,11 +152,9 @@ class profile extends Component {
             this.showAlertSuccess();
 
         } else
-
         if(mobile.length<11 || mobile.length>11){
             this.setState({textMessageBox: 'تعداد شماره های همراه را به درستی وارد نمائید'})
             this.showAlertSuccess();
-
         }
         else {
             fetch('http://194.5.175.25:2000/api/v1/updatemobile/' + this.state.user_id, {
@@ -258,7 +256,7 @@ class profile extends Component {
             <View style={styles.container}>
                 <StatusBar
                     hidden={false}
-                    backgroundColor='#47b03e'
+                    backgroundColor='#3e843d'
                 />
                 <LinearGradient
                     style={styles.header}
@@ -266,18 +264,17 @@ class profile extends Component {
                     locations={[0.1, 0.6, 0.9]}
                     colors={['#3e843d', '#3ede30', '#47b03e']}>
                     <View style={styles.headerContent}>
-
                         <Text style={{ fontSize: 20, color: '#fff', marginBottom: 15, fontFamily: 'Far_Aref' }}>
-                            پروفایل
+                            پروفایل من
                         </Text>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',}}>
                         <TouchableOpacity style={styles.followButton} onPress={this.showDialogm}>
-                            <Text style={styles.followButtonText}>ویرایش تلفن</Text>
+                            <Text style={styles.followButtonText}>تغییر شماره</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.followButton} onPress={this.showDialogp}>
-                            <Text style={styles.followButtonText}>ویرایش رمز</Text>
+                            <Text style={styles.followButtonText}>تغییر رمز</Text>
                         </TouchableOpacity>
 
                     </View>
@@ -351,9 +348,9 @@ class profile extends Component {
                             </Item>
                             <Item fixedLabel>
                                 <Left>
-                                    <Button style={{backgroundColor: '#33b5e5'}}>
+
                                         <Icon Type='FontAwesome5' name="bank" style={styles.icon} />
-                                    </Button>
+
                                 </Left>
                                 <Input placeholder='شهر' style={styles.input} value={this.state.city_user}
                                        onChangeText={city=> this.setState({city_user:city})} />
@@ -475,13 +472,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     avatar: {
-        width: 130,
-        height: 130,
+        width: 100,
+        height: 100,
         borderRadius: 63,
         borderWidth: 1.5,
         borderColor: "#e2e2e2",
         alignSelf: 'center',
-        position: 'absolute',
+       position: 'absolute',
         justifyContent: 'center',
         alignItems: 'center'
     },

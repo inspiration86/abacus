@@ -74,7 +74,7 @@ class ListDebt extends Component {
       <View style={{ flex: 1 }}>
         <StatusBar
           hidden={false}
-          backgroundColor='#47b03e'
+          backgroundColor='#3e843d'
         />
          <Header title="لیست بدهی ها" onBackPress={()=>{this.props.navigation.goBack()}}/>
 
@@ -88,12 +88,12 @@ class ListDebt extends Component {
 
           renderItem={({ item, index }) => (
             <Card style={styles.card} key={0}>
-              <View style={{ flexDirection: 'row-reverse', flex: 1, backgroundColor: '#7cb342', marginHorizontal: -10 }}>
+              <View style={{ flexDirection: 'row-reverse', flex: 1, backgroundColor: '#47b03e', marginHorizontal: -10 }}>
                 <View style={{ flex: 1, marginTop: 5 }}>
                   <Text style={styles.title2}>مبلغ:</Text>
                 </View>
                 <View style={{ flex: 1, marginTop: 5, alignItems: 'flex-start', }}>
-                  <Text style={styles.title2}>{item.amount} </Text>
+                  <Text style={styles.title2}>{[item.amount,'  ریال']} </Text>
                 </View>
               </View>
               <View style={{ flexDirection: 'row-reverse', flex: 1, backgroundColor: '#fff', marginHorizontal: -10 }}>

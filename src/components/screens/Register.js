@@ -97,9 +97,9 @@ import {
                     colors={['#3e843d', '#3ede30', '#47b03e']}>
 
                     <View style={styles.headerContent}>
-                        <Image style={{width:90,height:90}} source={require('../../../assets/images/icons/857385.png')} />
-                        <Text style={{ fontSize: 25,fontFamily:'IRANSansMobile(FaNum)',color: '#fff', marginBottom: 5 }}>
-                            فرم ثبت نام
+                        <Image style={{width:90,height:90}} source={require('../../../assets/images/icons/abacus.png')} />
+                        <Text style={{ fontSize: 22,fontFamily:'Far_Aref',color: '#fff', marginBottom: 5 }}>
+                            عضویت در اپ مالی حسابداری شخصی چرتکه
                         </Text>
                     </View>
                     <View style={{justifyContent:'center',alignItems:'center',marginTop:60}}>

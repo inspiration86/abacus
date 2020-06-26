@@ -143,8 +143,6 @@ class Home extends Component {
                 break;
             case 5: this.props.screenProps.navigate('Reminder');
                 break;
-            case 6: this.props.screenProps.navigate('Balance');
-                break;
             default:this.showMessage(`در نسخه های بعدی این قابلیت افزوده خواهد شد`)
         }
     }
@@ -162,15 +160,11 @@ class Home extends Component {
                                 locations={[0, 0.5, 0.6]}
                                 colors={['#3e843d', '#3ede30', '#47b03e']} style={{
                     height: 200, alignItems: 'center', justifyContent: 'center',
-                    // borderBottomLeftRadius:20,
-                    // borderBottomRightRadius:20
                 }}>
-                    <FontAwesomeIcon icon={faBars} size={25} style={{color: '#fff', marginLeft: '88%',}}
+                    <FontAwesomeIcon icon={faBars} size={25} style={{color: '#fff', marginLeft: '88%',marginTop:5}}
                                      onPress={() => this.props.screenProps.openDrawer()}/>
-                    {/*<View style={{flex:5,backgroundColor:'#3d933c',borderRadius:30,marginTop:-30,justifyContent:'center',*/}
-                    {/*    alignItems:'center'}}>*/}
                     <Image
-                        source={require('../../../assets/images/icons/857385.png')}
+                        source={require('../../../assets/images/icons/abacus.png')}
                         style={{width: 65, height: 65}}
                     />
                     <Text style={{
@@ -185,7 +179,7 @@ class Home extends Component {
                 </LinearGradient>
                 <View style={styles.Detail}>
                     <View style={styles.detailContent}>
-                        <Image style={styles.icon1} source={require('../../../assets/images/icons/2760970.png')}/>
+                        <Image style={styles.icon1} source={require('../../../assets/images/icons/bill2.png')}/>
                         <Text style={styles.textHeader}>مبلغ بدهی</Text>
                         <Text style={[styles.textHeader,{marginTop:-5}]}>500000 تومان</Text>
 
@@ -194,14 +188,14 @@ class Home extends Component {
                     <View
                         style={[styles.detailContent,{borderLeftWidth: 1,
                             borderColor: '#e2e2e2'}]}>
-                        <Image style={styles.icon1} source={require('../../../assets/images/icons/1312175.png')}/>
+                        <Image style={styles.icon1} source={require('../../../assets/images/icons/2760970.png')}/>
                         <Text style={styles.textHeader}>مخارج</Text>
                         <Text style={[styles.textHeader,{marginTop:-5}]}>500000 تومان</Text>
 
                     </View>
                     <View  style={[styles.detailContent,{borderLeftWidth: 1,
                         borderColor: '#e2e2e2'}]}>
-                        <Image style={styles.icon1} source={require('../../../assets/images/icons/2553139.png')}/>
+                        <Image style={styles.icon1} source={require('../../../assets/images/icons/wallet.png')}/>
                         <Text style={styles.textHeader}>مانده</Text>
                         <Text style={[styles.textHeader,{marginTop:-5}]}>500000 تومان</Text>
                     </View>

@@ -54,15 +54,13 @@ const CustomDrawerComponent = props => (
                 colors={['#3e843d','#3ede30','#47b03e']}
                 style={{
                     padding:10,
-                    borderBottomColor:'#47b03e',
-                    borderBottomWidth:5,
                     width: '108%',
                 }}>
                 <View style={{flex: 1, flexDirection: 'column'}}>
                     <View style={{flex: 2, justifyContent: 'center', alignItems: 'flex-end', marginTop: 20,marginRight:40}}>
                         <Image
-                            source={require('../../../assets/images/icons/857385.png')}
-                            style={{  // borderRadius: 50,
+                            source={require('../../../assets/images/icons/abacus.png')}
+                            style={{
                                 width: 75,
                                 height: 75,
                                 marginBottom: 20,

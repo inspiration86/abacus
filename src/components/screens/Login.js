@@ -130,10 +130,10 @@ renderLogin(){
 
                     <View style={styles.headerContent}>
                         <Image style={{width: 90, height: 90}}
-                               source={require('../../../assets/images/icons/857385.png')}/>
+                               source={require('../../../assets/images/icons/abacus.png')}/>
                         <Text
-                            style={{fontSize: 20, fontFamily: 'IRANSansMobile(FaNum)', color: '#fff', marginBottom: 5}}>
-                            ورود به اپ حسابداری شخصی چرتکه
+                            style={{fontSize: 20, fontFamily: 'Far_Aref', color: '#fff', marginBottom: 5}}>
+                            ورود به اپ مالی حسابداری شخصی چرتکه
                         </Text>
                     </View>
                     <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 60}}>

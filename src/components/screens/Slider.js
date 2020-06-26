@@ -3,6 +3,7 @@ import {StyleSheet, View, Text, Image, ImageBackground, StatusBar,BackHandler} f
 import AppIntroSlider from 'react-native-app-intro-slider';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DashboardUser from '../layouts/DashboardUser';
+import LoginOrRegister from './LoginOrRegister';
 
 const slides = [
     {
@@ -87,7 +88,8 @@ export default class Slider extends React.Component {
     };
     render() {
         if (this.state.showRealApp) {
-            return <DashboardUser />;
+            // return <DashboardUser />;
+            return <LoginOrRegister />;
         } else {
             return <AppIntroSlider
                     keyExtractor={this._keyExtractor}

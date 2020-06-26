@@ -78,7 +78,7 @@ DeleteRecord = (item) => {
             <View style={{ flex: 1 }}>
                 <StatusBar
                     hidden={false}
-                    backgroundColor='#47b03e'
+                    backgroundColor='#3e843d'
                 />
                <Header title="لیست هزینه ها" onBackPress={()=>{this.props.navigation.goBack()}}/>
 

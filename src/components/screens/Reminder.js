@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, ScrollView, StatusBar, StyleSheet, Text, Picker ,modal} from 'react-native';
-import { Provider, Portal, FAB, Avatar,  IconButton } from 'react-native-paper';
-import Modal from 'react-native-modalbox';
+import { View, TouchableOpacity, Image, ScrollView, StatusBar, StyleSheet, Text, Picker ,Modal,Alert} from 'react-native';
+import { Provider, Portal, FAB,} from 'react-native-paper';
+import Modald from 'react-native-modalbox';
 import DatePicker, { getFormatedDate } from 'react-native-modern-datepicker';
-import Select2 from 'react-native-select-two';
+// import Select2 from 'react-native-select-two';
 import ImagePicker from 'react-native-image-picker';
-import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu'
 import Header from '../layouts/Header';
 import LinearGradient from 'react-native-linear-gradient';
 const typeIncome = [
@@ -19,22 +18,22 @@ const typeIncome = [
 ];
 
 const renderImage = (image) => {
-    console.log(image)
+    console.log(image);
     return [
         <>
-            <Card >
+            <Card style={{width: '70%', justifyContent: 'center', alignItems: 'center', alignSelf: 'center'}}>
 
                 <CardItem bordered>
                     <Left>
 
                     </Left>
-                    <Body style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Body style={{justifyContent: 'center', alignItems: 'center'}}>
                         <Image style={{
                             borderRadius: 10,
                             width: '200%',
-                            height: 200,
+                            height: 160,
 
-                        }} source={{ uri: image }} />
+                        }} source={{uri: image}}/>
                     </Body>
 
                     <Right>
@@ -42,7 +41,6 @@ const renderImage = (image) => {
                     </Right>
                 </CardItem>
             </Card>
-
         </>,
     ];
 };
@@ -50,45 +48,70 @@ import { CardItem, Tabs, Tab, ListItem, TabHeading, Left, Body, Title, Right, Fo
 
 import { FlatGrid } from 'react-native-super-grid';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {connect} from 'react-redux';
 
 class Reminder extends Component {
-    state = {
-        image: '',
-        open: false,
-        modalVisible:false,
-        userSelected:[],
-        selected: "key1",
-        data: [
-            {id:1,  title: 'برگزاری کلاس آنلاین', description: 'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان ', date:"2019-03-25 ", color:"#228B22", completed:1},
-            {id:2,  title: 'برگزاری کلاس آنلاین', description: 'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان ',    date:"2019-03-25", color:"#FF00FF", completed:2},
-            {id:3,  title: 'برگزاری کلاس آنلاین', description: 'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان ',date:"2019-03-25 ", color:"#4B0082", completed:0},
-            {id:4,  title: 'برگزاری کلاس آنلاین', description: 'هماهنگی برای اعلام تاریخ و ساعت برگزاری کلاس آنلاین با مهندس گردان ', date:"2019-03-25 ", color:"#20B2AA", completed:0},
+    constructor(props) {
+        super(props);
+        this.state = {
+            user_id: this.props.dataLogin['id'],
+            image: '',
+            open: false,
+            modalVisible:false,
+            isVisableBoxImage: 'none',
+            userSelected:[],
+            dataSource:[],
+            isLoading: true,
+            // ...................uploadimage...............
+            imagepath:'',
+            //..............RegisterReminderText...............
+            DateText: '',
+            description_text: '',
+            repeate_text: '',
+            title_text: '',
+            //..............RegisterReminderText...............
+            Dateimage: '',
+            description_image: '',
+            repeate_image: '',
+            title_image: '',
 
-        ],
+
+        }
+
+        this.ShowReminderRecord ();
     };
+
+    componentDidMount(): void {
+        this.ShowReminderRecord ();
+    }
+
     onValueChange(value: string) {
         this.setState({
-            selected: value
+            repate_text: value
         });
+    }
+    onValueChange(value: string) {
+        this.setState({
+            repate_text: value
+        });
+    }
+    // ................modal...........
+    clickEventListener = (item) => {
+        this.setState({userSelected: item}, () =>{
+            this.setModalVisible(true);
+        });
+    }
+
+    setModalVisible(visible) {
+        this.setState({modalVisible: visible});
     }
     // ..............imagepicker............................
     renderAsset(image) {
         return renderImage(image);
     }
-    _menu = null;
 
-    setMenuRef = ref => {
-        this._menu = ref;
-    };
 
-    hideMenu = () => {
-        this._menu.hide();
-    };
-
-    showMenu = () => {
-        this._menu.show();
-    };
-
+// ..............imagepicker............................
     handleClick = () => {
         const options = {
             title: 'انتخاب عکس',
@@ -108,7 +131,20 @@ class Reminder extends Component {
                 console.log('ImagePicker Error: ', response.error);
             } else {
                 this.setState({ image: response.uri });
-                // console.log(this.state.image);
+                RNFetchBlob.fetch('POST', 'http://194.5.175.25:2000/Api/v1/image', {
+                    Authorization: "Bearer access-token",
+                    otherHeader: "image",
+                    'Content-Type': 'multipart/form-data',
+
+                }, [
+                    // element with property `filename` will be transformed into `file` in form data
+                    {name: 'image', filename: response.fileName, data: response.data},
+                ]).then((response) => response.json()).then((responseJson) => {
+                        if(responseJson.success===true)
+                            console.log(responseJson.imagePath)
+                        this.setState({imagepath:responseJson.imagePath});
+                    }
+                ).done();
                 if (this.state.image != null) {
 
                     this.setState({ isVisableBoxImag: 'flex' });
@@ -119,22 +155,132 @@ class Reminder extends Component {
         });
 
     };
+    ShowReminderRecord = () => {
+        fetch('http://194.5.175.25:2000/api/v1/reminder/' + this.state.user_id)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+                this.setState({
+                    isLoading: false,
+                    dataSource: responseJson.data
+                })
+            })
+            .catch((error) => {
+                console.error(error);
+            });
 
-    _onStateChange = ({ open }) => this.setState({ open });
-// ..............
-    clickEventListener = (item) => {
-        Alert.alert("Item selected: "+item.description)
     }
+    // .............. RegisterReminderText ..............
+    RegisterReminderText = () => {
+
+
+        // console.log("description_text=" +this.state.description_text);
+        // console.log("DateText=" +this.state.DateText);
+        // console.log("repeate_text="+ this.state.repeate_text);
+        // console.log("title_text="+ this.state.title_text);
+        // console.log("imagepath="+ this.state.imagepath);
+
+        fetch('http://194.5.175.25:2000/api/v1/reminder', {
+
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_id:this.state.user_id,
+                description: this.state.description_text,
+                date:this.state.DateText,
+                repeat:this.state.repeate_text ,
+                title:this.state.title_text,
+                type:'2',
+
+            })
+
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                Alert.alert('با موفقیت ثبت شد')
+                // Alert.alert(responseJson.data);
+
+            }).catch((error) => {
+            console.error(error);
+        });
+
+    }
+    RegisterReminderImage = () => {
+
+
+        // console.log("description_image=" +this.state.description_image);
+        // console.log("Dateimage=" +this.state.Dateimage);
+        // console.log("repeate_image="+ this.state.repeate_image);
+        // console.log("title_image="+ this.state.title_image);
+        // console.log("imagepath="+ this.state.imagepath);
+
+        fetch('http://194.5.175.25:2000/api/v1/reminder', {
+
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_id:this.state.user_id,
+                description: this.state.description_image,
+                date:this.state.Dateimage,
+                repeat:this.state.repeate_image ,
+                title:this.state.title_image,
+                type:'1',
+                image:this.state.imagePath,
+
+
+
+
+            })
+
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                Alert.alert('با موفقیت ثبت شد')
+                // Alert.alert(responseJson.data);
+
+            }).catch((error) => {
+            console.error(error);
+        });
+
+    }
+    //  .................delete..........................
+    DeleteReminderRecord = (item) => {
+        let id;
+        id = item._id;
+        fetch('http://194.5.175.25:2000/api/v1/reminder/' + id, {
+
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                _id: id
+            })
+
+        }).then((response) => response.json())
+            .then((responseJson) => {
+
+                console.log(responseJson);
+
+
+            }).catch((error) => {
+            console.error(error);
+        });
+    }
+    _onStateChange = ({ open }) => this.setState({ open });
 
     __getCompletedIcon = (item) => {
-        if(item.completed == 1) {
+        if(item.type ==1) {
             // return require('../image/photo.png');
             return <Icon   name='camera' color='green'style={{fontSize:25}}/>
         }
-        else if(item.completed == 2) {
-            return <Icon   name='bell' color='green'style={{fontSize:25}}/>
-        }else {
-            return <Icon   name="text-height" color='green'style={{fontSize:25}}/>
+        else if(item.type==2) {
+            return <Icon name="text-height" color='green'style={{fontSize:25}}/>
         }
     }
     render() {
@@ -146,10 +292,10 @@ class Reminder extends Component {
                     hidden={false}
                     backgroundColor='#3e843d'
                 />
-                     <Header  title='یادآوری ها' onBackPress={() => {this.props.navigation.goBack();}} />
+                 <Header  title='یادداشت ها' onBackPress={() => {this.props.navigation.goBack();}} />
                 <FlatGrid
                     itemDimension={200}
-                    items={this.state.data}
+                    items={this.state.dataSource}
                     style={{marginTop: 3}}
                     contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
                     renderItem={({item, index}) => (
@@ -158,29 +304,26 @@ class Reminder extends Component {
                                 <Left>
                                     <Text style={styles.date}>{item.date}</Text>
                                 </Left>
-                                <Body>
 
-
-                                </Body>
                                 <Right style={{flexDirection:'row',flex:2,alignSelf:'flex-end',justifyContent:'flex-end',alignItems:'flex-end'}}>
                                     <Text style={styles.titel}>{item.title}</Text>
                                     <Text > { this.__getCompletedIcon(item)}</Text>
 
                                 </Right>
                             </CardItem>
-                            <CardItem bordered>
-                                <Body>
+                            <CardItem style={{ justifyContent:'flex-end',alignItems:'flex-end'}}>
+                                <View >
                                     <Text style={styles.description}>
-                                        {item.description}
+                                        یاداشت: {item.description}
                                     </Text>
-                                </Body>
+                                </View>
                             </CardItem>
                             <CardItem CardItem footer bordered style={{height:35}} >
                                 <Left>
-                                    <Button transparent >
+                                    <Button transparent onPress={() => this.clickEventListener(item)}>
 
-                                        <Text style={{fontSize:16,color:'#777777',marginRight:5}}>نمایش</Text>
-                                        <Icon active name="play-circle-o"  style={{fontSize:20,color:'#777777',marginRight:5}} />
+                                        <Text style={{fontSize:16,color:'#3e843d',marginRight:5}}>جزئیات بیشتر</Text>
+                                        <Icon active name="play-circle-o"  style={{fontSize:20,color:'#3e843d',marginRight:5}} />
                                     </Button>
                                 </Left>
                                 <Body>
@@ -189,7 +332,7 @@ class Reminder extends Component {
                                     </Button>
                                 </Body>
                                 <Right>
-                                    <Button transparent>
+                                    <Button transparent onPress={() => { this.DeleteReminderRecord(item) }}>
 
                                         <Icon active name="trash"  style={{fontSize:20,color:'red'}}/>
 
@@ -210,9 +353,10 @@ class Reminder extends Component {
                             icon={open ? '' : 'plus'}
                             actions={[
                                 // {icon: 'plus', onPress: () => console.log('Pressed add')},
-                                { icon: 'text', label: 'متنی', onPress: () => this.refs.modal1.open() },
-                                { icon: 'voice', label: 'صدا', onPress: () => console.log('Pressed email') },
-                                { icon: 'camera', label: 'تصویری', onPress: () => this.refs.modal2.open() },
+                                { icon: 'text', label: 'یادآور متنی', onPress: () => this.refs.modal1.open() },
+                                { icon: 'camera', label: 'یادآور تصویری', onPress: () => this.refs.modal2.open() },
+                                { icon: 'voice', label: 'یادآور صوتی', onPress: () => Alert.alert('در نسخه های بعدی این قابلیت افزوده خواهد شد') },
+
                             ]}
                             onStateChange={this._onStateChange}
                             onPress={() => {
@@ -224,7 +368,7 @@ class Reminder extends Component {
                     </Portal>
                 </Provider>
                 {/*............ ........modal4................................. */}
-                <Modal
+                <Modald
                     style={[styles.modal4]}
                     position={'bottom'}
                     ref={'modal1'}
@@ -258,7 +402,7 @@ class Reminder extends Component {
                                             <Icon active name="text-height" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
                                         </Button>
                                     </Left>
-                                    <Input style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', alignItems: 'center', justifyContent: 'center' }} />
+                                    <Input style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', alignItems: 'center', justifyContent: 'center' }}  onChangeText={title => this.setState({title_text:title})} />
                                     <Label style={{
                                         paddingRight
                                             : 20
@@ -275,7 +419,8 @@ class Reminder extends Component {
                                             <Icon active name="edit" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
                                         </Button>
                                     </Left>
-                                    <Input multiline={true} style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', alignItems: 'center' }} />
+                                    <Input multiline={true} style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', alignItems: 'center' }}
+                                           onChangeText={description => this.setState({description_text:description})}/>
                                     <Label style={{
                                         paddingRight
                                             : 20
@@ -293,7 +438,7 @@ class Reminder extends Component {
                                         </Button>
                                     </Left>
 
-                                    <Text style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light' }}>{this.state.DateStartTextCost} </Text>
+                                    <Text style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light' }}>{this.state.DateText} </Text>
                                     <Label style={{
                                         paddingRight
                                             : 20
@@ -347,14 +492,14 @@ class Reminder extends Component {
                                             }}
                                             itemTextStyle={{ color: '#777777' }}
                                             style={{ width: undefined }}
-                                            selectedValue={this.state.selected}
+                                            selectedValue={this.state.repate_text}
                                             onValueChange={this.onValueChange.bind(this)}
                                         >
-                                            <Picker.Item label="هرگز" value="key0" style={{fontFamilyfontFamily:'IRANSansMobile(FaNum)_Light',color:'#777777'}} />
-                                            <Picker.Item label="روزانه" value="key1" />
-                                            <Picker.Item label="هفتگی" value="key2" />
-                                            <Picker.Item label="ماهانه" value="key3" />
-                                            <Picker.Item label="سالانه" value="key4" />
+                                            <Picker.Item label="هرگز" value="هرگز" style={{fontFamilyfontFamily:'IRANSansMobile(FaNum)_Light',color:'#777777'}} />
+                                            <Picker.Item label="روزانه" value="روزانه" />
+                                            <Picker.Item label="هفتگی" value="هفتگی" />
+                                            <Picker.Item label="ماهانه" value="ماهانه" />
+                                            <Picker.Item label="سالانه" value="سالانه" />
                                         </Picker>
                                     </Body>
                                     <Right>
@@ -364,7 +509,7 @@ class Reminder extends Component {
                                 </ListItem>
 
 
-                                <Modal
+                                <Modald
                                     style={[styles.modal4]}
                                     position={"bottom"}
                                     ref={"modal1"}
@@ -379,7 +524,7 @@ class Reminder extends Component {
                                                     headerFont: 'Shabnam-Medium',
                                                 }}
                                                 onDateChange={date => {
-                                                    this.setState({ DateStartTextCost: date });
+                                                    this.setState({ DateText: date });
                                                     this.refs.modal1.close()
                                                 }
 
@@ -390,7 +535,7 @@ class Reminder extends Component {
                                     <Button full success>
                                         <Text style={{ color: '#fff' }}>تایید</Text>
                                     </Button>
-                                </Modal>
+                                </Modald>
 
                             </View>
                         </ScrollView>
@@ -408,16 +553,16 @@ class Reminder extends Component {
                             borderRadius: 5, width: '45%', marginLeft: 10, backgroundColor: '#47b03e',
                             height: 40, marginBottom: 2,
 
-                        }}>
+                        }} onPress={this.RegisterReminderText}>
 
                             <Text style={{ color: '#fff', textAlign: 'center', fontSize: 16, marginTop: 8 }}>ذخیره</Text>
                         </TouchableOpacity>
 
 
                     </View>
-                </Modal>
+                </Modald>
                 {/*............ ........modal2................................. */}
-                <Modal
+                <Modald
                     style={[styles.modal4]}
                     position={'bottom'}
                     ref={'modal2'}
@@ -452,7 +597,7 @@ class Reminder extends Component {
                                             <Icon active name="text-height" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
                                         </Button>
                                     </Left>
-                                    <Input style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light' }} />
+                                    <Input style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light' }} onChangeText={title => this.setState({title_image:title})} />
                                     <Label style={{
                                         paddingRight
                                             : 20
@@ -464,13 +609,13 @@ class Reminder extends Component {
                                 </Item>
 
 
-                                <Item fixedLabel>
+                                <Item fixedLabel onPress={() => this.refs.modal1.open()}>
                                     <Left>
-                                        <Button transparent onPress={() => this.refs.modal1.open()}>
+                                        <Button transparent >
                                             <Icon active name="calendar" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
                                         </Button>
                                     </Left>
-                                    <Text style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light' }}>{this.state.DateStartTextCost} </Text>
+                                    <Text style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light' }}>{this.state.Dateimage} </Text>
                                     <Label style={{
                                         paddingRight
                                             : 20
@@ -479,6 +624,23 @@ class Reminder extends Component {
 
                                             : 20
                                     }}> تاریخ:</Text></Label>
+
+                                </Item>
+                                <Item fixedLabel>
+                                    <Left>
+                                        <Button transparent >
+                                            <Icon active name="edit" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
+                                        </Button>
+                                    </Left>
+                                    <Input multiline={true} style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', alignItems: 'center' }}
+                                           onChangeText={description => this.setState({description_image:description})}/>
+                                    <Label style={{
+                                        paddingRight
+                                            : 20
+                                    }}><Text style={{
+                                        color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', paddingRight: 20, height: 15,
+
+                                    }}>یاداشت :</Text></Label>
 
                                 </Item>
                                 <ListItem Icon>
@@ -522,14 +684,14 @@ class Reminder extends Component {
                                             }}
                                             itemTextStyle={{ color: '#777777' }}
                                             style={{ width: undefined }}
-                                            selectedValue={this.state.selected}
+                                            selectedValue={this.state.repeate_image}
                                             onValueChange={this.onValueChange.bind(this)}
                                         >
-                                            <Picker.Item label="هرگز" value="key0" style={{fontFamilyfontFamily:'IRANSansMobile(FaNum)_Light',color:'#777777'}} />
-                                            <Picker.Item label="روزانه" value="key1" />
-                                            <Picker.Item label="هفتگی" value="key2" />
-                                            <Picker.Item label="ماهانه" value="key3" />
-                                            <Picker.Item label="سالانه" value="key4" />
+                                            <Picker.Item label="هرگز" value="هرگز" style={{fontFamilyfontFamily:'IRANSansMobile(FaNum)_Light',color:'#777777'}} />
+                                            <Picker.Item label="روزانه" value="روزانه" />
+                                            <Picker.Item label="هفتگی" value="هفتگی" />
+                                            <Picker.Item label="ماهانه" value="ماهانه" />
+                                            <Picker.Item label="سالانه" value="سالانه" />
                                         </Picker>
                                     </Body>
                                     <Right>
@@ -538,24 +700,12 @@ class Reminder extends Component {
                                     </Right>
                                 </ListItem>
                                 {/* .........................imagepicker.................................. */}
-
-                                <View style={{marginTop: 8}}>
+                                <View style={{marginTop: 8, marginHorizontal: 30}}>
                                     <Card>
                                         <CardItem bordered style={{backgroundColor: '#c5f3c1', borderStyle: 'dashed', borderWidth: 0.5}}>
                                             <Left>
-                                                <TouchableOpacity
-                                                    style={{width:50,justifyContent:'center',alignItems:'center'}}
-                                                    activeOpacity={0.9}
-                                                    onPress={this.showMenu}>
-                                                    <Icon name='ellipsis-v'
-                                                          style={{marginTop: 5, fontSize: 25, color: '#47b03e'}}
-                                                    />
-                                                </TouchableOpacity>
-                                                <Menu
-                                                    ref={this.setMenuRef}>
-                                                    <MenuItem onPress={this.hideMenu}>ویرایش</MenuItem>
-                                                    <MenuItem onPress={this.hideMenu}>حذف</MenuItem>
-                                                </Menu>
+
+
                                                 <Body onPress>
                                                     <Text style={{color: '#777'}} onPress={this.handleClick.bind(this)}>پیوست
                                                         فایل</Text>
@@ -563,17 +713,13 @@ class Reminder extends Component {
                                             </Left>
                                         </CardItem>
                                     </Card>
-
-                                    <View>
-                                        {this.state.image ? this.renderAsset(this.state.image) : null}
-                                    </View>
-
-
+                                </View>
+                                <View>
+                                    {this.state.image ? this.renderAsset(this.state.image) : null}
                                 </View>
 
 
-
-                                <Modal
+                                <Modald
                                     style={[styles.modal4]}
                                     position={"bottom"}
                                     ref={"modal1"}
@@ -588,7 +734,7 @@ class Reminder extends Component {
                                                     headerFont: 'Shabnam-Medium',
                                                 }}
                                                 onDateChange={date => {
-                                                    this.setState({ DateStartTextCost: date });
+                                                    this.setState({ Dateimage: date });
                                                     this.refs.modal1.close()
                                                 }
 
@@ -599,7 +745,7 @@ class Reminder extends Component {
                                     <Button full success>
                                         <Text style={{ color: '#fff' }}>تایید</Text>
                                     </Button>
-                                </Modal>
+                                </Modald>
 
                             </View>
                         </ScrollView>
@@ -617,34 +763,59 @@ class Reminder extends Component {
                             borderRadius: 5, width: '45%', marginLeft: 10, backgroundColor: '#47b03e',
                             height: 40, marginBottom: 2,
 
-                        }}>
+                        }} onPress={this.RegisterReminderImage}>
 
                             <Text style={{ color: '#fff', textAlign: 'center', fontSize: 16, marginTop: 8 }}>ذخیره</Text>
                         </TouchableOpacity>
 
 
                     </View>
-                </Modal>
+                </Modald>
                 <Modal
+
                     animationType={'fade'}
                     transparent={true}
                     onRequestClose={() => this.setModalVisible(false)}
                     visible={this.state.modalVisible}>
+                    <LinearGradient
+                        style={{ width: '100%' }}
+                        start={{ x: 0.3, y: 0.0 }} end={{ x: 0.5, y: 1.0 }}
+                        locations={[0.1, 0.6, 0.9]}
+                        colors={['#3e843d', '#3ede30', '#47b03e']}>
+                        <View style={{
+                            paddingVertical: 7,
+                            alignItems: 'center'
+                            , justifyContent: 'space-around',
+                            flexDirection: 'row'
+                        }}>
+                            <Text></Text>
 
+                            <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>جزئیات بیشتر</Text>
+                            <Button transparent style={{ marginRight: -20 }}>
+                                <Icon name='close' style={{ fontSize: 30, color: '#fff', marginRight: 20 }} onPress={() => { this.setModalVisible(false) }} />
+                            </Button>
+
+                        </View>
+                    </LinearGradient>
                     <View style={styles.popupOverlay}>
                         <View style={styles.popup}>
                             <View style={styles.popupContent}>
                                 <ScrollView contentContainerStyle={styles.modalInfo}>
-                                    <Image style={styles.image} source={{uri: this.state.userSelected.image}}/>
-                                    <Text style={styles.name}>{this.state.userSelected.name}</Text>
-                                    <Text style={styles.position}>{this.state.userSelected.position}</Text>
-                                    <Text style={styles.about}>{this.state.userSelected.about}</Text>
+                                    <Image style={styles.image} source={{ uri: this.state.userSelected.image }} />
+                                    <View style={{ marginTop: 10 }}>
+                                        <View style={[styles.view,{backgroundColor:'#e2e2e2'}]}>
+                                            <Text style={styles.title3}>عنوان:<Text style={styles.title3}>{this.state.userSelected.title} </Text></Text>
+                                        </View>
+                                        <View style={[styles.view,{backgroundColor:'#fff'}]}>
+                                            <Text style={styles.title3}>تاریخ : <Text style={styles.title3}> {this.state.userSelected.date}</Text></Text>
+                                        </View>
+
+                                        <View style={[styles.view,{backgroundColor:'#e2e2e2'}]}>
+                                            <Text style={styles.title3}> توضیحات:  {this.state.userSelected.description}</Text>
+                                        </View>
+                                    </View>
                                 </ScrollView>
-                            </View>
-                            <View style={styles.popupButtons}>
-                                <TouchableOpacity onPress={() => {this.setModalVisible(false) }} style={styles.btnClose}>
-                                    <Text style={styles.txtClose}>Close</Text>
-                                </TouchableOpacity>
+
                             </View>
                         </View>
                     </View>
@@ -655,6 +826,14 @@ class Reminder extends Component {
         );
     }
 }
+
+const  mapStateToProps = state => {
+    return {
+        dataLogin: state.loginUser.dataLogin,
+
+    };
+};
+export default connect(mapStateToProps)(Reminder);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -718,7 +897,8 @@ const styles = StyleSheet.create({
         flex:1,
         color:"#777777",
         fontFamily: 'IRANSansMobile(FaNum)',
-        marginTop:-13
+        marginTop:-13,
+        textAlign:'right'
 
     },
     titel:{
@@ -735,60 +915,38 @@ const styles = StyleSheet.create({
         marginTop:3,
         fontFamily: 'IRANSansMobile(FaNum)'
     },
+
     /************ modals ************/
     popup: {
         backgroundColor: 'white',
-        marginTop: 80,
-        marginHorizontal: 20,
-        borderRadius: 7,
+
     },
     popupOverlay: {
         backgroundColor: "#00000057",
         flex: 1,
-        marginTop: 30
+
     },
     popupContent: {
         //alignItems: 'center',
-        margin: 5,
-        height:250,
+        height: '100%',
+        width: '100%'
     },
-    popupHeader: {
-        marginBottom: 45
-    },
+
     popupButtons: {
-        marginTop: 15,
-        flexDirection: 'row',
-        borderTopWidth: 1,
-        borderColor: "#eee",
-        justifyContent:'center'
-    },
-    popupButton: {
-        flex: 1,
-        marginVertical: 16
-    },
-    btnClose:{
-        height:20,
-        backgroundColor:'#20b2aa',
-        padding:20
-    },
-    modalInfo:{
-        alignItems:'center',
-        justifyContent:'center',
-    },
-    followButton: {
-        marginTop:-40,
-        height:20,
-        width:100,
+        backgroundColor: '#47b03e',
         flexDirection: 'row',
         justifyContent: 'center',
+        borderRadius: 80,
+        width: 65,
+        height: 65,
+        alignSelf: 'center',
+
         alignItems: 'center',
-        borderRadius:30,
-        backgroundColor: "green",
+        marginBottom: 10
+
+
     },
-    followButtonText:{
-        color: "#FFF",
-        fontSize:16,
-    },
+
+
 });
 
-export default Reminder;

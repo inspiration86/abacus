@@ -34,7 +34,8 @@ export default class Splash extends Component {
     splash() {
         setTimeout(() => {
             //this.props.navigation.navigate('DashboardUser');
-            this.props.navigation.navigate('Slider');
+           // this.props.navigation.navigate('Slider');
+            this.props.navigation.navigate('LoginOrRegister');
 
         }, 6000);
     }
@@ -84,11 +85,11 @@ export default class Splash extends Component {
                 <LinearGradient start={{x: -0.1, y: 0.9}} end={{x: 0.6, y: 1.0}}
                                 locations={[0,0.5,0.9]}
                                 colors={['#3e843d','#3ede30','#47b03e']} style={{flex:5,alignItems:'center',justifyContent:'center'}}>
-                    <Animated.View style={[{ flex: 1, justifyContent: 'center',marginTop:250,
+                    <Animated.View style={[{ flex: 1, justifyContent: 'center',marginTop:200,
                         alignItems: 'center',},{transform: [{scale: scale}]}]}>
                         <Image
-                            source={require('../../../assets/images/icons/857385.png')}
-                            style={{width: 140, height: 140}}
+                            source={require('../../../assets/images/icons/abacus.png')}
+                            style={{width: 120, height: 120}}
                         />
                         <Text style={styles.text}>چرتکه</Text>
                     </Animated.View>
@@ -139,8 +140,7 @@ const styles = StyleSheet.create({
         // opacity:0.5,
     },
     text: {
-        marginTop: 5,
-        fontSize: 60,
+        fontSize: 65,
         color: '#fff',
         textAlign: 'center',
         alignSelf: 'center',
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
         // fontFamily: 'IRANSansMobile(FaNum)',
     },
     textversion: {
-        fontSize: 12,
+        fontSize: 14,
         marginTop:5,
         color: '#fff',
         // fontFamily: 'GreatVibes-Regular',
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
         textAlign:'center',
 
         width:300,
-        height:30,
+        height:40,
 
         flexDirection: 'row',
         alignItems:'center',

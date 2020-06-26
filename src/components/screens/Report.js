@@ -38,20 +38,20 @@ export default class Home extends Component {
                 {
                     id: 4,
                     title: 'خلاصه عملکرد',
-                    image: require('../../../assets/images/icons/2553139.png'),
+                    image: require('../../../assets/images/icons/date2.png'),
 
                 }
                 ,
                 {
                     id: 5,
-                    title: 'گزارش هوشمند',
-                    image: require('../../../assets/images/icons/2553139.png'),
+                    title: 'گزارش دسته ها',
+                    image: require('../../../assets/images/icons/2830694.png'),
                 }
                 ,
                 {
                     id: 6,
-                    title: 'گزارش کلی',
-                    image: require('../../../assets/images/icons/2553139.png'),
+                    title: 'گزارش پیشرفته',
+                    image: require('../../../assets/images/icons/1570961.png'),
 
                 }
             ],
@@ -70,16 +70,16 @@ export default class Home extends Component {
         {
             case 1: this.props.navigation.navigate('ReportDay');
                 break;
-            case 2: this.props.navigation.navigate('ReportMounth');
+            case 2: this.props.navigation.navigate('ReportMonth');
                 break;
             case 3: this.props.navigation.navigate('ReportYear');
                 break;
-             case 4: this.props.navigation.navigate('ReportCategory');
+             case 4: this.props.navigation.navigate('ReportPerformance');
               break;
-            // case 5: this.props.screenProps.navigate('Reminder');
-            //     break;
-            // case 6: this.props.screenProps.navigate('Balance');
-            //     break;
+            case 5: this.props.screenProps.navigate('ReportCategory');
+                break;
+            case 6: this.props.screenProps.navigate('AdvancedSearch');
+               break;
             default:this.showError('در نسخه های بعدی این قابلیت افزوده خواهد شد')
         }
     }
@@ -136,7 +136,7 @@ export default class Home extends Component {
                 </LinearGradient>
                 <View style={styles.Detail}>
                     <View style={styles.detailContent}>
-                        <Image style={styles.icon1} source={require('../../../assets/images/icons/2760970.png')}/>
+                        <Image style={styles.icon1} source={require('../../../assets/images/icons/bill2.png')}/>
                         <Text style={styles.textHeader}>مبلغ بدهی</Text>
                         <Text style={[styles.textHeader,{marginTop:-5}]}>500000 تومان</Text>
 
@@ -144,14 +144,14 @@ export default class Home extends Component {
                     <View
                         style={[styles.detailContent,{borderLeftWidth: 1,
                             borderColor: '#e2e2e2'}]}>
-                        <Image style={styles.icon1} source={require('../../../assets/images/icons/1312175.png')}/>
+                        <Image style={styles.icon1} source={require('../../../assets/images/icons/2760970.png')}/>
                         <Text style={styles.textHeader}>مخارج</Text>
                         <Text style={[styles.textHeader,{marginTop:-5}]}>500000 تومان</Text>
 
                     </View>
                     <View  style={[styles.detailContent,{borderLeftWidth: 1,
                         borderColor: '#e2e2e2'}]}>
-                        <Image style={styles.icon1} source={require('../../../assets/images/icons/2553139.png')}/>
+                        <Image style={styles.icon1} source={require('../../../assets/images/icons/wallet.png')}/>
                         <Text style={styles.textHeader}>مانده</Text>
                         <Text style={[styles.textHeader,{marginTop:-5}]}>500000 تومان</Text>
                     </View>
