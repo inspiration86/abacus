@@ -505,7 +505,6 @@ class ReportCategory extends React.Component {
 const mapStateToProps = state => {
     return {
         dataLogin: state.loginUser.dataLogin,
-
     };
 };
 export default connect(mapStateToProps)(ReportCategory);

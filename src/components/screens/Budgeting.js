@@ -174,7 +174,7 @@ class BudgetingScreen extends React.Component {
                                     <Text style={{textAlign: 'left', fontFamily: 'IRANSansMobile(FaNum)'}}>{item.sub_category}</Text>
                                 </Body>
                                 <Right>
-                                    <Text style={{fontFamily: 'IRANSansMobile(FaNum)', color: '#00C851'}}>{[item.amount,' ریال']}
+                                    <Text style={{fontFamily: 'IRANSansMobile(FaNum)', color: '#00C851'}}>{[item.amount,' تومان']}
                                          </Text>
                                 </Right>
                             </ListItem>
@@ -270,7 +270,7 @@ class BudgetingScreen extends React.Component {
                                                         <Text style={{
                                                             color: '#777',
                                                             fontFamily: 'IRANSansMobile(FaNum)',
-                                                        }}>ریال</Text>
+                                                        }}>تومان</Text>
 
                                                     </View>
                                                 </Left>

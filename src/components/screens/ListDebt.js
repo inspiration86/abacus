@@ -93,7 +93,7 @@ class ListDebt extends Component {
                   <Text style={styles.title2}>مبلغ:</Text>
                 </View>
                 <View style={{ flex: 1, marginTop: 5, alignItems: 'flex-start', }}>
-                  <Text style={styles.title2}>{[item.amount,'  ریال']} </Text>
+                  <Text style={styles.title2}>{[item.amount,'  تومان']} </Text>
                 </View>
               </View>
               <View style={{ flexDirection: 'row-reverse', flex: 1, backgroundColor: '#fff', marginHorizontal: -10 }}>

@@ -99,7 +99,7 @@ DeleteRecord = (item) => {
                                                   </View>
 
                                                 <View style={{ flex: 1,marginTop:5, alignItems: 'flex-start', }}>
-                                                        <Text style={styles.title2}>{item.amount} </Text>
+                                                        <Text style={styles.title2}>{[item.amount,'  تومان']} </Text>
                                                      
                                                     </View>
                                                    
