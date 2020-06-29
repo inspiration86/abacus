@@ -47,7 +47,6 @@ const CustomDrawerComponent = props => (
                 hidden={false}
                 backgroundColor='#3e843d'
             />
-            {/*<StatusBar translucent={true} hidden={false}  networkActivityIndicatorVisible={true} backgroundColor='#e2e2e2' barStyle="dark-content" />*/}
             <LinearGradient
                 start={{x: 0.25, y: 0.0}} end={{x: 0.5, y: 1.0}}
                 locations={[0.1,0.6,0.9]}

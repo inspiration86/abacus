@@ -7,10 +7,10 @@ import {
     Button,
     TouchableOpacity,
     Image,
-    Alert, StatusBar, ActivityIndicator
+    Alert, StatusBar, ActivityIndicator, Dimensions,
 } from 'react-native';
 import DialogInput from 'react-native-dialog-input-custom';
-
+const {width, height} = Dimensions.get('window');
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {connect} from "react-redux";
@@ -124,15 +124,12 @@ renderLogin(){
                     style={styles.header}
                     start={{x: -0.3, y: 0.0}} end={{x: 0.5, y: 1.0}}
                     locations={[0.1, 0.6, 0.9]}
-                    // start={{x: -0.1, y: 0.9}} end={{x: 0.6, y: 1.0}}
-                    // locations={[0,0.5,0.9]}
                     colors={['#3e843d', '#3ede30', '#47b03e']}>
-
                     <View style={styles.headerContent}>
                         <Image style={{width: 90, height: 90}}
                                source={require('../../../assets/images/icons/abacus.png')}/>
                         <Text
-                            style={{fontSize: 20, fontFamily: 'Far_Aref', color: '#fff', marginBottom: 5}}>
+                            style={{fontSize:width/22, fontFamily: 'Far_Alphabet', color: '#fff', marginBottom: 5}}>
                             ورود به اپ مالی حسابداری شخصی چرتکه
                         </Text>
                     </View>
@@ -168,13 +165,7 @@ renderLogin(){
                             >رمز عبور خود را فراموش کرده اید؟</Text>
                         </TouchableOpacity>
                         {this.renderLogin()}
-                        {/*<TouchableOpacity activeOpacity={0.8} style={[styles.buttonContainer, styles.loginButton]}*/}
-                        {/*                  onPress={() => this.onLoginUser()}>*/}
-                        {/*    <Text style={styles.loginText}>ورود</Text>*/}
-                        {/*</TouchableOpacity>*/}
-
-
-                        <TouchableOpacity activeOpacity={0.8} style={styles.buttonContainer}
+                                           <TouchableOpacity activeOpacity={0.8} style={styles.buttonContainer}
                                           onPress={() => this.props.navigation.navigate('Register')}>
                             <Text style={styles.btnText}> ثبت نام نکرده اید؟</Text>
                         </TouchableOpacity>
@@ -183,7 +174,6 @@ renderLogin(){
                 <AwesomeAlert
                     show={showAlert}
                     showProgress={false}
-                    // title="اطلاعات  را به طور کامل وارد نمائید"
                     message={this.state.error}
                     closeOnTouchOutside={true}
                     closeOnHardwareBackPress={false}
@@ -198,15 +188,12 @@ renderLogin(){
                         this.hideAlert();
                     }}
                 />
-
                 <DialogInput
                     dialogIsVisible={this.state.dialogVisible}
                     closeDialogInput={() => { this.handleCancel(false) }}
                     submitInput={(inputText) => { this.sendInput(inputText) }}
                     underlineColor={'#47b03e'}
-                    // outerContainerStyle={{ backgroundColor: 'rgba(0,0,0, 0.75)' }}
                     containerStyle={{ justifyContent: 'center', marginTop: 25,  }}
-
                     titleStyle={{ color: '#47b03e', textAlign: 'right' }}
                     title="بازنشانی رمز"
                     subTitleStyle={{ color: '#fff', textAlign: 'right', marginTop: 5 }}
@@ -219,10 +206,8 @@ renderLogin(){
                     buttonsStyle={{ borderColor: '#fff' }}
                     textCancelStyle={{ color: '#47b03e', fontSize: 16 }}
                     submitTextStyle={{ color: '#47b03e', fontSize: 16 }}
-
                     cancelButtonText="خروج"
                     submitButtonText="تایید"
-
                 />
             </View>
         );
@@ -236,13 +221,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#3d933c',
         width: '100%',
         height: '100%'
-
-        // borderBottomLeftRadius:900
     },
     headerContent: {
         marginTop: 70,
         alignItems: 'center',
-
     },
     container: {
         flex: 1,
@@ -259,7 +241,6 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         flexDirection: 'row',
         alignItems: 'center',
-
         shadowColor: "#808080",
         shadowOffset: {
             width: 0,
@@ -316,7 +297,7 @@ const styles = StyleSheet.create({
         elevation: 19,
     },
     loginText: {
-        color: '#777777',
+        color: 'green',
         fontFamily: 'IRANSansMobile(FaNum)',
         fontSize: 18,
 

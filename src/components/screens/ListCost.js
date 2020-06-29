@@ -151,7 +151,7 @@ DeleteRecord = (item) => {
                                                 <View style={{ flex: 1,marginTop:5,marginRight:10}}>
                                                       
                                                 <TouchableOpacity style={{ marginRight: 10, marginTop: 2 }} onPress={() => { this.DeleteRecord(item) }}>
-                                             <Icon active name="trash" style={{ fontSize: 20, color: 'red', alignSelf: 'flex-end' }} />
+                                             <Icon active name="trash" style={{ fontSize: 20, color: '#888', alignSelf: 'flex-end' }} />
                                                </TouchableOpacity>
                             
                                                   </View>
@@ -189,7 +189,7 @@ DeleteRecord = (item) => {
 
                   <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>جزئیات بیشتر</Text>
                   <Button transparent style={{ marginRight: -20 }}>
-                    <Icon name='close' style={{ fontSize: 30, color: '#fff', marginRight: 20 }} onPress={() => { this.setModalVisible(false) }} />
+                    <Icon name='close' style={{ fontSize: 25, color: '#fff', marginRight: 20 }} onPress={() => { this.setModalVisible(false) }} />
                   </Button>
 
                 </View>
@@ -286,10 +286,8 @@ title3: {
     fontSize: 14,
     color: '#555',
     fontFamily: 'IRANSansMobile(FaNum)',
-    marginRight: 15,
-    flex: 1, marginBottom: 5,
-    marginTop: 5,
-
+    margin:10,
+    padding: 5
 },
 title2: {
     fontSize: 14,

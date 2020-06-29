@@ -147,7 +147,7 @@ class ListIncome extends Component {
                                                 <View style={{ flex: 1,marginTop:5,marginRight:10}}>
                                                       
                                                 <TouchableOpacity style={{ marginRight: 10, marginTop: 2 }} onPress={() => { this.DeleteRecord(item) }}>
-                                             <Icon active name="trash" style={{ fontSize: 20, color: 'red', alignSelf: 'flex-end' }} />
+                                             <Icon active name="trash" style={{ fontSize: 20, color: '#888', alignSelf: 'flex-end' }} />
                                                </TouchableOpacity>
                             
                                                   </View>
@@ -161,36 +161,6 @@ class ListIncome extends Component {
                                                    
 
                                                 </View>
-              {/* <View style={{ flex: 1, flexDirection: 'row' }}>
-                <View style={{ flex: 1, marginTop: 12, alignItems: 'flex-start', paddingLeft: 10 }}>
-                  <Text style={styles.title2}>{item.amount} </Text>
-                  <Text style={styles.title2}>{item.year}/{item.month}/{item.day}</Text>
-
-                </View>
-                <View style={{ flex: 2, marginTop: 12 }}>
-                  <Text style={styles.title}>مبلغ</Text>
-                  <Text style={styles.title}>تاریخ</Text>
-                </View>
-              </View>
-              <View style={{ flex: 1, flexDirection: 'row' }}>
-                <View style={{ marginTop: 25, alignItems: 'flex-start', paddingLeft: 10 }}>
-                  <Text style={styles.title2}>{item.category} </Text>
-                  <Text style={styles.title2}>{item.sub_category}</Text>
-                </View>
-                <View style={{ flex: 1, marginTop: 25 }}>
-                  <Text style={styles.title}>دسته</Text>
-                  <Text style={styles.title}>زیردسته</Text>
-                </View>
-              </View>
-              <View style={styles.viewbuttom}>
-                <TouchableOpacity style={{ flexDirection: 'row', marginTop: 2 }} onPress={() => this.clickEventListener(item)}>
-                  <Text style={{ fontSize: 14,  marginRight: 5, color: '#47b03e' }}>جزئیات بیشتر</Text>
-                  <Icon active name="play-circle-o" style={{ fontSize: 20, marginRight: 5, color: '#47b03e' }} />
-                </TouchableOpacity>
-                <TouchableOpacity style={{ marginRight: 5, marginTop: 2 }} onPress={() => { this.DeleteRecord(item) }}>
-                  <Icon active name="trash" style={{ fontSize: 20, color: 'red', alignSelf: 'flex-end' }} />
-                </TouchableOpacity>
-                </View> */}
             </Card>
 
           )} />
@@ -216,7 +186,7 @@ visible={this.state.modalVisible}>
 
     <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>جزئیات بیشتر</Text>
     <Button transparent style={{ marginRight: -20 }}>
-      <Icon name='close' style={{ fontSize: 30, color: '#fff', marginRight: 20 }} onPress={() => { this.setModalVisible(false) }} />
+      <Icon name='close' style={{ fontSize: 25, color: '#fff', marginRight: 20 }} onPress={() => { this.setModalVisible(false) }} />
     </Button>
 
   </View>
@@ -309,9 +279,8 @@ title3: {
     fontSize: 14,
     color: '#555',
     fontFamily: 'IRANSansMobile(FaNum)',
-    marginRight: 15,
-    flex: 1, marginBottom: 5,
-    marginTop: 5,
+    margin:10,
+    padding: 5
 
 },
 title2: {

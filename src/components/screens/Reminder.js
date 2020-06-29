@@ -7,15 +7,6 @@ import DatePicker, { getFormatedDate } from 'react-native-modern-datepicker';
 import ImagePicker from 'react-native-image-picker';
 import Header from '../layouts/Header';
 import LinearGradient from 'react-native-linear-gradient';
-const typeIncome = [
-    { id: 1, name: 'هرگز' },
-    { id: 2, name: 'روزانه' },
-    { id: 3, name: 'هفتگی' },
-    { id: 4, name: 'ماهانه' },
-    { id: 5, name: 'سالیانه' },
-    { id: 6, name: 'سفر' },
-    { id: 7, name: 'شرکت' },
-];
 
 const renderImage = (image) => {
     console.log(image);
@@ -58,6 +49,8 @@ class Reminder extends Component {
             image: '',
             open: false,
             modalVisible:false,
+            modalVisibleimage:false,
+            modalVisibletext:false,
             isVisableBoxImage: 'none',
             userSelected:[],
             dataSource:[],
@@ -90,21 +83,44 @@ class Reminder extends Component {
             repate_text: value
         });
     }
-    onValueChange(value: string) {
+    onValueChangei(value: string) {
         this.setState({
-            repate_text: value
+            repate_image: value
         });
     }
-    // ................modal...........
+   // ................modal...........
     clickEventListener = (item) => {
         this.setState({userSelected: item}, () =>{
             this.setModalVisible(true);
         });
     }
+    clickEventimage = () => {
+        this.setState(() =>{
+            this.setModalVisibleimage(true);
+        });
+    }
+// ................modal...........
+
+    setModalVisibleimage(visible) {
+        this.setState({modalVisibleimage: visible});
+    }
+
+// ................modal...........
 
     setModalVisible(visible) {
         this.setState({modalVisible: visible});
     }
+    clickEventtext = () => {
+        this.setState(() =>{
+            this.setModalVisibletext(true);
+        });
+    }
+// ................modal...........
+
+    setModalVisibletext(visible) {
+        this.setState({modalVisibletext: visible});
+    }
+
     // ..............imagepicker............................
     renderAsset(image) {
         return renderImage(image);
@@ -353,8 +369,8 @@ class Reminder extends Component {
                             icon={open ? '' : 'plus'}
                             actions={[
                                 // {icon: 'plus', onPress: () => console.log('Pressed add')},
-                                { icon: 'text', label: 'یادآور متنی', onPress: () => this.refs.modal1.open() },
-                                { icon: 'camera', label: 'یادآور تصویری', onPress: () => this.refs.modal2.open() },
+                                { icon: 'text', label: 'یادآور متنی',onPress:() => this.clickEventtext()},
+                                { icon: 'camera', label: 'یادآور تصویری',  onPress:() => this.clickEventimage()},
                                 { icon: 'voice', label: 'یادآور صوتی', onPress: () => Alert.alert('در نسخه های بعدی این قابلیت افزوده خواهد شد') },
 
                             ]}
@@ -367,410 +383,9 @@ class Reminder extends Component {
                         />
                     </Portal>
                 </Provider>
-                {/*............ ........modal4................................. */}
-                <Modald
-                    style={[styles.modal4]}
-                    position={'bottom'}
-                    ref={'modal1'}
-                    coverScreen={true}
-                    swipeToClose={false}
-                >
-                    <LinearGradient
-                        style={{ borderTopLeftRadius: 15, borderTopRightRadius: 15, }}
-                        start={{ x: 0.3, y: 0.0 }} end={{ x: 0.5, y: 1.0 }}
-                        locations={[0.1, 0.6, 0.9]}
-                        colors={['#3e843d', '#3ede30', '#47b03e']}>
-                        <View style={{
-                            padding: 7,
-                            alignItems: 'center',
-                        }}>
 
-                            <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>
-                                یادآور متنی
-                            </Text>
-                        </View>
-                    </LinearGradient>
+                {/*............ ........modaldetails................................ */}
 
-
-
-                    <View style={{ marginTop: 2, flex: 1, }}>
-                        <ScrollView showsVerticalScrollIndicator={false}>
-                            <View>
-                                <Item fixedLabel>
-                                    <Left>
-                                        <Button transparent onPress={() => this.refs.modal1.open()}>
-                                            <Icon active name="text-height" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
-                                        </Button>
-                                    </Left>
-                                    <Input style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', alignItems: 'center', justifyContent: 'center' }}  onChangeText={title => this.setState({title_text:title})} />
-                                    <Label style={{
-                                        paddingRight
-                                            : 20
-                                    }}><Text style={{
-                                        color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', paddingRight: 20, height: 15,
-
-                                    }}>عنوان:</Text></Label>
-
-                                </Item>
-
-                                <Item fixedLabel>
-                                    <Left>
-                                        <Button transparent onPress={() => this.refs.modal1.open()}>
-                                            <Icon active name="edit" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
-                                        </Button>
-                                    </Left>
-                                    <Input multiline={true} style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', alignItems: 'center' }}
-                                           onChangeText={description => this.setState({description_text:description})}/>
-                                    <Label style={{
-                                        paddingRight
-                                            : 20
-                                    }}><Text style={{
-                                        color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', paddingRight: 20, height: 15,
-
-                                    }}>یاداشت :</Text></Label>
-
-                                </Item>
-
-                                <Item fixedLabel onPress={() => this.refs.modal1.open()}>
-                                    <Left>
-                                        <Button transparent onPress={() => this.refs.modal1.open()}>
-                                            <Icon active name="calendar" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
-                                        </Button>
-                                    </Left>
-
-                                    <Text style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light' }}>{this.state.DateText} </Text>
-                                    <Label style={{
-                                        paddingRight
-                                            : 20
-                                    }}><Text style={{
-                                        color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', paddingRight
-
-                                            : 20
-                                    }}> تاریخ:</Text></Label>
-
-
-                                </Item>
-
-                                <ListItem Icon>
-                                    <Left>
-                                        <Button transparent style={{ marginLeft: -20, }}>
-                                            <Icon active name="bell" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
-                                        </Button>
-
-                                    </Left>
-                                    <Body style={{ marginLeft: -80, marginRight: 100, width: '100%' }}>
-                                        {/* <Select2
-
-                                            isSelectSingle={true}
-                                            // colorTheme='#3d933c'
-                                            popupTitle="انتخاب نوع  دسته ها"
-                                            cancelButtonText="انصراف"
-                                            // newButtonText="جدید"
-                                            selectButtonText="تایید"
-                                            // title="نوع دسته ها"
-                                            style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', width: '140%' }}
-                                            searchPlaceHolderText="جستجو نوع دسته"
-                                            data={typeIncome}
-                                            onSelect={data => {
-                                                this.setState({ data });
-                                            }}
-                                            onRemoveItem={data => {
-                                                this.setState({ data });
-                                            }}
-                                        />  */}
-                                        <Picker
-                                            mode="dropdown"
-
-                                            iosIcon={<Icon name="arrow-down" />}
-
-                                            textStyle={{ color: "#777777" }}
-                                            itemStyle={{
-                                                backgroundColor: "#d3d3d3",
-                                                marginLeft: 0,
-                                                paddingLeft: 1,
-                                                color:'#777777'
-                                            }}
-                                            itemTextStyle={{ color: '#777777' }}
-                                            style={{ width: undefined }}
-                                            selectedValue={this.state.repate_text}
-                                            onValueChange={this.onValueChange.bind(this)}
-                                        >
-                                            <Picker.Item label="هرگز" value="هرگز" style={{fontFamilyfontFamily:'IRANSansMobile(FaNum)_Light',color:'#777777'}} />
-                                            <Picker.Item label="روزانه" value="روزانه" />
-                                            <Picker.Item label="هفتگی" value="هفتگی" />
-                                            <Picker.Item label="ماهانه" value="ماهانه" />
-                                            <Picker.Item label="سالانه" value="سالانه" />
-                                        </Picker>
-                                    </Body>
-                                    <Right>
-                                        <Text style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', marginHorizontal: -40, marginRight: -2 }}> تکرار یاداوری</Text>
-
-                                    </Right>
-                                </ListItem>
-
-
-                                <Modald
-                                    style={[styles.modal4]}
-                                    position={"bottom"}
-                                    ref={"modal1"}
-                                    coverScreen={true}
-                                    swipeToClose={true}
-                                >
-
-                                    <DatePicker isGregorian={false}
-                                                mode="date"
-                                                options={{
-                                                    defaultFont: 'Shabnam-Light',
-                                                    headerFont: 'Shabnam-Medium',
-                                                }}
-                                                onDateChange={date => {
-                                                    this.setState({ DateText: date });
-                                                    this.refs.modal1.close()
-                                                }
-
-                                                }
-
-                                                placeholder="Select date"
-                                    />
-                                    <Button full success>
-                                        <Text style={{ color: '#fff' }}>تایید</Text>
-                                    </Button>
-                                </Modald>
-
-                            </View>
-                        </ScrollView>
-                    </View>
-
-                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 5 }}>
-                        <TouchableOpacity style={{
-                            borderRadius: 5, width: '45%', marginLeft: 10, backgroundColor: '#fff', borderColor: '#47b03e', borderWidth: 1.5,
-                            height: 40, marginBottom: 2,
-                        }}>
-
-                            <Text style={{ color: '#47b03e', textAlign: 'center', fontSize: 16, marginTop: 8 }}>لغو</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{
-                            borderRadius: 5, width: '45%', marginLeft: 10, backgroundColor: '#47b03e',
-                            height: 40, marginBottom: 2,
-
-                        }} onPress={this.RegisterReminderText}>
-
-                            <Text style={{ color: '#fff', textAlign: 'center', fontSize: 16, marginTop: 8 }}>ذخیره</Text>
-                        </TouchableOpacity>
-
-
-                    </View>
-                </Modald>
-                {/*............ ........modal2................................. */}
-                <Modald
-                    style={[styles.modal4]}
-                    position={'bottom'}
-                    ref={'modal2'}
-                    coverScreen={true}
-                    swipeToClose={false}
-                    useNativeDriver={true}
-                >
-                    <LinearGradient
-                        style={{ borderTopLeftRadius: 15, borderTopRightRadius: 15, }}
-                        start={{ x: 0.3, y: 0.0 }} end={{ x: 0.5, y: 1.0 }}
-                        locations={[0.1, 0.6, 0.9]}
-                        colors={['#3e843d', '#3ede30', '#47b03e']}>
-                        <View style={{
-                            padding: 7,
-                            alignItems: 'center',
-                        }}>
-
-                            <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>
-                                یادآور تصویری
-                            </Text>
-                        </View>
-                    </LinearGradient>
-
-
-
-                    <View style={{ marginTop: 2, flex: 1, }}>
-                        <ScrollView showsVerticalScrollIndicator={false}>
-                            <View>
-                                <Item fixedLabel>
-                                    <Left>
-                                        <Button transparent onPress={() => this.refs.modal1.open()}>
-                                            <Icon active name="text-height" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
-                                        </Button>
-                                    </Left>
-                                    <Input style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light' }} onChangeText={title => this.setState({title_image:title})} />
-                                    <Label style={{
-                                        paddingRight
-                                            : 20
-                                    }}><Text style={{
-                                        color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', paddingRight: 20, height: 15,
-
-                                    }}>عنوان:</Text></Label>
-
-                                </Item>
-
-
-                                <Item fixedLabel onPress={() => this.refs.modal1.open()}>
-                                    <Left>
-                                        <Button transparent >
-                                            <Icon active name="calendar" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
-                                        </Button>
-                                    </Left>
-                                    <Text style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light' }}>{this.state.Dateimage} </Text>
-                                    <Label style={{
-                                        paddingRight
-                                            : 20
-                                    }}><Text style={{
-                                        color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', paddingRight
-
-                                            : 20
-                                    }}> تاریخ:</Text></Label>
-
-                                </Item>
-                                <Item fixedLabel>
-                                    <Left>
-                                        <Button transparent >
-                                            <Icon active name="edit" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
-                                        </Button>
-                                    </Left>
-                                    <Input multiline={true} style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', alignItems: 'center' }}
-                                           onChangeText={description => this.setState({description_image:description})}/>
-                                    <Label style={{
-                                        paddingRight
-                                            : 20
-                                    }}><Text style={{
-                                        color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', paddingRight: 20, height: 15,
-
-                                    }}>یاداشت :</Text></Label>
-
-                                </Item>
-                                <ListItem Icon>
-                                    <Left>
-                                        <Button transparent style={{ marginLeft: -20, }}>
-                                            <Icon active name="bell" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
-                                        </Button>
-
-                                    </Left>
-                                    <Body style={{ marginLeft: -80, marginRight: 100, width: '100%' }}>
-                                        {/* <Select2
-
-                                            isSelectSingle={true}
-                                            // colorTheme='#3d933c'
-                                            popupTitle="انتخاب نوع  دسته ها"
-                                            cancelButtonText="انصراف"
-                                            // newButtonText="جدید"
-                                            selectButtonText="تایید"
-                                            // title="نوع دسته ها"
-                                            style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', width: '140%' }}
-                                            searchPlaceHolderText="جستجو نوع دسته"
-                                            data={typeIncome}
-                                            onSelect={data => {
-                                                this.setState({ data });
-                                            }}
-                                            onRemoveItem={data => {
-                                                this.setState({ data });
-                                            }}
-                                        />  */}
-                                        <Picker
-                                            mode="dropdown"
-
-                                            iosIcon={<Icon name="arrow-down" />}
-
-                                            textStyle={{ color: "#777777" }}
-                                            itemStyle={{
-                                                backgroundColor: "#d3d3d3",
-                                                marginLeft: 0,
-                                                paddingLeft: 1,
-                                                color:'#777777'
-                                            }}
-                                            itemTextStyle={{ color: '#777777' }}
-                                            style={{ width: undefined }}
-                                            selectedValue={this.state.repeate_image}
-                                            onValueChange={this.onValueChange.bind(this)}
-                                        >
-                                            <Picker.Item label="هرگز" value="هرگز" style={{fontFamilyfontFamily:'IRANSansMobile(FaNum)_Light',color:'#777777'}} />
-                                            <Picker.Item label="روزانه" value="روزانه" />
-                                            <Picker.Item label="هفتگی" value="هفتگی" />
-                                            <Picker.Item label="ماهانه" value="ماهانه" />
-                                            <Picker.Item label="سالانه" value="سالانه" />
-                                        </Picker>
-                                    </Body>
-                                    <Right>
-                                        <Text style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', marginHorizontal: -40, marginRight: -2 }}> تکرار یاداوری</Text>
-
-                                    </Right>
-                                </ListItem>
-                                {/* .........................imagepicker.................................. */}
-                                <View style={{marginTop: 8, marginHorizontal: 30}}>
-                                    <Card>
-                                        <CardItem bordered style={{backgroundColor: '#c5f3c1', borderStyle: 'dashed', borderWidth: 0.5}}>
-                                            <Left>
-
-
-                                                <Body onPress>
-                                                    <Text style={{color: '#777'}} onPress={this.handleClick.bind(this)}>پیوست
-                                                        فایل</Text>
-                                                </Body>
-                                            </Left>
-                                        </CardItem>
-                                    </Card>
-                                </View>
-                                <View>
-                                    {this.state.image ? this.renderAsset(this.state.image) : null}
-                                </View>
-
-
-                                <Modald
-                                    style={[styles.modal4]}
-                                    position={"bottom"}
-                                    ref={"modal1"}
-                                    coverScreen={true}
-                                    swipeToClose={true}
-                                >
-
-                                    <DatePicker isGregorian={false}
-                                                mode="date"
-                                                options={{
-                                                    defaultFont: 'Shabnam-Light',
-                                                    headerFont: 'Shabnam-Medium',
-                                                }}
-                                                onDateChange={date => {
-                                                    this.setState({ Dateimage: date });
-                                                    this.refs.modal1.close()
-                                                }
-
-                                                }
-
-                                                placeholder="Select date"
-                                    />
-                                    <Button full success>
-                                        <Text style={{ color: '#fff' }}>تایید</Text>
-                                    </Button>
-                                </Modald>
-
-                            </View>
-                        </ScrollView>
-                    </View>
-
-                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 5 }}>
-                        <TouchableOpacity style={{
-                            borderRadius: 5, width: '45%', marginLeft: 10, backgroundColor: '#fff', borderColor: '#47b03e', borderWidth: 1.5,
-                            height: 40, marginBottom: 2,
-                        }}>
-
-                            <Text style={{ color: '#47b03e', textAlign: 'center', fontSize: 16, marginTop: 8 }}>لغو</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{
-                            borderRadius: 5, width: '45%', marginLeft: 10, backgroundColor: '#47b03e',
-                            height: 40, marginBottom: 2,
-
-                        }} onPress={this.RegisterReminderImage}>
-
-                            <Text style={{ color: '#fff', textAlign: 'center', fontSize: 16, marginTop: 8 }}>ذخیره</Text>
-                        </TouchableOpacity>
-
-
-                    </View>
-                </Modald>
                 <Modal
 
                     animationType={'fade'}
@@ -792,7 +407,7 @@ class Reminder extends Component {
 
                             <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>جزئیات بیشتر</Text>
                             <Button transparent style={{ marginRight: -20 }}>
-                                <Icon name='close' style={{ fontSize: 30, color: '#fff', marginRight: 20 }} onPress={() => { this.setModalVisible(false) }} />
+                                <Icon name='close' style={{ fontSize: 25, color: '#fff', marginRight: 20 }} onPress={() => { this.setModalVisible(false) }} />
                             </Button>
 
                         </View>
@@ -804,14 +419,14 @@ class Reminder extends Component {
                                     <Image style={styles.image} source={{ uri: this.state.userSelected.image }} />
                                     <View style={{ marginTop: 10 }}>
                                         <View style={[styles.view,{backgroundColor:'#e2e2e2'}]}>
-                                            <Text style={styles.title3}>عنوان:<Text style={styles.title3}>{this.state.userSelected.title} </Text></Text>
+                                            <Text style={styles.title}>عنوان:<Text style={styles.title}>{this.state.userSelected.title} </Text></Text>
                                         </View>
                                         <View style={[styles.view,{backgroundColor:'#fff'}]}>
-                                            <Text style={styles.title3}>تاریخ : <Text style={styles.title3}> {this.state.userSelected.date}</Text></Text>
+                                            <Text style={styles.title}>تاریخ : <Text style={styles.title}> {this.state.userSelected.date}</Text></Text>
                                         </View>
 
                                         <View style={[styles.view,{backgroundColor:'#e2e2e2'}]}>
-                                            <Text style={styles.title3}> توضیحات:  {this.state.userSelected.description}</Text>
+                                            <Text style={styles.title}> توضیحات:  {this.state.userSelected.description}</Text>
                                         </View>
                                     </View>
                                 </ScrollView>
@@ -820,7 +435,379 @@ class Reminder extends Component {
                         </View>
                     </View>
                 </Modal>
+            {/*..........Reminderimage...............*/}
+                <Modal
 
+                    animationType={'fade'}
+                    transparent={true}
+                    // onRequestClose={() => this.setModalVisibleimge(false)}
+                    visible={this.state.modalVisibleimage}>
+                    <LinearGradient
+                        style={{ width: '100%' }}
+                        start={{ x: 0.3, y: 0.0 }} end={{ x: 0.5, y: 1.0 }}
+                        locations={[0.1, 0.6, 0.9]}
+                        colors={['#3e843d', '#3ede30', '#47b03e']}>
+                        <View style={{
+                            paddingVertical: 7,
+                            alignItems: 'center'
+                            , justifyContent: 'space-around',
+                            flexDirection: 'row'
+                        }}>
+                            <Text></Text>
+
+                            <Text style={{ fontSize: 18, color: '#fff', marginBottom: 5, fontFamily: 'IRANSansMobile(FaNum)' }}>ثبت یادآور تصویری</Text>
+                            <Button transparent style={{ marginRight: -20 }}>
+                                <Icon name='close' style={{ fontSize: 30, color: '#fff', marginRight: 20 }} onPress={() => { this.setModalVisibleimage(false) }} />
+                            </Button>
+
+                        </View>
+                    </LinearGradient>
+                    <View style={styles.popupOverlay}>
+                        <View style={styles.popup}>
+                            <View style={styles.popupContent}>
+
+                                    <ScrollView showsVerticalScrollIndicator={false}>
+                                        <View>
+                                            <Item fixedLabel>
+                                                <Left>
+                                                    <Button transparent onPress={() => this.refs.modal1.open()}>
+                                                        <Icon active name="text-height" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
+                                                    </Button>
+                                                </Left>
+                                                <Input style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light' }} onChangeText={title => this.setState({title_image:title})} />
+                                                <Label style={{
+                                                    paddingRight
+                                                        : 20
+                                                }}><Text style={{
+                                                    color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', paddingRight: 20, height: 15,
+
+                                                }}>عنوان:</Text></Label>
+
+                                            </Item>
+
+
+                                            <Item fixedLabel onPress={() => this.refs.modal1.open()}>
+                                                <Left>
+                                                    <Button transparent >
+                                                        <Icon active name="calendar" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
+                                                    </Button>
+                                                </Left>
+                                                <Text style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light' }}>{this.state.Dateimage} </Text>
+                                                <Label style={{
+                                                    paddingRight
+                                                        : 20
+                                                }}><Text style={{
+                                                    color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', paddingRight
+
+                                                        : 20
+                                                }}> تاریخ:</Text></Label>
+
+                                            </Item>
+                                            <Item fixedLabel>
+                                                <Left>
+                                                    <Button transparent >
+                                                        <Icon active name="edit" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
+                                                    </Button>
+                                                </Left>
+                                                <Input multiline={true} style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', alignItems: 'center' }}
+                                                       onChangeText={description => this.setState({description_image:description})}/>
+                                                <Label style={{
+                                                    paddingRight
+                                                        : 20
+                                                }}><Text style={{
+                                                    color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', paddingRight: 20, height: 15,
+
+                                                }}>یاداشت :</Text></Label>
+
+                                            </Item>
+                                            <ListItem Icon>
+                                                <Left>
+                                                    <Button transparent style={{ marginLeft: -20, }}>
+                                                        <Icon active name="bell" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
+                                                    </Button>
+
+                                                </Left>
+                                                <Body style={{ marginLeft: -80, marginRight: 100, width: '100%' }}>
+                                                    <Picker
+                                                        mode="dropdown"
+
+                                                        iosIcon={<Icon name="arrow-down" />}
+
+                                                        textStyle={{ color: "#777777" }}
+                                                        itemStyle={{
+                                                            backgroundColor: "#d3d3d3",
+                                                            marginLeft: 0,
+                                                            paddingLeft: 1,
+                                                            color:'#777777'
+                                                        }}
+                                                        itemTextStyle={{ color: '#777777' }}
+                                                        style={{ width: undefined }}
+                                                        selectedValue={this.state.repate_image}
+                                                        onValueChange={this.onValueChangei.bind(this)}
+                                                    >
+                                                        <Picker.Item label="هرگز" value="هرگز" style={{fontFamilyfontFamily:'IRANSansMobile(FaNum)_Light',color:'#777777'}} />
+                                                        <Picker.Item label="روزانه" value="روزانه" />
+                                                        <Picker.Item label="هفتگی" value="هفتگی" />
+                                                        <Picker.Item label="ماهانه" value="ماهانه" />
+                                                        <Picker.Item label="سالانه" value="سالانه" />
+                                                    </Picker>
+
+                                                </Body>
+                                                <Right>
+                                                    <Text style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', marginHorizontal: -40, marginRight: -2 }}> تکرار یاداوری</Text>
+
+                                                </Right>
+                                            </ListItem>
+                                            {/* .........................imagepicker.................................. */}
+                                            <View style={{marginTop: 8, marginHorizontal: 30}}>
+                                                <Card>
+                                                    <CardItem bordered style={{backgroundColor: '#c5f3c1', borderStyle: 'dashed', borderWidth: 0.5}}>
+                                                        <Left>
+
+
+                                                            <Body onPress>
+                                                                <Text style={{color: '#777'}} onPress={this.handleClick.bind(this)}>پیوست
+                                                                    فایل</Text>
+                                                            </Body>
+                                                        </Left>
+                                                    </CardItem>
+                                                </Card>
+                                            </View>
+                                            <View>
+                                                {this.state.image ? this.renderAsset(this.state.image) : null}
+                                            </View>
+
+
+                                            <Modald
+                                                style={[styles.modal4]}
+                                                position={"bottom"}
+                                                ref={"modal1"}
+                                                coverScreen={true}
+                                                swipeToClose={true}
+                                            >
+
+                                                <DatePicker isGregorian={false}
+                                                            mode="date"
+                                                            options={{
+                                                                defaultFont: 'Shabnam-Light',
+                                                                headerFont: 'Shabnam-Medium',
+                                                            }}
+                                                            onDateChange={date => {
+                                                                this.setState({ Dateimage: date });
+                                                                this.refs.modal1.close()
+                                                            }
+
+                                                            }
+
+                                                            placeholder="Select date"
+                                                />
+                                                <Button full success>
+                                                    <Text style={{ color: '#fff' }}>تایید</Text>
+                                                </Button>
+                                            </Modald>
+                                        </View>
+                                    </ScrollView>
+
+                            </View>
+                        </View>
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 5 }}>
+                        <TouchableOpacity onPress={() => { this.setModalVisibleimage(false) }}  style={{
+                            borderRadius: 5, width: '45%', marginLeft: 10, backgroundColor: '#fff', borderColor: '#47b03e', borderWidth: 1.5,
+                            height: 40, marginBottom: 2,
+                        }}>
+
+                            <Text style={{ color: '#47b03e', textAlign: 'center', fontSize: 16, marginTop: 8,fontFamily:'IRANSansMobile(FaNum)' }}>لغو</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{
+                            borderRadius: 5, width: '45%', marginLeft: 10, backgroundColor: '#47b03e',
+                            height: 40, marginBottom: 2,
+
+                        }} onPress={this.RegisterReminderImage}>
+
+                            <Text style={{ color: '#fff', textAlign: 'center', fontSize: 16, marginTop: 8 ,fontFamily:'IRANSansMobile(FaNum)'}}>ذخیره</Text>
+                        </TouchableOpacity>
+
+
+                    </View>
+                </Modal>
+                {/*..........Remindertext...............*/}
+                <Modal
+
+                    animationType={'fade'}
+                    transparent={true}
+                    // onRequestClose={() => this.setModalVisibleimge(false)}
+                    visible={this.state.modalVisibletext}>
+                    <LinearGradient
+                        style={{ width: '100%' }}
+                        start={{ x: 0.3, y: 0.0 }} end={{ x: 0.5, y: 1.0 }}
+                        locations={[0.1, 0.6, 0.9]}
+                        colors={['#3e843d', '#3ede30', '#47b03e']}>
+                        <View style={{
+                            paddingVertical: 7,
+                            alignItems: 'center'
+                            , justifyContent: 'space-around',
+                            flexDirection: 'row'
+                        }}>
+                            <Text></Text>
+
+                            <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>ثبت یادآور متنی</Text>
+                            <Button transparent style={{ marginRight: -20 }}>
+                                <Icon name='close' style={{ fontSize: 30, color: '#fff', marginRight: 20 }} onPress={() => { this.setModalVisibletext(false) }} />
+                            </Button>
+
+                        </View>
+                    </LinearGradient>
+                    <View style={styles.popupOverlay}>
+                        <View style={styles.popup}>
+                            <View style={styles.popupContent}>
+
+                                <ScrollView showsVerticalScrollIndicator={false}>
+                                    <View>
+                                        <Item fixedLabel>
+                                            <Left>
+                                                <Button transparent onPress={() => this.refs.modal1.open()}>
+                                                    <Icon active name="text-height" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
+                                                </Button>
+                                            </Left>
+                                            <Input style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', alignItems: 'center', justifyContent: 'center' }}  onChangeText={title => this.setState({title_text:title})} />
+                                            <Label style={{
+                                                paddingRight
+                                                    : 20
+                                            }}><Text style={{
+                                                color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', paddingRight: 20, height: 15,
+
+                                            }}>عنوان:</Text></Label>
+
+                                        </Item>
+
+                                        <Item fixedLabel>
+                                            <Left>
+                                                <Button transparent onPress={() => this.refs.modal1.open()}>
+                                                    <Icon active name="edit" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
+                                                </Button>
+                                            </Left>
+                                            <Input multiline={true} style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', alignItems: 'center' }}
+                                                   onChangeText={description => this.setState({description_text:description})}/>
+                                            <Label style={{
+                                                paddingRight
+                                                    : 20
+                                            }}><Text style={{
+                                                color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', paddingRight: 20, height: 15,
+
+                                            }}>یاداشت :</Text></Label>
+
+                                        </Item>
+
+                                        <Item fixedLabel onPress={() => this.refs.modal1.open()}>
+                                            <Left>
+                                                <Button transparent onPress={() => this.refs.modal1.open()}>
+                                                    <Icon active name="calendar" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
+                                                </Button>
+                                            </Left>
+
+                                            <Text style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light' }}>{this.state.DateText} </Text>
+                                            <Label style={{
+                                                paddingRight
+                                                    : 20
+                                            }}><Text style={{
+                                                color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', paddingRight
+
+                                                    : 20
+                                            }}> تاریخ:</Text></Label>
+
+
+                                        </Item>
+
+                                        <ListItem Icon>
+                                            <Left>
+                                                <Button transparent style={{ marginLeft: -20, }}>
+                                                    <Icon active name="bell" style={{ color: '#00C851', fontSize: 20, marginLeft: 8 }} />
+                                                </Button>
+                                            </Left>
+                                            <Body style={{ marginLeft: -80, marginRight: 100, width: '100%' }}>
+                                                <Picker
+                                                    mode="dropdown"
+                                                    iosIcon={<Icon name="arrow-down" />}
+                                                    textStyle={{ color: "#777777" }}
+                                                    itemStyle={{
+                                                        backgroundColor: "#d3d3d3",
+                                                        marginLeft: 0,
+                                                        paddingLeft: 1,
+                                                        color:'#777777'
+                                                    }}
+                                                    itemTextStyle={{ color: '#777777' }}
+                                                    style={{ width: undefined }}
+                                                    selectedValue={this.state.repate_text}
+                                                    onValueChange={this.onValueChange.bind(this)}
+                                                >
+                                                    <Picker.Item label="هرگز" value="هرگز" style={{fontFamilyfontFamily:'IRANSansMobile(FaNum)_Light',color:'#777777'}} />
+                                                    <Picker.Item label="روزانه" value="روزانه" />
+                                                    <Picker.Item label="هفتگی" value="هفتگی" />
+                                                    <Picker.Item label="ماهانه" value="ماهانه" />
+                                                    <Picker.Item label="سالانه" value="سالانه" />
+                                                </Picker>
+                                            </Body>
+                                            <Right>
+                                                <Text style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light', marginHorizontal: -40, marginRight: -2 }}> تکرار یاداوری</Text>
+
+                                            </Right>
+                                        </ListItem>
+
+
+                                        <Modald
+                                            style={[styles.modal4]}
+                                            position={"bottom"}
+                                            ref={"modal1"}
+                                            coverScreen={true}
+                                            swipeToClose={true}
+                                        >
+
+                                            <DatePicker isGregorian={false}
+                                                        mode="date"
+                                                        options={{
+                                                            defaultFont: 'Shabnam-Light',
+                                                            headerFont: 'Shabnam-Medium',
+                                                        }}
+                                                        onDateChange={date => {
+                                                            this.setState({ DateText: date });
+                                                            this.refs.modal1.close()
+                                                        }
+
+                                                        }
+
+                                                        placeholder="Select date"
+                                            />
+                                            <Button full success>
+                                                <Text style={{ color: '#fff' }}>تایید</Text>
+                                            </Button>
+                                        </Modald>
+                                    </View>
+                                </ScrollView>
+                                    </View>
+                        </View>
+
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 5 }}>
+                        <TouchableOpacity  onPress={() => { this.setModalVisibletext(false) }}  style={{
+                            borderRadius: 5, width: '45%', marginLeft: 10, backgroundColor: '#fff', borderColor: '#47b03e', borderWidth: 1.5,
+                            height: 40, marginBottom: 2,
+                        }}>
+
+                            <Text style={{ color: '#47b03e', textAlign: 'center', fontSize: 16, marginTop: 8 }}>لغو</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{
+                            borderRadius: 5, width: '45%', marginLeft: 10, backgroundColor: '#47b03e',
+                            height: 40, marginBottom: 2,
+
+                        }} onPress={this.RegisterReminderText}>
+
+                            <Text style={{ color: '#fff', textAlign: 'center', fontSize: 16, marginTop: 8 }}>ذخیره</Text>
+                        </TouchableOpacity>
+
+
+                    </View>
+                </Modal>
             </View>
 
         );
@@ -901,11 +888,13 @@ const styles = StyleSheet.create({
         textAlign:'right'
 
     },
-    titel:{
-        fontSize:12,
+    title:{
+        fontSize:16,
         flex:1,
-        color:"green",
-        fontFamily: 'IRANSansMobile(FaNum)'
+        color:"#444",
+        fontFamily: 'IRANSansMobile(FaNum)',
+        margin: 10,
+        padding: 5
 
     },
     date:{

@@ -9,34 +9,32 @@ import {
     Image,
     Text,
     ImageBackground,
-    StatusBar,
+    StatusBar,AsyncStorage
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-export default class Splash extends Component {
+import {connect} from 'react-redux';
+class Splash extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props)
         this.animatedValue1 = new Animated.Value(0);
         this.animatedValue2 = new Animated.Value(0);
         this.animatedValue3 = new Animated.Value(0);
-
-        // this.state = {
-        //     logourl: require('../../../assets/images/user.jpg'),
-        //     backgroundurl: require('../../../assets/images/avatar.png'),
-        // };
+        this.state={
+        }
     }
 
     componentDidMount() {
         this.animate();
         this.splash();
-
     }
     splash() {
         setTimeout(() => {
-            //this.props.navigation.navigate('DashboardUser');
-           // this.props.navigation.navigate('Slider');
-            this.props.navigation.navigate('LoginOrRegister');
-
+    // AsyncStorage.getItem(this.state.user_id,(err,result)=>{
+    // if (result===null)
+        this.props.navigation.navigate('LoginOrRegister');
+    // else
+    //     this.props.navigation.navigate('DashboardUser');
+    //         });
         }, 6000);
     }
 
@@ -89,7 +87,7 @@ export default class Splash extends Component {
                         alignItems: 'center',},{transform: [{scale: scale}]}]}>
                         <Image
                             source={require('../../../assets/images/icons/abacus.png')}
-                            style={{width: 120, height: 120}}
+                            style={{width: 100, height: 100}}
                         />
                         <Text style={styles.text}>چرتکه</Text>
                     </Animated.View>
@@ -127,6 +125,8 @@ export default class Splash extends Component {
         );
     }
 }
+
+export default Splash;
 const styles = StyleSheet.create({
     container: {
         flex: 1,

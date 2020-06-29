@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {I18nManager} from "react-native";
+import {I18nManager} from 'react-native';
 I18nManager.allowRTL(false);
 import RootStack from '../routs';
-import {Provider} from "react-redux";
+import {connect, Provider} from 'react-redux';
 import {applyMiddleware, createStore} from "redux";
 import reducers from "../reducers";
 import ReduxThunk from "redux-thunk";

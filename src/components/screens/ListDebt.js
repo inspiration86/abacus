@@ -127,7 +127,7 @@ class ListDebt extends Component {
               <View style={{ flexDirection: 'row-reverse', flex: 1, backgroundColor: '#fff', marginHorizontal: -10 }}>
                 <View style={{ flex: 1, marginTop: 5 }}>
 
-                  <Text style={styles.title}>صاحب حساب:</Text>
+                  <Text style={styles.title}>طرف حساب:</Text>
 
                 </View>
 
@@ -145,7 +145,7 @@ class ListDebt extends Component {
                 <View style={{ flex: 1, marginTop: 5, marginRight: 10 }}>
 
                   <TouchableOpacity style={{ marginRight: 10, marginTop: 2 }} onPress={() => { this.DeleteRecord(item) }}>
-                    <Icon active name="trash" style={{ fontSize: 20, color: 'red', alignSelf: 'flex-end' }} />
+                    <Icon active name="trash" style={{ fontSize: 20, color: '#888', alignSelf: 'flex-end' }} />
                   </TouchableOpacity>
 
                 </View>
@@ -183,7 +183,7 @@ class ListDebt extends Component {
 
               <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>جزئیات بیشتر</Text>
               <Button transparent style={{alignItems:'flex-end',justifyContent:'flex-end'}}>
-                <Icon name='close' style={{ fontSize: 30, color: '#fff',}} onPress={() => { this.setModalVisible(false) }} />
+                <Icon name='close' style={{ fontSize: 25, color: '#fff',}} onPress={() => { this.setModalVisible(false) }} />
               </Button>
 
             </View>
@@ -207,7 +207,7 @@ class ListDebt extends Component {
                       <Text style={styles.title3}> نوع حساب : {this.state.userSelected.acount}</Text>
                     </View>
                     <View style={[styles.view, { backgroundColor: '#e2e2e2' }]}>
-                      <Text style={styles.title3}>صاحب حساب : {this.state.userSelected.lender}</Text>
+                      <Text style={styles.title3}>طرف حساب : {this.state.userSelected.lender}</Text>
                     </View>
                     <View style={[styles.view, { backgroundColor: '#fff' }]}>
                       <Text style={styles.title3}> توضیحات : {this.state.userSelected.detail}</Text>
@@ -277,10 +277,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#555',
     fontFamily: 'IRANSansMobile(FaNum)',
-    marginRight: 15,
-    flex: 1, marginBottom: 5,
-    marginTop: 5,
-
+    margin:10,
+    padding: 5
   },
   title2: {
     fontSize: 14,

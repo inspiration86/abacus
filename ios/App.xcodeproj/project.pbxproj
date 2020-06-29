@@ -85,6 +85,11 @@
 		76DD767EA104478CA0F3572E /* Vazir.woff2 in Resources */ = {isa = PBXBuildFile; fileRef = 38D4934BE51148A4A4145CFF /* Vazir.woff2 */; };
 		1B78D1AE21004694B0DD9136 /* Far_Aref.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF14252BC8F14AE693E5FF80 /* Far_Aref.ttf */; };
 		2D6E67B3C57043EB91E058A6 /* Lalezar-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A4D63E5126724CACAC9D8256 /* Lalezar-Regular.ttf */; };
+		41CF4A4575B942A59EBF7D57 /* A Google.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EE8DB9B2EF4D45F099D7502D /* A Google.ttf */; };
+		C031BC6AE5834A18897FCE2E /* Mj_Promoter Lt_0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0CAE640DA5A646B595E982B2 /* Mj_Promoter Lt_0.ttf */; };
+		BEFA80AAA0FB4E6A86B939C8 /* Mj_Promoter Md_0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1C13D798A954E98864B438B /* Mj_Promoter Md_0.ttf */; };
+		FA7436F277EC42E6BDF4A174 /* Mj_Promoter_0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 29DB9C10A767471492CC58A9 /* Mj_Promoter_0.ttf */; };
+		52C6928165834975867DF39D /* Far_Alphabet.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5B7842636924C80BAA1B081 /* Far_Alphabet.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -189,6 +194,11 @@
 		38D4934BE51148A4A4145CFF /* Vazir.woff2 */ = {isa = PBXFileReference; name = "Vazir.woff2"; path = "../assets/fonts/Vazir.woff2"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		FF14252BC8F14AE693E5FF80 /* Far_Aref.ttf */ = {isa = PBXFileReference; name = "Far_Aref.ttf"; path = "../assets/fonts/Far_Aref.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		A4D63E5126724CACAC9D8256 /* Lalezar-Regular.ttf */ = {isa = PBXFileReference; name = "Lalezar-Regular.ttf"; path = "../assets/fonts/Lalezar-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		EE8DB9B2EF4D45F099D7502D /* A Google.ttf */ = {isa = PBXFileReference; name = "A Google.ttf"; path = "../assets/fonts/A Google.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0CAE640DA5A646B595E982B2 /* Mj_Promoter Lt_0.ttf */ = {isa = PBXFileReference; name = "Mj_Promoter Lt_0.ttf"; path = "../assets/fonts/Mj_Promoter Lt_0.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B1C13D798A954E98864B438B /* Mj_Promoter Md_0.ttf */ = {isa = PBXFileReference; name = "Mj_Promoter Md_0.ttf"; path = "../assets/fonts/Mj_Promoter Md_0.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		29DB9C10A767471492CC58A9 /* Mj_Promoter_0.ttf */ = {isa = PBXFileReference; name = "Mj_Promoter_0.ttf"; path = "../assets/fonts/Mj_Promoter_0.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B5B7842636924C80BAA1B081 /* Far_Alphabet.ttf */ = {isa = PBXFileReference; name = "Far_Alphabet.ttf"; path = "../assets/fonts/Far_Alphabet.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -368,6 +378,11 @@
 				38D4934BE51148A4A4145CFF /* Vazir.woff2 */,
 				FF14252BC8F14AE693E5FF80 /* Far_Aref.ttf */,
 				A4D63E5126724CACAC9D8256 /* Lalezar-Regular.ttf */,
+				EE8DB9B2EF4D45F099D7502D /* A Google.ttf */,
+				0CAE640DA5A646B595E982B2 /* Mj_Promoter Lt_0.ttf */,
+				B1C13D798A954E98864B438B /* Mj_Promoter Md_0.ttf */,
+				29DB9C10A767471492CC58A9 /* Mj_Promoter_0.ttf */,
+				B5B7842636924C80BAA1B081 /* Far_Alphabet.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -580,6 +595,11 @@
 				76DD767EA104478CA0F3572E /* Vazir.woff2 in Resources */,
 				1B78D1AE21004694B0DD9136 /* Far_Aref.ttf in Resources */,
 				2D6E67B3C57043EB91E058A6 /* Lalezar-Regular.ttf in Resources */,
+				41CF4A4575B942A59EBF7D57 /* A Google.ttf in Resources */,
+				C031BC6AE5834A18897FCE2E /* Mj_Promoter Lt_0.ttf in Resources */,
+				BEFA80AAA0FB4E6A86B939C8 /* Mj_Promoter Md_0.ttf in Resources */,
+				FA7436F277EC42E6BDF4A174 /* Mj_Promoter_0.ttf in Resources */,
+				52C6928165834975867DF39D /* Far_Alphabet.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -46,57 +46,40 @@ export default class LoginOrRegister extends Component {
 
     render() {
         const {open} = this.state;
-        const {showAlert} = this.state;
         return (
-            <View style={styles.container}>
+            <LinearGradient
+                style={styles.header}
+                start={{x: -0.3, y: 0.0}} end={{x: 0.5, y: 1.0}}
+                locations={[0.1, 0.6, 0.9]}
+                colors={['#3e843d', '#3ede30', '#47b03e']}>
                 <StatusBar
                     hidden={false}
-                    backgroundColor='#3e843d'
-                />
-                <LinearGradient start={{x: -0.1, y: 0.9}} end={{x: 0.6, y: 1.0}}
-                                locations={[0,0.5,0.9]}
-                                style={styles.header}
-                                colors={['#3e843d','#3ede30','#47b03e']} >
+                    backgroundColor='#3e843d'/>
                     <View style={styles.headerContent}>
                         <Image style={{width: 90, height: 90}}
                                source={require('../../../assets/images/icons/abacus.png')}/>
-
                         <Text style={{
-                            fontSize: 40,
+                        fontSize: 40,
+                        color: '#fff',
+                        fontFamily: 'Far_Aref'}}>
+                        چرتکه
+                    </Text>
+                        <Text style={{
+                            fontSize: width/22,
                             color: '#fff',
-                            fontFamily: 'Far_Aref',
+                            fontFamily: 'Far_Alphabet',
+                            marginTop:20
                         }}>
-                            چرتکه
+                            به اپ حسابداری شخصی چرتکه خوش آمدید
                         </Text>
-
                     </View>
-
-                    <Card
-                        style={{
-                            marginTop:40,
-                            backgroundColor:'#fff',
-                            width:width,height:height, alignSelf: 'center',
-                            borderRadius: 60,
-                            shadowColor: '#3d933c',
-                            marginBottom: 20,
-                            shadowOffset: {
-                                width: 0,
-                                height: 9,
-                                marginRight: 16,
-                                marginBottom: 12,
-                            },
-                            shadowOpacity: 0.50,
-                            shadowRadius: 7.49,
-                            elevation: 19,
-                            alignItems: 'center', justifyContent: 'center'
-                        }}>
                         <View style={{marginTop: 110}}>
                             <Button buttonStyle={{
                                 marginVertical: 10,
-                                backgroundColor: '#47b03e',
+                                backgroundColor: '#fff',
                                 borderRadius: 30,
                                 width: '100%',
-                                height: 48,
+                                height: 45,
                                 shadowColor: '#43c164',
                                 shadowOffset: {
                                     width: 0,
@@ -107,17 +90,15 @@ export default class LoginOrRegister extends Component {
                                 elevation: 5,
                             }}
                                     onPress={() => this.props.navigation.navigate('Login')}
-                                    titleStyle={{color: '#fff',fontFamily:'IRANSansMobile(FaNum)',fontSize:18}}
-
-
+                                    titleStyle={{color: 'green',fontFamily:'IRANSansMobile(FaNum)',fontSize:18}}
                                     title="ورود"
                             />
                             <Button buttonStyle={{
                                 marginVertical: 10,
-                                backgroundColor: '#47b03e',
+                                backgroundColor: '#fff',
                                 borderRadius: 30,
                                 width: '100%',
-                                height: 48,
+                                height: 45,
                                 shadowColor: '#43c164',
                                 shadowOffset: {
                                     width: 0,
@@ -128,51 +109,20 @@ export default class LoginOrRegister extends Component {
                                 elevation: 5,
                             }}
                                     onPress={() => this.props.navigation.navigate('Register')}
-                                    titleStyle={{color: '#fff',fontFamily:'IRANSansMobile(FaNum)',fontSize:18}}
-
+                                    titleStyle={{color: 'green',fontFamily:'IRANSansMobile(FaNum)',fontSize:18}}
                                     title="ثبت نام"
                             />
                         </View>
-                    </Card>
-                </LinearGradient>
+    </LinearGradient>
 
-
-                <AwesomeAlert
-                    show={showAlert}
-                    showProgress={false}
-                    title={this.state.titles}
-                    closeOnTouchOutside={true}
-                    closeOnHardwareBackPress={false}
-                    showConfirmButton={true}
-                    titleStyle={{fontSize: 16, fontFamily: 'IRANSansMobile(FaNum)', textAlign: 'justify'}}
-                    messageStyle={{fontSize: 15, fontFamily: 'IRANSansMobile(FaNum)'}}
-                    confirmText="تایید"
-                    confirmButtonColor="#3d933c"
-                    confirmButtonStyle={{width: 90}}
-                    confirmButtonTextStyle={{
-                        fontSize: 17,
-                        fontFamily: 'IRANSansMobile(FaNum)',
-                        textAlign: 'center',
-                    }}
-                    onConfirmPressed={() => {
-                        this.hideAlert();
-                    }}
-                />
-
-            </View>
-        );
+    );
     }
 }
 
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-
-
     header: {
+        flex:1,
         backgroundColor: '#3d933c',
         padding: 60,
     },
@@ -191,7 +141,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
         flexDirection: 'row',
         marginRight: 10,
-        //  position: 'absolute',
         backgroundColor: '#e0e0e0',
         borderRadius: 60,
         shadowColor: '#000',

@@ -1052,7 +1052,7 @@ class RegisterCost extends Component {
                         </View>
                     </View>
                     <Button buttonStyle={{
-                        marginTop: 20,
+                        marginTop: 60,
                         marginLeft: 25,
                         backgroundColor: '#47b03e',
                         borderRadius: 30,

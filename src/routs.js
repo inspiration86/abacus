@@ -1,6 +1,6 @@
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-// global screens
+//global screens
 import Slider from './components/screens/Slider';
 import Splash from './components/screens/Splash';
 import SendMessage from './components/screens/SendMessage';
@@ -19,6 +19,7 @@ import ListCost from "./components/screens/ListCost";
 import ListDebt from "./components/screens/ListDebt";
 import ResetPassword from "./components/screens/ResetPassword";
 import Profile from "./components/screens/Profile";
+import {connect} from 'react-redux';
 const RootStack = createStackNavigator({
         Splash: {screen: Splash,navigationOptions: ({navigation}) => ({
             headerShown: false
@@ -133,4 +134,11 @@ const RootStack = createStackNavigator({
         defaultNavigationOptions: {headerShown: false}
     }
 );
-export default createAppContainer(RootStack);
+
+const mapStateToProps = state => {
+    return {
+        dataLogin: state.loginUser.dataLogin,
+    };
+};
+export default connect(mapStateToProps)(createAppContainer(RootStack));
+// export default createAppContainer(RootStack);

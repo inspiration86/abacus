@@ -15,7 +15,6 @@ import {
     Icon,
 } from 'native-base';
 import {FlatGrid} from 'react-native-super-grid';
-
 import Header from '../layouts/Header';
 import {connect} from 'react-redux';
 class ReportCategory extends React.Component {
@@ -31,7 +30,6 @@ class ReportCategory extends React.Component {
             isLoading: true,
             year: '',
         };
-
     }
 
     displayIncome = () => {

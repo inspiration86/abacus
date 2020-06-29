@@ -7,10 +7,11 @@ import {
     Button,
     TouchableOpacity,
     Image,
-    Alert, StatusBar, ActivityIndicator
+    Alert, StatusBar, ActivityIndicator,Dimensions
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
+const {width, height} = Dimensions.get('window');
 import {connect} from "react-redux";
 import {
     mobileChanged,
@@ -98,7 +99,7 @@ import {
 
                     <View style={styles.headerContent}>
                         <Image style={{width:90,height:90}} source={require('../../../assets/images/icons/abacus.png')} />
-                        <Text style={{ fontSize: 22,fontFamily:'Far_Aref',color: '#fff', marginBottom: 5 }}>
+                        <Text style={{ fontSize: width/22,fontFamily:'Far_Alphabet',color: '#fff', marginBottom: 5 }}>
                             عضویت در اپ مالی حسابداری شخصی چرتکه
                         </Text>
                     </View>
@@ -124,6 +125,10 @@ import {
                                        onChangeText={this.onPasswordChange.bind(this)}/>
                         </View>
                         {this.renderRegister()}
+                        <TouchableOpacity activeOpacity={0.8} style={styles.buttonContainer}
+                                          onPress={() => this.props.navigation.navigate('Login')}>
+                            <Text style={styles.btnText}>ورود به اپ چرتکه</Text>
+                        </TouchableOpacity>
 
 
                     </View>

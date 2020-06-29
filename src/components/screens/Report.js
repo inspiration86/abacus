@@ -19,39 +19,39 @@ export default class Home extends Component {
                 {
                     id: 1,
                     title: 'گزارش روزانه',
-                    image: require('../../../assets/images/icons/2553139.png'),
+                    image: require('../../../assets/images/icons/2416340.png'),
 
                 }
                 ,
                 {
                     id: 2,
                     title: 'گزارش ماهانه',
-                    image: require('../../../assets/images/icons/2553139.png'),
+                    image: require('../../../assets/images/icons/2416340.png'),
                 }
                 ,
                 {
                     id: 3,
                     title: 'گزارش سالانه',
-                    image: require('../../../assets/images/icons/2553139.png'),
+                    image: require('../../../assets/images/icons/2416340.png'),
                 }
                 ,
                 {
                     id: 4,
                     title: 'خلاصه عملکرد',
-                    image: require('../../../assets/images/icons/date2.png'),
+                    image: require('../../../assets/images/icons/2416340.png'),
 
                 }
                 ,
                 {
                     id: 5,
                     title: 'گزارش دسته ها',
-                    image: require('../../../assets/images/icons/2830694.png'),
+                    image: require('../../../assets/images/icons/2416340.png'),
                 }
                 ,
                 {
                     id: 6,
                     title: 'گزارش پیشرفته',
-                    image: require('../../../assets/images/icons/1570961.png'),
+                    image: require('../../../assets/images/icons/2416340.png'),
 
                 }
             ],
