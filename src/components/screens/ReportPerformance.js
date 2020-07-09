@@ -6,99 +6,47 @@ import {
     Text,
     View,
     processColor,
-    ScrollView, FlatList, Image
+    ScrollView, Image,
 } from 'react-native';
-import { Container, Header, Tab, Tabs, TabHeading, } from 'native-base';
-
+import {  Tab, Tabs, TabHeading, } from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import { Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {  SafeAreaView } from 'react-navigation';
-
-import { PieChart } from 'react-native-charts-wrapper';
-
-export default class ReportPerformance extends React.Component {
-
-    constructor() {
-        super();
-
+// import { PieChart } from 'react-native-charts-wrapper';
+import {connect} from 'react-redux';
+class ReportPerformance extends React.Component {
+    constructor(props) {
+        super(props);
         this.state = {
-
+            user_id: this.props.dataLogin['id'],
+            resultIncome: [],
+            sumOfIncome: 0,
+            AvgOfDayIncome: 0,
+            AvgOfDayCost:0,
+            AvgOfMounthIncome: 0,
+            AvgOfMounthCost:0,
+            sumOfCost: 0,
+            year: '',
             legend: {
                 enabled: true,
                 textSize: 15,
-
-                form: 'CIRCLE',
-
-                horizontalAlignment: "CENTER",
+                direction: 'RIGHT_TO_LEFT',
+                horizontalAlignment: 'CENTER',
                 verticalAlignment: 'BOTTOM',
-                orientation: "HORIZONTAL",
-                wordWrapEnabled: true
+                orientation: 'HORIZONTAL',
+                wordWrapEnabled: true,
             },
-            data: {
-                dataSets: [{
-                    values: [{ value: 45, label: 'نقد' },
-                        { value: 21, label: 'کارت به کارت' },
-                        { value: 15, label: 'طلا' },
-                        { value: 21, label: 'اجاره ' },
-                        { value: 15, label: 'بورس' },
-                    ],
+            xx: [{label: '', value: 0}],
+            data: {},
+            marker: {},
 
-                    label: '',
-                    config: {
-                        colors: [processColor('#66d808'), processColor('#c6b807'), processColor('#ffdc2e'), processColor('#8CEAFF'), processColor('#FF8C9D')],
-                        valueTextSize: 16,
-                        valueTextColor: processColor('green'),
-                        sliceSpace: 1,
-                        selectionShift: 2,
-                        // form: 'SQUARE',
-                        // xValuePosition: "OUTSIDE_SLICE",
-                        // yValuePosition: "OUTSIDE_SLICE",
-                        valueFormatter: "#.#'%'",
-                        valueLineColor: processColor('green'),
-                        valueLinePart1Length:5
-                    }
-                }],
+            xAxis: {},
+            yAxis: {},
 
-            },
+            dataCost: {},
 
-            // highlights: [{ x: 1 }],
-            // description: {
-            //     text: '',
-            //     textSize: 15,
-            //     textColor: processColor('darkgray'),
-            //
-            // },
-
-            datap: {
-                dataSets: [{
-                    values: [{ value: 45, label: 'کنسرت' },
-                        { value:10, label: 'رستوران' },
-
-                        { value: 19, label: 'اجاره' },
-                        { value: 21, label: 'مسافرت' },
-                        { value: 15, label: 'بتزین' },
-                    ],
-
-                    label: '',
-                    config: {
-                        colors: [processColor('#66d808'), processColor('#c6b807'), processColor('#ffdc2e'), processColor('#8CEAFF'), processColor('#FF8C9D')],
-                        valueTextSize: 16,
-                        valueTextColor: processColor('green'),
-                        sliceSpace: 1,
-                        selectionShift: 0,
-                        form: 'SQUARE',
-                        // xValuePosition: "OUTSIDE_SLICE",
-                        // yValuePosition: "OUTSIDE_SLICE",
-                        valueFormatter: "#.#'%'",
-                        valueLineColor: processColor('green'),
-                        valueLinePart1Length: 0.80
-                    }
-                }],
-
-            },
-
-            highlights: [{ x: 50 }],
+            highlights: [{x: 50}],
             description: {
                 text: '',
                 textSize: 15,
@@ -106,70 +54,403 @@ export default class ReportPerformance extends React.Component {
 
             },
 
-            yeardata: [
-                {
-                    id: 1,
-
-                    title:'امروز',
-                    day:'1/2/99',
-                    name:'تومان',
-                    sumincom: 10000000,
-                    sumpayment:200000,
-
-
-                }
-                ,
-                {
-                    id: 2,
-                    title:'هفته جاری',
-                    name:' تومان',
-                    sumincom: 40000000,
-                    sumpayment:200000,
-                }
-                ,
-                {
-                    id: 3,
-                    title:'10 روز گذشته',
-                    sumincom: 10000000,
-                    sumpayment:200000,
-                    name:'تومان',
-
-                }
-                ,
-                {
-                    id: 4,
-                    title:'ماه جاری',
-                    sumincom: 10000000,
-                    sumpayment:200000,
-                    mounth:'اردیبهشت',
-                    name:'تومان',
-
-                }
-                ,
-                {
-                    id:5,
-                    title:'سال جاری',
-                    sumincom: 10000000,
-                    sumpayment:200000,
-                    name:'تومان',
-
-                }
-                ,
-
-
-            ],
         };
+
     }
 
     handleSelect(event) {
-        let entry = event.nativeEvent
+        let entry = event.nativeEvent;
         if (entry == null) {
-            this.setState({ ...this.state, selectedEntry: null })
+            this.setState({...this.state, selectedEntry: null});
         } else {
-            this.setState({ ...this.state, selectedEntry: JSON.stringify(entry) })
+            this.setState({...this.state, selectedEntry: JSON.stringify(entry)});
         }
 
-        console.log(event.nativeEvent)
+        console.log(event.nativeEvent);
+    }
+
+    getDate() {
+
+
+    }
+
+    displayIncome = () => {
+        var week = new Array('يكشنبه', 'دوشنبه', 'سه شنبه', 'چهارشنبه', 'پنج شنبه', 'جمعه', 'شنبه');
+        var months = new Array('فروردين', 'ارديبهشت', 'خرداد', 'تير', 'مرداد', 'شهريور', 'مهر', 'آبان', 'آذر', 'دي', 'بهمن', 'اسفند');
+        var today = new Date();
+        var d = today.getDay();
+        var day = today.getDate();
+        var month = today.getMonth() + 1;
+        var year = today.getYear();
+        year = (window.navigator.geolocation > 0) ? year : 1900 + year;
+        if (year === 0) {
+            year = 2000;
+        }
+        if (year < 100) {
+            year += 1900;
+        }
+        var y = 1;
+        for (var i = 0; i < 3000; i += 4) {
+            if (year === i) {
+                y = 2;
+            }
+        }
+        for (var i = 1; i < 3000; i += 4) {
+            if (year === i) {
+                y = 3;
+            }
+        }
+        if (y === 1) {
+            year -= ((month < 3) || ((month === 3) && (day < 21))) ? 622 : 621;
+            switch (month) {
+                case 1:
+                    (day < 21) ? (month = 10, day += 10) : (month = 11, day -= 20);
+                    break;
+                case 2:
+                    (day < 20) ? (month = 11, day += 11) : (month = 12, day -= 19);
+                    break;
+                case 3:
+                    (day < 21) ? (month = 12, day += 9) : (month = 1, day -= 20);
+                    break;
+                case 4:
+                    (day < 21) ? (month = 1, day += 11) : (month = 2, day -= 20);
+                    break;
+                case 5:
+                case 6:
+                    (day < 22) ? (month -= 3, day += 10) : (month -= 2, day -= 21);
+                    break;
+                case 7:
+                case 8:
+                case 9:
+                    (day < 23) ? (month -= 3, day += 9) : (month -= 2, day -= 22);
+                    break;
+                case 10:
+                    (day < 23) ? (month = 7, day += 8) : (month = 8, day -= 22);
+                    break;
+                case 11:
+                case 12:
+                    (day < 22) ? (month -= 3, day += 9) : (month -= 2, day -= 21);
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (y === 2) {
+            year -= ((month < 3) || ((month == 3) && (day < 20))) ? 622 : 621;
+            switch (month) {
+                case 1:
+                    (day < 21) ? (month = 10, day += 10) : (month = 11, day -= 20);
+                    break;
+                case 2:
+                    (day < 20) ? (month = 11, day += 11) : (month = 12, day -= 19);
+                    break;
+                case 3:
+                    (day < 20) ? (month = 12, day += 10) : (month = 1, day -= 19);
+                    break;
+                case 4:
+                    (day < 20) ? (month = 1, day += 12) : (month = 2, day -= 19);
+                    break;
+                case 5:
+                    (day < 21) ? (month = 2, day += 11) : (month = 3, day -= 20);
+                    break;
+                case 6:
+                    (day < 21) ? (month = 3, day += 11) : (month = 4, day -= 20);
+                    break;
+                case 7:
+                    (day < 22) ? (month = 4, day += 10) : (month = 5, day -= 21);
+                    break;
+                case 8:
+                    (day < 22) ? (month = 5, day += 10) : (month = 6, day -= 21);
+                    break;
+                case 9:
+                    (day < 22) ? (month = 6, day += 10) : (month = 7, day -= 21);
+                    break;
+                case 10:
+                    (day < 22) ? (month = 7, day += 9) : (month = 8, day -= 21);
+                    break;
+                case 11:
+                    (day < 21) ? (month = 8, day += 10) : (month = 9, day -= 20);
+                    break;
+                case 12:
+                    (day < 21) ? (month = 9, day += 10) : (month = 10, day -= 20);
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (y === 3) {
+            year -= ((month < 3) || ((month === 3) && (day < 21))) ? 622 : 621;
+            switch (month) {
+                case 1:
+                    (day < 20) ? (month = 10, day += 11) : (month = 11, day -= 19);
+                    break;
+                case 2:
+                    (day < 19) ? (month = 11, day += 12) : (month = 12, day -= 18);
+                    break;
+                case 3:
+                    (day < 21) ? (month = 12, day += 10) : (month = 1, day -= 20);
+                    break;
+                case 4:
+                    (day < 21) ? (month = 1, day += 11) : (month = 2, day -= 20);
+                    break;
+                case 5:
+                case 6:
+                    (day < 22) ? (month -= 3, day += 10) : (month -= 2, day -= 21);
+                    break;
+                case 7:
+                case 8:
+                case 9:
+                    (day < 23) ? (month -= 3, day += 9) : (month -= 2, day -= 22);
+                    break;
+                case 10:
+                    (day < 23) ? (month = 7, day += 8) : (month = 8, day -= 22);
+                    break;
+                case 11:
+                case 12:
+                    (day < 22) ? (month -= 3, day += 9) : (month -= 2, day -= 21);
+                    break;
+                default:
+                    break;
+            }
+        }
+        this.setState({day: day});
+        this.setState({year: year});
+        this.setState({month: months[month - 1]});
+        console.log(month - 1);
+        let countMonth = month - 1;
+        var monthNumber;
+        if (countMonth < 10) {
+            monthNumber = '0' + countMonth;
+        }
+
+        let x = [];
+
+        fetch('http://194.5.175.25:2000/api/v1/reportYearIncome/' +this.state.user_id , {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                year: year.toString(),
+
+            }),
+        }).then((response) => response.json())
+            .then((responseJson) => {
+
+                if (responseJson.success === true) {
+                    let count = responseJson.data.length;
+                    for (var i = 0; i < count; i++) {
+                        console.log(responseJson.data[i].sum);
+                        this.state.sumOfIncome += responseJson.data[i].sum;
+                        x.push({label: responseJson.data[i]._id, value: responseJson.data[i].sum});
+                    }
+                    this.setState({ AvgOfDayIncome: this.state.sumOfIncome/365})
+                    this.setState({ AvgOfMounthIncome: this.state.sumOfIncome/12})
+
+
+
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+        this.setState({
+            xx: x,
+        });
+    };
+    displayCost = () => {
+        var week = new Array('يكشنبه', 'دوشنبه', 'سه شنبه', 'چهارشنبه', 'پنج شنبه', 'جمعه', 'شنبه');
+        var months = new Array('فروردين', 'ارديبهشت', 'خرداد', 'تير', 'مرداد', 'شهريور', 'مهر', 'آبان', 'آذر', 'دي', 'بهمن', 'اسفند');
+        var today = new Date();
+        var d = today.getDay();
+        var day = today.getDate();
+        var month = today.getMonth() + 1;
+        var year = today.getYear();
+        year = (window.navigator.geolocation > 0) ? year : 1900 + year;
+        if (year === 0) {
+            year = 2000;
+        }
+        if (year < 100) {
+            year += 1900;
+        }
+        var y = 1;
+        for (var i = 0; i < 3000; i += 4) {
+            if (year === i) {
+                y = 2;
+            }
+        }
+        for (var i = 1; i < 3000; i += 4) {
+            if (year === i) {
+                y = 3;
+            }
+        }
+        if (y === 1) {
+            year -= ((month < 3) || ((month === 3) && (day < 21))) ? 622 : 621;
+            switch (month) {
+                case 1:
+                    (day < 21) ? (month = 10, day += 10) : (month = 11, day -= 20);
+                    break;
+                case 2:
+                    (day < 20) ? (month = 11, day += 11) : (month = 12, day -= 19);
+                    break;
+                case 3:
+                    (day < 21) ? (month = 12, day += 9) : (month = 1, day -= 20);
+                    break;
+                case 4:
+                    (day < 21) ? (month = 1, day += 11) : (month = 2, day -= 20);
+                    break;
+                case 5:
+                case 6:
+                    (day < 22) ? (month -= 3, day += 10) : (month -= 2, day -= 21);
+                    break;
+                case 7:
+                case 8:
+                case 9:
+                    (day < 23) ? (month -= 3, day += 9) : (month -= 2, day -= 22);
+                    break;
+                case 10:
+                    (day < 23) ? (month = 7, day += 8) : (month = 8, day -= 22);
+                    break;
+                case 11:
+                case 12:
+                    (day < 22) ? (month -= 3, day += 9) : (month -= 2, day -= 21);
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (y === 2) {
+            year -= ((month < 3) || ((month == 3) && (day < 20))) ? 622 : 621;
+            switch (month) {
+                case 1:
+                    (day < 21) ? (month = 10, day += 10) : (month = 11, day -= 20);
+                    break;
+                case 2:
+                    (day < 20) ? (month = 11, day += 11) : (month = 12, day -= 19);
+                    break;
+                case 3:
+                    (day < 20) ? (month = 12, day += 10) : (month = 1, day -= 19);
+                    break;
+                case 4:
+                    (day < 20) ? (month = 1, day += 12) : (month = 2, day -= 19);
+                    break;
+                case 5:
+                    (day < 21) ? (month = 2, day += 11) : (month = 3, day -= 20);
+                    break;
+                case 6:
+                    (day < 21) ? (month = 3, day += 11) : (month = 4, day -= 20);
+                    break;
+                case 7:
+                    (day < 22) ? (month = 4, day += 10) : (month = 5, day -= 21);
+                    break;
+                case 8:
+                    (day < 22) ? (month = 5, day += 10) : (month = 6, day -= 21);
+                    break;
+                case 9:
+                    (day < 22) ? (month = 6, day += 10) : (month = 7, day -= 21);
+                    break;
+                case 10:
+                    (day < 22) ? (month = 7, day += 9) : (month = 8, day -= 21);
+                    break;
+                case 11:
+                    (day < 21) ? (month = 8, day += 10) : (month = 9, day -= 20);
+                    break;
+                case 12:
+                    (day < 21) ? (month = 9, day += 10) : (month = 10, day -= 20);
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (y === 3) {
+            year -= ((month < 3) || ((month === 3) && (day < 21))) ? 622 : 621;
+            switch (month) {
+                case 1:
+                    (day < 20) ? (month = 10, day += 11) : (month = 11, day -= 19);
+                    break;
+                case 2:
+                    (day < 19) ? (month = 11, day += 12) : (month = 12, day -= 18);
+                    break;
+                case 3:
+                    (day < 21) ? (month = 12, day += 10) : (month = 1, day -= 20);
+                    break;
+                case 4:
+                    (day < 21) ? (month = 1, day += 11) : (month = 2, day -= 20);
+                    break;
+                case 5:
+                case 6:
+                    (day < 22) ? (month -= 3, day += 10) : (month -= 2, day -= 21);
+                    break;
+                case 7:
+                case 8:
+                case 9:
+                    (day < 23) ? (month -= 3, day += 9) : (month -= 2, day -= 22);
+                    break;
+                case 10:
+                    (day < 23) ? (month = 7, day += 8) : (month = 8, day -= 22);
+                    break;
+                case 11:
+                case 12:
+                    (day < 22) ? (month -= 3, day += 9) : (month -= 2, day -= 21);
+                    break;
+                default:
+                    break;
+            }
+        }
+        this.setState({day: day});
+        this.setState({year: year});
+        this.setState({month: months[month - 1]});
+        console.log(month - 1);
+        let countMonth = month - 1;
+        var monthNumber;
+        if (countMonth < 10) {
+            monthNumber = '0' + countMonth;
+        }
+
+        let x = [];
+        fetch('http://194.5.175.25:2000/api/v1/reportYearCost/' + this.state.user_id, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+
+                year: year.toString(),
+
+
+            }),
+        }).then((response) => response.json())
+            .then((responseJson) => {
+
+                if (responseJson.success === true) {
+                    let count = responseJson.data.length;
+                    for (var i = 0; i < count; i++) {
+                        console.log(responseJson.data[i].sum);
+                        this.state.sumOfCost += responseJson.data[i].sum;
+                        x.push({label: responseJson.data[i]._id, value: responseJson.data[i].sum});
+                    }
+                    this.setState({ AvgOfDayCost:this.state.sumOfCost/365})
+                    this.setState({ AvgOfMounthCost:this.state.sumOfCost/12})
+                    let day = parseFloat( this.state.AvgOfDayCost).toFixed(2);
+                    this.state.AvgOfDayCost= day;
+                    let mounth = parseFloat( this.state.AvgOfMounthCost).toFixed(2);
+                    this.state.AvgOfMounthCost= mounth
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+        this.setState({
+            xx: x,
+        });
+    };
+
+    componentDidMount(): void {
+        this.displayIncome();this.displayCost()
     }
 
     render() {
@@ -192,74 +473,65 @@ export default class ReportPerformance extends React.Component {
                 <Tabs tabBarUnderlineStyle={{ backgroundColor: '#3ede30', height: 3 }} initialPage={1}>
                     <Tab heading={<TabHeading style={{ backgroundColor: '#fff' }}>
                         <Text style={{ color: 'green', fontWeight: 'bold', fontFamily: 'IRANSansMobile' }}>هزینه ها</Text>
-                        <Icon name="money" style={{ color: 'green', marginLeft: 5, fontSize: 20 }} />
-                        {/* <Image style={{
-              width: 50,
-              height: 50,
-            }} source={require('../image/get-cash.png')} /> */}
+                        <Image style={{
+                            width: 30,
+                            height:30,
+                            marginLeft:10
+                        }} source={require('../../../assets/images/icons/coin.png')} />
+
 
                     </TabHeading>}>
                         <View style={{ flex: 1, backgroundColor: '#DCDCDC', }}>
                             <ScrollView>
-                                <Card style={styles.cardStyle}>
 
-                                    <PieChart
-                                        style={styles.chart}
-                                        logEnabled={true}
-                                        chartBackgroundColor={processColor('#FFF')}
-
-                                        chartDescription={this.state.description}
-                                        data={this.state.datap}
-                                        legend={this.state.legend}
-                                        highlights={this.state.highlights}
-
-                                        entryLabelColor={processColor('green')}
-                                        entryLabelTextSize={16}
-                                        drawEntryLabels={false}
-
-                                        rotationEnabled={true}
-                                        rotationAngle={45}
-                                        usePercentValues={true}
-                                        styledCenterText={{ text: 'نمودار', color: processColor('pink'), size: 15 }}
-                                        centerTextRadiusPercent={100}
-                                        holeRadius={40}
-                                        holeColor={processColor('#fF4500')}
-                                        transparentCircleRadius={50}
-                                        transparentCircleColor={processColor('#f0f0f088')}
-                                        maxAngle={360}
-                                        onSelect={this.handleSelect.bind(this)}
-                                        onChange={(event) => console.log(event.nativeEvent)}
-                                    />
-                                </Card>
                                 <View style={{ flex: 1, marginTop: 10 }}>
-                                    <FlatList style={styles.notificationList} enableEmptySections={true}
-                                              data={this.state.yeardata}
-                                              keyExtractor={(item) => {
-                                                  return item.id;
-                                              }}
-                                              renderItem={({ item }) => {
-                                                  return (
 
-                                                      <Card style={{ marginTop: 10, paddingRight: 10, paddingLeft: 10, backgroundColor: '#fff', height: 60, marginHorizontal: 10 }} key={0}>
-                                                          <View style={{ flex: 1, flexDirection: 'row' }}>
-                                                              <View style={{ flex: 3, marginTop: 17, alignItems: 'flex-start', paddingLeft: 6 }}>
-                                                                  <Text style={{ fontSize: 14, color: 'red', fontFamily: 'IRANSansMobile(FaNum)' }}>{item.sumpayment}<Text style={{ fontSize: 14, color: '#777777', fontFamily: 'IRANSansMobile(FaNum)' }}>{item.name}</Text></Text>
-                                                              </View>
-                                                              <View style={{ flex: 3, marginTop: 12 }}>
-                                                                  <Text style={{ fontSize: 14, color: '#777777', fontFamily: 'IRANSansMobile(FaNum)' }}>{item.title}</Text>
-                                                                  <Text style={{ fontSize: 13, color: '#777777', fontFamily: 'IRANSansMobile(FaNum)', textAlign: 'right' }}>{item.day}{item.mounth}</Text>
+                                    <Card style={{ marginTop: 10, paddingRight: 10, paddingLeft: 10, backgroundColor: '#fff', height: 55, marginHorizontal: 10 }} key={0}>
+                                        <View style={{ flex: 1, flexDirection: 'row' }}>
+
+                                            <View style={{ flex: 3, marginTop: 17, alignItems: 'flex-start', paddingLeft: 8 }}>
+
+                                                <Text style={{ fontSize: 14, color: 'green', fontFamily: 'IRANSansMobile(FaNum)' }}> {this.state.AvgOfDayCost}</Text>
+
+                                            </View>
+                                            <View style={{ flex: 3, marginTop: 12 }}>
+
+                                                <Text style={{fontSize: 14,fontFamily: 'IRANSansMobile(FaNum)' }}> میانگین هزینه درروز : </Text>
+                                            </View>
+                                        </View>
+                                    </Card>
+                                    <Card style={{ marginTop: 10, paddingRight: 10, paddingLeft: 10, backgroundColor: '#fff', height: 55, marginHorizontal: 10 }} key={0}>
+                                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                                            <View style={{ flex: 3, marginTop: 17, alignItems: 'flex-start', paddingLeft: 8 }}>
+
+                                                <Text style={{ fontSize: 14, color: 'green', fontFamily: 'IRANSansMobile(FaNum)' }}> {this.state.AvgOfMounthCost}</Text>
+
+                                            </View>
+                                            <View style={{ flex: 3, marginTop: 12 }}>
+                                                <Text> میانگین هزینه در ماه:</Text>
 
 
-                                                              </View>
-                                                          </View>
+                                            </View>
+                                        </View>
 
-                                                      </Card>
+                                    </Card>
+                                    <Card style={{ marginTop: 10, paddingRight: 10, paddingLeft: 10, backgroundColor: '#fff', height: 55, marginHorizontal: 10 }} key={0}>
+                                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                                            <View style={{ flex: 3, marginTop: 17, alignItems: 'flex-start', paddingLeft: 8 }}>
+
+                                                <Text style={{ fontSize: 14, color: 'green', fontFamily: 'IRANSansMobile(FaNum)' }}> {this.state.sumOfIncome}</Text>
+
+                                            </View>
+                                            <View style={{ flex: 3, marginTop: 12 }}>
+                                                <Text> جمع کل ها :</Text>
 
 
+                                            </View>
+                                        </View>
 
-                                                  )
-                                              }} />
+                                    </Card>
                                 </View>
+
                             </ScrollView>
                         </View>
 
@@ -267,71 +539,64 @@ export default class ReportPerformance extends React.Component {
                     <Tab
                         heading={<TabHeading style={{ backgroundColor: '#fff' }}>
                             <Text style={{ color: 'green', fontWeight: 'bold', fontFamily: 'IRANSansMobile' }}>درآمدها</Text>
-                            <Icon name="credit-card" style={{ color: 'green', fontSize: 20, marginLeft: 5 }} />
-                            {/* <Image style={{width:40,height:40}} source={require('../image/payment.png')} /> */}
+                            <Image style={{
+                                width: 30,
+                                height:30,
+                                marginLeft:10
+                            }} source={require('../../../assets/images/icons/incom.png')} />
 
                         </TabHeading>}>
                         <View style={{ flex: 1, backgroundColor: '#DCDCDC', }}>
                             <ScrollView>
-                                <Card style={styles.cardStyle}>
 
-                                    <PieChart
-                                        style={styles.chart}
-                                        logEnabled={true}
-                                        chartBackgroundColor={processColor('#FFF')}
-
-                                        chartDescription={this.state.description}
-                                        data={this.state.data}
-                                        legend={this.state.legend}
-                                        highlights={this.state.highlights}
-
-                                        entryLabelColor={processColor('red')}
-                                        entryLabelTextSize={16}
-                                        drawEntryLabels={false}
-
-                                        rotationEnabled={true}
-                                        rotationAngle={45}
-                                        usePercentValues={true}
-                                        styledCenterText={{ text: 'نمودار', color: processColor('pink'), size: 15 }}
-                                        centerTextRadiusPercent={100}
-                                        holeRadius={40}
-                                        holeColor={processColor('#fF4500')}
-                                        transparentCircleRadius={50}
-                                        transparentCircleColor={processColor('#f0f0f088')}
-                                        maxAngle={360}
-                                        onSelect={this.handleSelect.bind(this)}
-                                        onChange={(event) => console.log(event.nativeEvent)}
-                                    />
-                                </Card>
                                 <View style={{ flex: 1, marginTop: 10 }}>
-                                    <FlatList style={styles.notificationList} enableEmptySections={true}
-                                              data={this.state.yeardata}
-                                              keyExtractor={(item) => {
-                                                  return item.id;
-                                              }}
-                                              renderItem={({ item }) => {
-                                                  return (
 
-                                                      <Card style={{ marginTop: 10, paddingRight: 10, paddingLeft: 10, backgroundColor: '#fff', height: 60, marginHorizontal: 10 }} key={0}>
-                                                          <View style={{ flex: 1, flexDirection: 'row' }}>
-                                                              <View style={{ flex: 3, marginTop: 17, alignItems: 'flex-start', paddingLeft:3 }}>
+                                    <Card style={{ marginTop: 10, paddingRight: 10, paddingLeft: 10, backgroundColor: '#fff', height: 55, marginHorizontal: 10 }} key={0}>
+                                        <View style={{ flex: 1, flexDirection: 'row' }}>
 
-                                                                  <Text style={{ fontSize: 14, color: 'green', fontFamily: 'IRANSansMobile(FaNum)' }}>{item.sumincom}<Text style={{ fontSize: 14, color: '#777777', fontFamily: 'IRANSansMobile(FaNum)' }}>{item.name}</Text></Text>
+                                            <View style={{ flex: 3, marginTop: 17, alignItems: 'flex-start', paddingLeft: 8 }}>
 
-                                                              </View>
-                                                              <View style={{ flex: 3, marginTop: 12 }}>
-                                                                  <Text style={{ fontSize: 14, color: '#777777', fontFamily: 'IRANSansMobile(FaNum)',marginTop:-3 }}>{item.title}</Text>
-                                                                  <Text style={{ fontSize: 12, color: '#777777', fontFamily: 'IRANSansMobile(FaNum)',textAlign:'right'}}>{item.day}{item.mounth}</Text>
+                                                <Text style={{ fontSize: 14, color: 'green', fontFamily: 'IRANSansMobile(FaNum)' }}> {this.state.AvgOfDayIncome}</Text>
 
-                                                              </View>
-                                                          </View>
+                                            </View>
+                                            <View style={{ flex: 3, marginTop: 12 }}>
 
-                                                      </Card>
+                                                <Text style={{fontSize: 14,fontFamily: 'IRANSansMobile(FaNum)' }}> میانگین درآمد درامروز : </Text>
+                                            </View>
+                                        </View>
+                                    </Card>
+                                    <Card style={{ marginTop: 10, paddingRight: 10, paddingLeft: 10, backgroundColor: '#fff', height: 55, marginHorizontal: 10 }} key={0}>
+                                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                                            <View style={{ flex: 3, marginTop: 17, alignItems: 'flex-start', paddingLeft: 8 }}>
+
+                                                <Text style={{ fontSize: 14, color: 'green', fontFamily: 'IRANSansMobile(FaNum)' }}> {this.state.AvgOfMounthIncome}</Text>
+
+                                            </View>
+                                            <View style={{ flex: 3, marginTop: 12 }}>
+                                                <Text> میانگین درآمد در ماه:</Text>
 
 
-                                                  )
-                                              }} />
+                                            </View>
+                                        </View>
+
+                                    </Card>
+                                    <Card style={{ marginTop: 10, paddingRight: 10, paddingLeft: 10, backgroundColor: '#fff', height: 55, marginHorizontal: 10 }} key={0}>
+                                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                                            <View style={{ flex: 3, marginTop: 17, alignItems: 'flex-start', paddingLeft: 8 }}>
+
+                                                <Text style={{ fontSize: 14, color: 'green', fontFamily: 'IRANSansMobile(FaNum)' }}> {this.state.sumOfIncome}</Text>
+
+                                            </View>
+                                            <View style={{ flex: 3, marginTop: 12 }}>
+                                                <Text> جمع کل درآمدها :</Text>
+
+
+                                            </View>
+                                        </View>
+
+                                    </Card>
                                 </View>
+
                             </ScrollView>
                         </View>
                     </Tab>
@@ -341,7 +606,13 @@ export default class ReportPerformance extends React.Component {
         );
     }
 }
-
+const mapStateToProps = state => {
+    return {
+        dataLogin: state.loginUser.dataLogin,
+        dd: [],
+    };
+};
+export default connect(mapStateToProps)(ReportPerformance);
 const styles = StyleSheet.create({
 
     chart: {
@@ -374,7 +645,4 @@ const styles = StyleSheet.create({
         // shadowRadius: 3.84,
         // elevation: 12,
     },
-
-
 });
-

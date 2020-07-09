@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import RNFetchBlob from 'rn-fetch-blob';
-import {Button} from 'react-native-elements';
 import Modal from 'react-native-modalbox';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ImagePicker from 'react-native-image-picker';
@@ -23,9 +22,8 @@ import DatePicker, {getFormatedDate} from 'react-native-modern-datepicker';
 import Menu, {MenuItem, MenuDivider} from 'react-native-material-menu';
 import Header from '../layouts/Header';
 import LinearGradient from 'react-native-linear-gradient';
-import {Card, List, Content, ListItem, Left, Body, Right, Title, CardItem, Item, Input, Label} from 'native-base';
+import {Card, List, Content, ListItem, Left, Body, Right, Title,Button, CardItem, Item, Input, Label, Tab} from 'native-base';
 import Modaldate from 'react-native-modal';
-
 import {faCoins} from '@fortawesome/free-solid-svg-icons/faCoins';
 import {connect} from "react-redux";
 import AwesomeAlert from "react-native-awesome-alerts";
@@ -224,6 +222,16 @@ class RegisterIncome extends Component {
     };
     // .............. Registerincom..............
     UserRegistrincome = () => {
+//         console.log("year=" +this.state.year);
+//         console.log("month=" +this.state.month);
+//         console.log("day=" +this.state.day);
+// console.log("amount_income=" +this.state.amount_income);
+// console.log("Type_income=" +this.state.Type_income);
+// console.log("Account_income="+ this.state.Account_income);
+// console.log("Category_income="+ this.state.Category_income);
+// console.log("Sub_Category_income="+ this.state.Sub_Category_income);
+// console.log("Detail_income="+ this.state.Detail_income);
+// console.log("imagepath="+ this.state.imagepath);
         if (this.state.year === '' || this.state.amount_income === '' || this.state.Type_income === '' ||
             this.state.Account_income === '' || this.state.Sub_Category_income === '' || this.state.Detail_income === '') {
             this.showAlertSuccess();
@@ -240,15 +248,15 @@ class RegisterIncome extends Component {
                     user_id: this.state.user_id,
                     year: this.state.year,
                     month: this.state.month,
+                    date:this.state.dateText,
                     day: this.state.day,
                     amount: this.state.amount_income,
                     type: this.state.Type_income,
-                    account: this.state.Account_income,
-                    category: 'ارکا',
+                    acount: this.state.Account_income,
+                    category:this.state.category_name_incom,
                     sub_category: this.state.Sub_Category_income,
                     detail: this.state.Detail_income,
                     image: this.state.imagepath
-
                 })
 
             }).then((response) => response.json())
@@ -256,6 +264,7 @@ class RegisterIncome extends Component {
                     this.showAlertSuccess();
                     this.setState({textMessageBox: 'درآمد با موفقیت ثبت شد'});
                     this.clearInputText();
+                    //this.props.navigation.navigate('DashboardUser');
                 }).catch((error) => {
                 console.error(error);
             });
@@ -304,15 +313,32 @@ class RegisterIncome extends Component {
         });
     }
 
+
+    findParent = (itemId) => {
+        const { categoryIncome } = this.state
+        let match = false
+        categoryIncome.forEach((item) => {
+            item.children &&
+            item.children.filter(({ id }) => {
+                if (id === itemId) {
+                    match = item.name
+                }
+            })
+        })
+        this.setState({category_name_incom:match})
+        // alert(match)
+    }
     onSelectedItemsChange = (selectedItems) => {
         this.setState({selectedItems});
+        // alert(selectedItems)
+
     };
 
     onSelectedItemObjectsChange = (selectedItems) => {
         this.setState({Sub_Category_income: selectedItems[0]['name']})
-        // this.setState({ Category_incom:selectedItems[0]['name']})
-
-        console.log(selectedItems);
+        this.findParent(selectedItems[0]['id'])
+        // alert(selectedItems[0]['id'])
+        // console.log(selectedItems);
 
     }
     //   .............RegistrcategoryandSub_category................
@@ -392,10 +418,7 @@ class RegisterIncome extends Component {
                     acount_name: this.state.acount_name_incom,
                     acount_num: this.state.acount_num_incom,
                     card_num: this.state.card_num_incom,
-
-
                 })
-
             }).then((response) => response.json())
                 .then((responseJson) => {
                     this.refs.modal4.close();
@@ -424,7 +447,6 @@ class RegisterIncome extends Component {
                         name: responseJson.data[i]['type_name']
                     })
                 }
-
             })
             .catch((error) => {
                 console.error(error);
@@ -681,11 +703,9 @@ class RegisterIncome extends Component {
                                 data={this.state.acount}
                                 onSelect={account => {
                                     for (var i = 0; i < this.state.acount.length; i++) {
-
                                         if (this.state.acount[i]['id'] == account) {
                                             //   Alert.alert(this.state.acount[i]['name'])
                                             this.setState({Account_income: this.state.acount[i]['name']});
-
                                         }
                                     }
                                 }}
@@ -760,32 +780,15 @@ class RegisterIncome extends Component {
                             {this.state.image ? this.renderAsset(this.state.image) : null}
                         </View>
 
-                        <Button buttonStyle={{
-                            marginTop: 20,
-                            marginLeft: 25,
-                            backgroundColor: '#47b03e',
-                            borderRadius: 30,
-                            width: '80%',
-                            height: 45,
-                            shadowColor: '#43c164',
-                            shadowOffset: {
-                                width: 0,
-                                height: 6,
-                            },
-                            shadowOpacity: 0.37,
-                            shadowRadius: 7.49,
-                            elevation: 5,
-                            marginBottom: 20
-                        }}
-                                onPress={this.UserRegistrincome}
-                                titleStyle={{color: '#fff', fontFamily: 'IRANSansMobile(FaNum)', fontSize: 18}}
 
-                                title="ثبت"
-                        />
                     </View>
 
 
                 </ScrollView>
+                <Button full style={{ backgroundColor: '#47b03e' }} onPress={this.UserRegistrincome}>
+                    <Text
+                        style={{ color: '#fff', fontSize: 18, fontFamily: 'IRANSansMobile(FaNum)' }}>ثبت</Text>
+                </Button>
 
                 {/*........................modal5......................*/}
                 <Modal

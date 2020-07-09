@@ -1,5 +1,16 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, ScrollView, StatusBar, StyleSheet, Text, Picker ,Modal} from 'react-native';
+import {
+    View,
+    TouchableOpacity,
+    Image,
+    ScrollView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    Picker,
+    Modal,
+    Alert,
+} from 'react-native';
 import {Card,Button} from 'native-base';
  import Header from '../layouts/Header';
 import { FlatGrid } from 'react-native-super-grid';
@@ -18,9 +29,15 @@ import LinearGradient from 'react-native-linear-gradient';
         modalVisible:false,
         selected: "key1",
             }
-      this. ShowRecord();
+      this.ShowRecord();
     };
 
+     componentDidMount(): void {
+         this.ShowRecord();
+     }
+     componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
+         this.ShowRecord();
+     }
     clickEventListener = (item) => {
       this.setState({userSelected: item}, () =>{
         this.setModalVisible(true);
@@ -51,7 +68,6 @@ import LinearGradient from 'react-native-linear-gradient';
 DeleteRecord = (item) => {
   let id
   id = item._id;
-
   fetch('http://194.5.175.25:2000/api/v1/cost/' + id, {
     method: 'DELETE',
     headers: {
@@ -92,7 +108,7 @@ DeleteRecord = (item) => {
                    
                     renderItem={({item, index}) => (
                  <Card style={styles.card}  key={0}>
-                    <View style={{flexDirection:'row-reverse',flex:1,backgroundColor:'#7cb342',marginHorizontal:-10}}>
+                    <View style={{flexDirection:'row-reverse',flex:1,backgroundColor:'#47b03e',marginHorizontal:-10}}>
                                                 <View style={{ flex: 1,marginTop:5}}>
                                                       <Text style={styles.title2}>مبلغ:</Text>
 
@@ -150,7 +166,15 @@ DeleteRecord = (item) => {
                                                 <View style={{flexDirection:'row-reverse',flex:1,backgroundColor:'#e2e2e2',marginHorizontal:-10}}>
                                                 <View style={{ flex: 1,marginTop:5,marginRight:10}}>
                                                       
-                                                <TouchableOpacity style={{ marginRight: 10, marginTop: 2 }} onPress={() => { this.DeleteRecord(item) }}>
+                                                <TouchableOpacity style={{ marginRight: 10, marginTop: 2 }}
+                                                                  onPress={() => { Alert.alert(
+                                                                      'هشدار حذف',
+                                                                      'آیا برای حذف اطمینان دارید؟',
+                                                                      [
+                                                                          {text: 'لغو'},
+                                                                          {text: 'بله', onPress: () => { this.DeleteRecord(item)}},
+                                                                      ],
+                                                                  ) }}>
                                              <Icon active name="trash" style={{ fontSize: 20, color: '#888', alignSelf: 'flex-end' }} />
                                                </TouchableOpacity>
                             
@@ -198,7 +222,6 @@ DeleteRecord = (item) => {
                 <View style={styles.popup}>
                   <View style={styles.popupContent}>
                     <ScrollView contentContainerStyle={styles.modalInfo}>
-                      <Image style={styles.image} source={{ uri: this.state.userSelected.image }} />
                       <View style={{ marginTop: 10 }}>
                         <View style={[styles.view,{backgroundColor:'#e2e2e2'}]}>
                           <Text style={styles.title3}>مبلغ:<Text style={styles.title3}>{this.state.userSelected.amount} </Text></Text>
@@ -224,6 +247,7 @@ DeleteRecord = (item) => {
                         <View style={[styles.view,{backgroundColor:'#fff'}]}>
                           <Text style={styles.title3}> توضیحات:  {this.state.userSelected.detail}</Text>
                         </View>
+                          <Image style={styles.image}    source={{ uri: this.state.userSelected.image }}/>
                       </View>
                     </ScrollView>
 

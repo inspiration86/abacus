@@ -109,9 +109,13 @@ const AppMaterialTopTabNavigator = createMaterialBottomTabNavigator(
         activeColor: '#3d933c',
         inactiveTintColor: 'grey',
         barStyle: { backgroundColor: '#fff'},
+       //labelStyle:{fontFamily:'Lalezar-Regular',fontSize:30},
         swipeEnabled: true,
         animationEnabled: true,
         shifting:false,
+        tabBarLabel:{titleStyle:{fontFamily:'Lalezar-Regular',fontSize:30}},
+       // titleStyle:{fontFamily:'Lalezar-Regular'}
+
     },
 );
 

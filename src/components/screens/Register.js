@@ -99,11 +99,17 @@ import {
 
                     <View style={styles.headerContent}>
                         <Image style={{width:90,height:90}} source={require('../../../assets/images/icons/abacus.png')} />
-                        <Text style={{ fontSize: width/22,fontFamily:'Far_Alphabet',color: '#fff', marginBottom: 5 }}>
+                        <Text style={{
+                            fontSize: 30,
+                            color: '#fff',
+                            fontFamily: 'Far_Aref'}}>
+                            چرتکه
+                        </Text>
+                        <Text style={{ fontSize: width/22,fontFamily:'Lalezar-Regular',color: '#fff', marginBottom: 5 }}>
                             عضویت در اپ مالی حسابداری شخصی چرتکه
                         </Text>
                     </View>
-                    <View style={{justifyContent:'center',alignItems:'center',marginTop:60}}>
+                    <View style={{justifyContent:'center',alignItems:'center',marginTop:40}}>
                         <Text style={{textAlign:'center',fontFamily: 'IRANSansMobile(FaNum)',color:'#fff'}}>{this.props.error}</Text>
 
                         <View style={styles.inputContainer}>
@@ -230,7 +236,7 @@ const styles = StyleSheet.create({
     },
     loginText: {
         color: '#3e843d',
-        fontFamily:'IRANSansMobile(FaNum)',
+        fontFamily:'IRANSansMobile_Bold',
         fontSize:18,
 
 
@@ -245,7 +251,7 @@ const styles = StyleSheet.create({
     },
     btnText:{
         color:"white",
-        fontFamily:'IRANSansMobile(FaNum)',
+        fontFamily:'IRANSansMobile_Bold',
         fontSize:18,
 
     }

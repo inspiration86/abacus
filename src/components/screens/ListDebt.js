@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, ScrollView, StatusBar, StyleSheet, Text, Modal } from 'react-native';
+import {View, TouchableOpacity, Image, ScrollView, StatusBar, StyleSheet, Text, Modal, Alert} from 'react-native';
 import { Card, Button } from 'native-base';
  import Header from '../layouts/Header';
 import { FlatGrid } from 'react-native-super-grid';
@@ -19,6 +19,12 @@ class ListDebt extends Component {
     }
     this.ShowRecord();
   };
+  componentDidMount(): void {
+    this.ShowRecord();
+  }
+  componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
+    this.ShowRecord();
+  }
 
   clickEventListener = (item) => {
     this.setState({ userSelected: item }, () => {
@@ -144,7 +150,16 @@ class ListDebt extends Component {
               <View style={{ flexDirection: 'row-reverse', flex: 1, backgroundColor: '#e2e2e2', marginHorizontal: -10 }}>
                 <View style={{ flex: 1, marginTop: 5, marginRight: 10 }}>
 
-                  <TouchableOpacity style={{ marginRight: 10, marginTop: 2 }} onPress={() => { this.DeleteRecord(item) }}>
+                  <TouchableOpacity style={{ marginRight: 10, marginTop: 2 }}
+                                    onPress={() => { Alert.alert(
+                                        'هشدار حذف',
+                                        'آیا برای حذف اطمینان دارید؟',
+                                        [
+                                          {text: 'لغو'},
+                                          {text: 'بله', onPress: () => { this.DeleteRecord(item)}},
+                                        ],
+                                    ) }}
+                  >
                     <Icon active name="trash" style={{ fontSize: 20, color: '#888', alignSelf: 'flex-end' }} />
                   </TouchableOpacity>
 
@@ -192,7 +207,6 @@ class ListDebt extends Component {
             <View style={styles.popup}>
               <View style={styles.popupContent}>
                 <ScrollView contentContainerStyle={styles.modalInfo}>
-                  <Image style={styles.image} source={{ uri: this.state.userSelected.image }} />
                   <View style={{ marginTop: 10 }}>
                     <View style={[styles.view, { backgroundColor: '#e2e2e2' }]}>
                       <Text style={styles.title3}>مبلغ : <Text style={styles.title3}> {this.state.userSelected.amount} </Text></Text>
@@ -203,15 +217,17 @@ class ListDebt extends Component {
                     <View style={[styles.view, { backgroundColor: '#e2e2e2' }]}>
                       <Text style={styles.title3}> تا تاریخ : {this.state.userSelected.date_giveback}</Text>
                     </View>
+                    {/*<View style={[styles.view, { backgroundColor: '#fff' }]}>*/}
+                    {/*  <Text style={styles.title3}> نوع حساب : {this.state.userSelected.acount}</Text>*/}
+                    {/*</View>*/}
                     <View style={[styles.view, { backgroundColor: '#fff' }]}>
-                      <Text style={styles.title3}> نوع حساب : {this.state.userSelected.acount}</Text>
-                    </View>
-                    <View style={[styles.view, { backgroundColor: '#e2e2e2' }]}>
                       <Text style={styles.title3}>طرف حساب : {this.state.userSelected.lender}</Text>
                     </View>
-                    <View style={[styles.view, { backgroundColor: '#fff' }]}>
+                    <View style={[styles.view, { backgroundColor: '#e2e2e2' }]}>
                       <Text style={styles.title3}> توضیحات : {this.state.userSelected.detail}</Text>
                     </View>
+                    <Image style={styles.image} source={{ uri: this.state.userSelected.image }} />
+
 
                   </View>
                 </ScrollView>

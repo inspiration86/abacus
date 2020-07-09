@@ -10,7 +10,6 @@ import {
     Image,
     ScrollView, Alert
 } from 'react-native';
-import {Button} from 'react-native-elements';
 import Modal from 'react-native-modalbox';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ImagePicker from 'react-native-image-picker';
@@ -19,7 +18,7 @@ import Select2 from 'react-native-select-two';
 import DatePicker, {getFormatedDate} from 'react-native-modern-datepicker';
 import Header from '../layouts/Header';
 import LinearGradient from 'react-native-linear-gradient';
-import {Card, List, Content, ListItem, Left, Body, Right, Title, CardItem} from 'native-base';
+import {Card, List, Content, ListItem, Left, Body,Button, Right, Title, CardItem} from 'native-base';
 import Modaldate from 'react-native-modal';
 import RNFetchBlob from 'rn-fetch-blob';
 import {connect} from "react-redux";
@@ -553,34 +552,14 @@ class RegisterDebt extends Component {
                         <View>
                             {this.state.image ? this.renderAsset(this.state.image) : null}
                         </View>
-
-                        <Button buttonStyle={{
-                            marginTop: 20,
-                            marginLeft: 25,
-                            backgroundColor: '#47b03e',
-                            borderRadius: 30,
-                            width: '80%',
-                            height: 45,
-                            shadowColor: '#43c164',
-                            shadowOffset: {
-                                width: 0,
-                                height: 6,
-                            },
-                            shadowOpacity: 0.37,
-                            shadowRadius: 7.49,
-                            elevation: 5,
-                            marginBottom: 10
-                        }}
-                                onPress={this.OnUserRegistrDebt}
-
-                                titleStyle={{color: '#fff', fontFamily: 'IRANSansMobile(FaNum)', fontSize: 18}}
-
-                                title="ثبت"
-                        />
                     </View>
 
 
                 </ScrollView>
+                <Button full style={{ backgroundColor: '#47b03e' }} onPress={this.OnUserRegistrDebt}>
+                    <Text
+                        style={{ color: '#fff', fontSize: 18, fontFamily: 'IRANSansMobile(FaNum)' }}>ثبت</Text>
+                </Button>
                 {/*....................نام حساب جدید ................................. */}
                 <Modal
                     style={[styles.modal4]}

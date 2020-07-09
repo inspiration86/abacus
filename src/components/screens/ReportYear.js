@@ -435,7 +435,6 @@ class ReportYear extends React.Component {
 
                 year: year.toString(),
 
-
             }),
         }).then((response) => response.json())
             .then((responseJson) => {

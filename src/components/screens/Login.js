@@ -128,12 +128,18 @@ renderLogin(){
                     <View style={styles.headerContent}>
                         <Image style={{width: 90, height: 90}}
                                source={require('../../../assets/images/icons/abacus.png')}/>
+                        <Text style={{
+                            fontSize: 30,
+                            color: '#fff',
+                            fontFamily: 'Far_Aref'}}>
+                            چرتکه
+                        </Text>
                         <Text
-                            style={{fontSize:width/22, fontFamily: 'Far_Alphabet', color: '#fff', marginBottom: 5}}>
+                            style={{fontSize:width/22, fontFamily: 'Lalezar-Regular', color: '#fff', marginBottom: 5}}>
                             ورود به اپ مالی حسابداری شخصی چرتکه
                         </Text>
                     </View>
-                    <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 60}}>
+                    <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 40}}>
                         <Text style={{textAlign:'center',fontFamily: 'IRANSansMobile(FaNum)',color:'#fff'}}>{this.props.error}</Text>
 
                         <View style={styles.inputContainer}>
@@ -199,7 +205,7 @@ renderLogin(){
                     subTitleStyle={{ color: '#fff', textAlign: 'right', marginTop: 5 }}
                     subtitle=""
                     placeholderInput="رمز جدید خود را وارد کنید"
-                    placeholderTextColor="#777777"
+                    placeholderTextColor="#777"
                     textInputStyle={{ marginTop: -20 ,textAlign:'right'}}
                     inputStyle={{color:'#47b03e'}}
                     secureTextEntry={true}
@@ -293,15 +299,12 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.50,
         shadowRadius: 12.35,
-
         elevation: 19,
     },
     loginText: {
         color: 'green',
-        fontFamily: 'IRANSansMobile(FaNum)',
+        fontFamily: 'IRANSansMobile_Bold',
         fontSize: 18,
-
-
     },
     bgImage: {
         flex: 1,
@@ -313,10 +316,9 @@ const styles = StyleSheet.create({
     },
     btnText: {
         color: "white",
-        fontFamily: 'IRANSansMobile(FaNum)',
-        fontSize: 17,
-        marginRight: 20
-
+        fontFamily: 'IRANSansMobile_Bold',
+        fontSize: 16,
+        marginRight: 2
     }
 });
 const mapStateToProps = state => {

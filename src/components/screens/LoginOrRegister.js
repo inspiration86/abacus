@@ -67,7 +67,7 @@ export default class LoginOrRegister extends Component {
                         <Text style={{
                             fontSize: width/22,
                             color: '#fff',
-                            fontFamily: 'Far_Alphabet',
+                            fontFamily: 'Lalezar-Regular',
                             marginTop:20
                         }}>
                             به اپ حسابداری شخصی چرتکه خوش آمدید
@@ -90,7 +90,7 @@ export default class LoginOrRegister extends Component {
                                 elevation: 5,
                             }}
                                     onPress={() => this.props.navigation.navigate('Login')}
-                                    titleStyle={{color: 'green',fontFamily:'IRANSansMobile(FaNum)',fontSize:18}}
+                                    titleStyle={{color: 'green',fontFamily:'IRANSansMobile_Bold',fontSize:18}}
                                     title="ورود"
                             />
                             <Button buttonStyle={{
@@ -109,7 +109,7 @@ export default class LoginOrRegister extends Component {
                                 elevation: 5,
                             }}
                                     onPress={() => this.props.navigation.navigate('Register')}
-                                    titleStyle={{color: 'green',fontFamily:'IRANSansMobile(FaNum)',fontSize:18}}
+                                    titleStyle={{color: 'green',fontFamily:'IRANSansMobile_Bold',fontSize:18}}
                                     title="ثبت نام"
                             />
                         </View>

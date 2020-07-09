@@ -82,7 +82,7 @@ const CustomDrawerComponent = props => (
                     <FontAwesomeIcon color={'#3d933c'} icon={faSignOutAlt} style={styles.containericon}/>
                 </View>
                 <View style={{flex: 1, justifyContent: 'center', alignItems: 'flex-end'}}>
-                    <Text style={{color: '#777', fontFamily: 'IRANSansMobile',}}>خروج</Text>
+                    <Text style={{color: '#777', fontFamily: 'IRANSansMobile_Bold',}}>خروج</Text>
                 </View>
             </View>
         </Footer>
@@ -145,7 +145,7 @@ const CustomerMyDrawerNavigator = createDrawerNavigator({
                 drawerLabel: (
                     <View style={{flex: 1, flexDirection: 'row',backgroundColor:'#fff',height:55,justifyContent:'center',alignItems:'center'}}>
                         <View style={{flex: 9}}>
-                            <Text style={{fontFamily: 'IRANSansMobile', color: '#555',textAlign:'right',marginRight:30}}>صفحه اصلی</Text>
+                            <Text style={{fontFamily: 'IRANSansMobile_Bold', color: '#666',textAlign:'right',marginRight:30}}>صفحه اصلی</Text>
                         </View>
                         <View style={{flex: 2}}>
                             <FontAwesomeIcon icon={faHome} size={20} style={{color: '#3d933c'}}/>
@@ -164,7 +164,7 @@ const CustomerMyDrawerNavigator = createDrawerNavigator({
                 drawerLabel: (
                     <View style={{flex: 1, flexDirection: 'row',backgroundColor:'#f5f5f5',height:55,justifyContent:'center',alignItems:'center'}}>
                         <View style={{flex: 9}}>
-                            <Text style={{fontFamily: 'IRANSansMobile', color: '#555',textAlign:'right',marginRight:30}}>پروفایل من</Text>
+                            <Text style={{fontFamily: 'IRANSansMobile_Bold', color: '#666',textAlign:'right',marginRight:30}}>پروفایل من</Text>
                         </View>
                         <View style={{flex: 2}}>
                             <FontAwesomeIcon icon={faUserCircle} size={20} style={{color: '#3d933c'}}/>
@@ -183,7 +183,7 @@ const CustomerMyDrawerNavigator = createDrawerNavigator({
                 drawerLabel: (
                     <View style={{flex: 1, flexDirection: 'row',backgroundColor:'#fff',height:55,justifyContent:'center',alignItems:'center'}}>
                         <View style={{flex: 9}}>
-                            <Text style={{fontFamily: 'IRANSansMobile', color: '#555',textAlign:'right',marginRight:30}}>لیست درآمدها</Text>
+                            <Text style={{fontFamily: 'IRANSansMobile_Bold', color: '#666',textAlign:'right',marginRight:30}}>لیست درآمد</Text>
                         </View>
                         <View style={{flex: 2}}>
                             <FontAwesomeIcon icon={faCoins} size={20} style={{color: '#3d933c'}}/>
@@ -202,7 +202,7 @@ const CustomerMyDrawerNavigator = createDrawerNavigator({
                 drawerLabel: (
                     <View style={{flex: 1, flexDirection: 'row',backgroundColor:'#f5f5f5',height:55,justifyContent:'center',alignItems:'center'}}>
                         <View style={{flex: 9}}>
-                            <Text style={{fontFamily: 'IRANSansMobile', color: '#555',textAlign:'right',marginRight:30}}>لیست هزینه ها</Text>
+                            <Text style={{fontFamily: 'IRANSansMobile_Bold', color: '#666',textAlign:'right',marginRight:30}}>لیست هزینه</Text>
                         </View>
                         <View style={{flex: 2}}>
                             <FontAwesomeIcon icon={faCalculator} size={20} style={{color: '#3d933c'}}/>
@@ -221,7 +221,7 @@ const CustomerMyDrawerNavigator = createDrawerNavigator({
                 drawerLabel: (
                     <View style={{flex: 1, flexDirection: 'row',height:55,justifyContent:'center',alignItems:'center'}}>
                         <View style={{flex: 9}}>
-                            <Text style={{fontFamily: 'IRANSansMobile', color: '#555',textAlign:'right',marginRight:30}}> لیست بدهی</Text>
+                            <Text style={{fontFamily: 'IRANSansMobile_Bold', color: '#666',textAlign:'right',marginRight:30}}> لیست بدهی</Text>
                         </View>
                         <View style={{flex: 2}}>
                             <FontAwesomeIcon icon={faList} size={20} style={{color: '#3d933c'}}/>
@@ -240,7 +240,7 @@ const CustomerMyDrawerNavigator = createDrawerNavigator({
                 drawerLabel: (
                     <View style={{flex: 1, flexDirection: 'row',height:55,backgroundColor:'#f5f5f5',justifyContent:'center',alignItems:'center'}}>
                         <View style={{flex: 9}}>
-                            <Text style={{fontFamily: 'IRANSansMobile', color: '#555',textAlign:'right',marginRight:30}}>تماس با ما</Text>
+                            <Text style={{fontFamily: 'IRANSansMobile_Bold', color: '#666',textAlign:'right',marginRight:30}}>تماس با ما</Text>
                         </View>
                         <View style={{flex: 2}}>
                             <FontAwesomeIcon icon={faPhoneSquare} size={20} style={{color: '#3d933c'}}/>

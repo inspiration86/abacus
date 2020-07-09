@@ -89,7 +89,6 @@ class SendMessage extends Component {
         });
     }
     onRegister(){
-
         fetch('http://194.5.175.25:2000/api/v1/register', {
             method: 'POST',
             headers: {

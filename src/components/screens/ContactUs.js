@@ -84,7 +84,7 @@ class ContactUs extends Component {
                         />
                         <View style={{backgroundColor:'ff4500',flex:1}}>
                             <Text style={{
-                                fontFamily: 'Far_Aref',
+                                fontFamily: 'Lalezar-Regular',
                                 fontSize: 12,
                                 color: '#555',
                                 paddingVertical: 15,

@@ -17,7 +17,6 @@ import {PieChart} from 'react-native-charts-wrapper';
 import {connect} from 'react-redux';
 
 class reportMonth extends React.Component {
-
     constructor(props) {
         super(props);
 
@@ -734,8 +733,7 @@ const    mapStateToProps = state => {
             dd: [],
         };
     };
-export default connect(mapStateToProps)(reportMonth)
-;
+export default connect(mapStateToProps)(reportMonth);
 const styles = StyleSheet.create({
 
         chart: {

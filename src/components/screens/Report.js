@@ -138,7 +138,7 @@ export default class Home extends Component {
                     <View style={styles.detailContent}>
                         <Image style={styles.icon1} source={require('../../../assets/images/icons/bill2.png')}/>
                         <Text style={styles.textHeader}>مبلغ بدهی</Text>
-                        <Text style={[styles.textHeader,{marginTop:-5}]}>500000 تومان</Text>
+                        <Text style={[styles.textHeader,{marginTop:-5}]}><Text style={{fontFamily:'IRANSansMobile(FaNum)'}}>500000</Text> تومان</Text>
 
                     </View>
                     <View
@@ -146,14 +146,14 @@ export default class Home extends Component {
                             borderColor: '#e2e2e2'}]}>
                         <Image style={styles.icon1} source={require('../../../assets/images/icons/2760970.png')}/>
                         <Text style={styles.textHeader}>مخارج</Text>
-                        <Text style={[styles.textHeader,{marginTop:-5}]}>500000 تومان</Text>
+                        <Text style={[styles.textHeader,{marginTop:-5}]}><Text style={{fontFamily:'IRANSansMobile(FaNum)'}}>500000</Text> تومان</Text>
 
                     </View>
                     <View  style={[styles.detailContent,{borderLeftWidth: 1,
                         borderColor: '#e2e2e2'}]}>
                         <Image style={styles.icon1} source={require('../../../assets/images/icons/wallet.png')}/>
                         <Text style={styles.textHeader}>مانده</Text>
-                        <Text style={[styles.textHeader,{marginTop:-5}]}>500000 تومان</Text>
+                        <Text style={[styles.textHeader,{marginTop:-5}]}><Text style={{fontFamily:'IRANSansMobile(FaNum)'}}>500000</Text> تومان</Text>
                     </View>
                 </View>
                 <FlatGrid
@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
     },
     textHeader:{
         fontSize: 13,
-        fontFamily: 'IRANSansMobile(FaNum)',
+        fontFamily: 'Lalezar-Regular',
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
@@ -289,9 +289,9 @@ const styles = StyleSheet.create({
         fontSize:13,
         textAlign: "center",
         margin: 10,
-        color: '#111',
-        fontFamily: 'IRANSansMobile(FaNum)',
-        marginHorizontal: -15,
+        color: '#666',
+        fontFamily: 'Lalezar-Regular',
+        marginHorizontal: -5,
 
         flex:2
     },

@@ -3,8 +3,8 @@ import { View, TouchableOpacity, Image, ScrollView, StatusBar, StyleSheet, Text,
 import { Provider, Portal, FAB,} from 'react-native-paper';
 import Modald from 'react-native-modalbox';
 import DatePicker, { getFormatedDate } from 'react-native-modern-datepicker';
-// import Select2 from 'react-native-select-two';
 import ImagePicker from 'react-native-image-picker';
+import RNFetchBlob from 'rn-fetch-blob';
 import Header from '../layouts/Header';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -36,10 +36,10 @@ const renderImage = (image) => {
     ];
 };
 import { CardItem, Tabs, Tab, ListItem, TabHeading, Left, Body, Title, Right, Form, Input, Item, Label, Button, Card} from 'native-base';
-
 import { FlatGrid } from 'react-native-super-grid';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {connect} from 'react-redux';
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 class Reminder extends Component {
     constructor(props) {
@@ -67,15 +67,13 @@ class Reminder extends Component {
             description_image: '',
             repeate_image: '',
             title_image: '',
-
-
         }
-
         this.ShowReminderRecord ();
     };
-
-    componentDidMount(): void {
+    componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
         this.ShowReminderRecord ();
+    }
+    componentDidMount(): void {
     }
 
     onValueChange(value: string) {
@@ -188,52 +186,39 @@ class Reminder extends Component {
     }
     // .............. RegisterReminderText ..............
     RegisterReminderText = () => {
-
-
-        // console.log("description_text=" +this.state.description_text);
-        // console.log("DateText=" +this.state.DateText);
-        // console.log("repeate_text="+ this.state.repeate_text);
-        // console.log("title_text="+ this.state.title_text);
-        // console.log("imagepath="+ this.state.imagepath);
-
-        fetch('http://194.5.175.25:2000/api/v1/reminder', {
-
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                user_id:this.state.user_id,
-                description: this.state.description_text,
-                date:this.state.DateText,
-                repeat:this.state.repeate_text ,
-                title:this.state.title_text,
-                type:'2',
-
-            })
-
-        }).then((response) => response.json())
-            .then((responseJson) => {
-                Alert.alert('با موفقیت ثبت شد')
-                // Alert.alert(responseJson.data);
-
-            }).catch((error) => {
-            console.error(error);
-        });
-
+        if (this.state.description_text=="" ||this.state.DateText=="" || this.state.title_text=="" ){
+            Alert.alert('لطفا اطلاعات را بطور کامل وارد نمایید')
+        }
+        else {
+            fetch('http://194.5.175.25:2000/api/v1/reminder', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user_id: this.state.user_id,
+                    description: this.state.description_text,
+                    date: this.state.DateText,
+                    repeat: this.state.repeate_text,
+                    title: this.state.title_text,
+                    type: '2',
+                })
+            }).then((response) => response.json())
+                .then((responseJson) => {
+                    Alert.alert('با موفقیت ثبت شد')
+                    // Alert.alert(responseJson.data);
+                    this.setModalVisibletext(false);
+                }).catch((error) => {
+                console.error(error);
+            });
+        }
     }
     RegisterReminderImage = () => {
-
-
-        // console.log("description_image=" +this.state.description_image);
-        // console.log("Dateimage=" +this.state.Dateimage);
-        // console.log("repeate_image="+ this.state.repeate_image);
-        // console.log("title_image="+ this.state.title_image);
-        // console.log("imagepath="+ this.state.imagepath);
-
+        if (this.state.description_image=="" ||this.state.Dateimage=="" || this.state.title_image=="" || this.state.imagePath==""){
+            Alert.alert('لطفا اطلاعات را بطور کامل وارد نمایید')
+        }
         fetch('http://194.5.175.25:2000/api/v1/reminder', {
-
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -247,16 +232,13 @@ class Reminder extends Component {
                 title:this.state.title_image,
                 type:'1',
                 image:this.state.imagePath,
-
-
-
-
             })
 
         }).then((response) => response.json())
             .then((responseJson) => {
                 Alert.alert('با موفقیت ثبت شد')
                 // Alert.alert(responseJson.data);
+                this.setModalVisibleimage(false);
 
             }).catch((error) => {
             console.error(error);
@@ -265,28 +247,28 @@ class Reminder extends Component {
     }
     //  .................delete..........................
     DeleteReminderRecord = (item) => {
-        let id;
-        id = item._id;
-        fetch('http://194.5.175.25:2000/api/v1/reminder/' + id, {
+          let id;
+          id = item._id;
+          fetch('http://194.5.175.25:2000/api/v1/reminder/' + id, {
+              method: 'DELETE',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  _id: id
+              })
 
-            method: 'DELETE',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                _id: id
-            })
+          }).then((response) => response.json())
+              .then((responseJson) => {
 
-        }).then((response) => response.json())
-            .then((responseJson) => {
-
-                console.log(responseJson);
+                  console.log(responseJson);
 
 
-            }).catch((error) => {
-            console.error(error);
-        });
+              }).catch((error) => {
+              console.error(error);
+          });
+
     }
     _onStateChange = ({ open }) => this.setState({ open });
 
@@ -348,9 +330,16 @@ class Reminder extends Component {
                                     </Button>
                                 </Body>
                                 <Right>
-                                    <Button transparent onPress={() => { this.DeleteReminderRecord(item) }}>
+                                    <Button transparent onPress={() => { Alert.alert(
+                                        'هشدار حذف',
+                                        'آیا برای حذف اطمینان دارید؟',
+                                        [
+                                            {text: 'لغو'},
+                                            {text: 'بله', onPress: () => { this.DeleteReminderRecord(item)}},
+                                        ],
+                                    ) }}>
 
-                                        <Icon active name="trash"  style={{fontSize:20,color:'red'}}/>
+                                        <Icon active name="trash"  style={{fontSize:20,color:'#777'}}/>
 
                                     </Button>
                                 </Right>
@@ -371,7 +360,7 @@ class Reminder extends Component {
                                 // {icon: 'plus', onPress: () => console.log('Pressed add')},
                                 { icon: 'text', label: 'یادآور متنی',onPress:() => this.clickEventtext()},
                                 { icon: 'camera', label: 'یادآور تصویری',  onPress:() => this.clickEventimage()},
-                                { icon: 'voice', label: 'یادآور صوتی', onPress: () => Alert.alert('در نسخه های بعدی این قابلیت افزوده خواهد شد') },
+                                { icon: 'voice', label: 'یادآور صوتی', onPress: () => Alert.alert('پیغام',`در نسخه های بعدی این قابلیت افزوده خواهد شد`,[{text:'بسیار خب'}])},
 
                             ]}
                             onStateChange={this._onStateChange}

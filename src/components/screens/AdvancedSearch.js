@@ -40,6 +40,7 @@ class AdvancedSearch extends Component {
         super(props);
         this.state = {
             dataSource: [],
+            dataSourceincome:[],
             isLoading: true,
             user_id: this.props.dataLogin['id'],
             selectedItems: [],
@@ -49,7 +50,7 @@ class AdvancedSearch extends Component {
             fromamount_income: '',
             toamount_income: '',
             category_income: '',
-            Account_income: '',
+            Type_incom: '',
             sub_category_incom: '',
             //..............cost...............
             DateStartTextCost: '',
@@ -58,6 +59,7 @@ class AdvancedSearch extends Component {
             toamount_cost: '',
             category_cost: '',
             Type_cost: '',
+
             sub_category_cost: '',
 
             //  ..........showRecords.............
@@ -69,6 +71,7 @@ class AdvancedSearch extends Component {
         };
         this.ShowAcountIncome();
         this.ShowTypeRecordCost();
+        this. SearchAdvencedcost();
         this.getCategoryIncome();
         this.getCategoryCost();
     }
@@ -114,14 +117,43 @@ class AdvancedSearch extends Component {
     onSelectedItemsChange = (selectedItems) => {
         this.setState({ selectedItems });
     };
-
+    findParenticom = (itemId) => {
+        const { categoryIncome } = this.state
+        let match = false
+        categoryIncome.forEach((item) => {
+            item.children &&
+            item.children.filter(({ id }) => {
+                if (id === itemId) {
+                    match = item.name
+                }
+            })
+        })
+        this.setState({category_income:match})
+        // alert(match)
+    }
     onSelectedItemObjectsChangeincom = (selectedItems) => {
-        this.setState({ category_income: selectedItems[0]['name'] })
-        this.setState({ sub_category_incom: selectedItems[0]['name'] })
 
+        this.setState({ sub_category_incom: selectedItems[0]['name'] })
+this.findParenticom(selectedItems[0]['id'])
         console.log(selectedItems);
 
     }
+
+    findParentCost = (itemId) => {
+        const { categoryIncome } = this.state
+        let match = false
+        categoryIncome.forEach((item) => {
+            item.children &&
+            item.children.filter(({ id }) => {
+                if (id === itemId) {
+                    match = item.name
+                }
+            })
+        })
+        this.setState({category_cost:match})
+        // alert(match)
+    }
+
     // ................getCategoryCost.........
     getCategoryCost() {
         let userId = this.state.user_id;
@@ -167,36 +199,28 @@ class AdvancedSearch extends Component {
 
     onSelectedItemObjectsChange = (selectedItems) => {
         this.setState({ sub_category_cost: selectedItems[0]['name'] })
-        this.setState({ category_cost: selectedItems[0]['name'] })
-        console.log(selectedItems);
+
+        this.findParentCost(selectedItems[0]['id'] )
 
     }
     // .............. SearchAdvencedincome..............
     SearchAdvencedincome = () => {
-
-        // console.log("DateStartTextIncome=" +this.state.DateStartTextIncome);
-        // console.log(" DateEndTextIncome=" +this.state.DateEndTextIncome);
-        // console.log("fromamount_income=" +this.state.fromamount_income);
-        // console.log("toamount_income="+ this.state.toamount_income);
-        // console.log("category_income="+ this.state.category_income);
-        // console.log("Type_income="+ this.state.Type_income);
+        // console.log("Type_income=" + this.state.Type_income);
         fetch('http://194.5.175.25:2000/api/v1/reportASearchIncome', {
-
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                user_id: '5ee8e38613983412c8dd544c',
+                user_id: this.state.user_id,
                 todate: this.state.DateEndTextIncome,
                 fromdate: this.state.DateStartTextIncome,
-                fromamount: this.state.fromamount,
-                toamount: this.state.toamount,
+                fromAmount: this.state.fromamount_income,
+                toAmount: this.state.toamount_income,
                 category: this.state.category_income,
                 sub_category: this.state.sub_category_incom,
-
-
+                acount: this.state.Type_income,
             })
 
         }).then((response) => response.json())
@@ -205,7 +229,7 @@ class AdvancedSearch extends Component {
                     console.log(responseJson)
                     this.setState({
                         isLoading: false,
-                        dataSource: responseJson.data
+                        dataSourceincome: responseJson.data
                     })
 
                     this.refs.modal5.open()
@@ -228,7 +252,7 @@ class AdvancedSearch extends Component {
         // console.log("toamount_cost=" + this.state.toamount_cost);
         // console.log("category_cost=" + this.state.category_cost);
         // console.log("sub_category_cost=" + this.state.sub_category_cost);
-        // console.log("Type_cost=" + this.state.Type_cost);
+        //console.log("Type_cost=" + this.state.Type_cost);
         fetch('http://194.5.175.25:2000/api/v1/reportASearchcost', {
 
             method: 'POST',
@@ -237,30 +261,30 @@ class AdvancedSearch extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                user_id: '5ee8e38613983412c8dd544c',
-                todate: this.state.DateStartTextcost,
-                fromdate: this.state.DateEndTextcost,
-                fromamount: this.state.fromamount,
-                toamount: this.state.toamount,
+                user_id: this.state.user_id,
+                todate: this.state.DateStartTextCost,
+                fromdate: this.state.DateEndTextCost,
+                fromAmount: this.state.fromamount_cost,
+                toAmount: this.state.toamount_cost,
                 category: this.state.category_cost,
                 sub_category:this.state.sub_category_cost,
-                type: this.state.Type_cost,
+               acount: this.state.Type_cost,
+
 
             })
 
         }).then((response) => response.json())
             .then((responseJson) => {
                 console.log(responseJson)
-                this.setState({
-                    isLoading: false,
-                    dataSource: responseJson.data
-                })
                 if (responseJson.success === true){
-                    this.refs.modal6.open()
-
+                    this.setState({
+                        isLoading: false,
+                        dataSource: responseJson.data
+                    })
 
                 } else if(responseJson.success ===false) {
                     alert('جستجوی یافت نشد')
+                    this.refs.modal6.open()
 
                 }
             }).catch((error) => {
@@ -271,12 +295,7 @@ class AdvancedSearch extends Component {
     //   .............. ShowTypeRecordincom...................
 
     ShowAcountIncome = () => {
-        this.state.acount_income.push({
-            id: '1',
-            name: 'نقد'
-        })
-        // let id
-        // id = '5ee8e38613983412c8dd544c';
+
         let userId = this.state.user_id;
         fetch('http://194.5.175.25:2000/api/v1/acount/' + userId)
             .then((response) => response.json())
@@ -297,19 +316,16 @@ class AdvancedSearch extends Component {
     //   .............. ShowTypeRecord...................
 
     ShowTypeRecordCost = () => {
-        this.state.type_cost.push({
-            id: '1',
-            name: 'نقد'
-        })
+
         let userId = this.state.user_id;
-        fetch('http://194.5.175.25:2000/api/v1/Type/' + userId)
+        fetch('http://194.5.175.25:2000/api/v1/acount/' + userId)
             .then((response) => response.json())
             .then((responseJson) => {
                 console.log(responseJson.data);
                 for (var i = 0; i < responseJson.data.length; i++) {
                     this.state.type_cost.push({
                         id: responseJson.data[i]['_id'],
-                        name: responseJson.data[i]['type_name']
+                        name: responseJson.data[i]['acount_name']
                     })
                 }
 
@@ -442,7 +458,7 @@ class AdvancedSearch extends Component {
 
                                     </Left>
                                     <Input keyboardType='number-pad'
-                                           onChangeText={fromamount => this.setState({ fromamount_cost: fromamount })}
+                                           onChangeText={fromAmount => this.setState({fromamount_cost:fromAmount })}
 
                                            style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)', alignSelf: 'center' }} />
                                     <Label style={{
@@ -459,7 +475,7 @@ class AdvancedSearch extends Component {
                                         }}>ریال</Text>
                                     </Left>
                                     <Input keyboardType='number-pad'
-                                           onChangeText={toamount => this.setState({ toamount_cost: toamount })}
+                                           onChangeText={toAmount => this.setState({toamount_cost:toAmount })}
 
                                            style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)', alignItems: 'center', justifyContent: 'center' }} />
                                     <Label style={{
@@ -549,13 +565,13 @@ class AdvancedSearch extends Component {
                                                 selectButtonText="تایید"
                                                 title="انتخاب حساب"
                                                 searchPlaceHolderText="جستجو حساب"
-                                                data={this.state.acount_income}
-                                                onSelect={acount_income => {
-                                                    for (var i = 0; i < this.state.acount_income.length; i++) {
+                                                data={this.state.type_cost}
+                                                onSelect={type_cost => {
+                                                    for (var i = 0; i < this.state.type_cost.length; i++) {
 
-                                                        if (this.state.acount_income[i]['id'] == acount_income) {
+                                                        if (this.state.type_cost[i]['id'] =type_cost) {
                                                             //   Alert.alert(this.state.acount[i]['name'])
-                                                            this.setState({ Account_income: this.state.acount_income[i]['name'] });
+                                                            this.setState({ Type_cost: this.state.type_cost[i]['name'] });
 
                                                         }
                                                     }
@@ -785,7 +801,7 @@ class AdvancedSearch extends Component {
 
                                     </Left>
                                     <Input keyboardType='number-pad'
-                                           onChangeText={fromamount => this.setState({ fromamount_income: fromamount })}
+                                           onChangeText={fromAmount => this.setState({fromamount_income:fromAmount })}
 
                                            style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light' }} />
                                     <Label style={{
@@ -802,7 +818,7 @@ class AdvancedSearch extends Component {
                                         }}>ریال</Text>
                                     </Left>
                                     <Input keyboardType='number-pad'
-                                           onChangeText={toamount => this.setState({ toamount_income: toamount })}
+                                           onChangeText={toAmount => this.setState({toamount_income:toAmount })}
 
                                            style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)', justifyContent: 'center', alignItems: 'center', alignSelf: 'center' }} />
                                     <Label style={{
@@ -894,11 +910,9 @@ class AdvancedSearch extends Component {
                                                 data={this.state.acount_income}
                                                 onSelect={acount_income => {
                                                     for (var i = 0; i < this.state.acount_income.length; i++) {
-
-                                                        if (this.state.acount_income[i]['id'] == acount_income) {
+                                                        if (this.state.acount_income[i]['id'] ==acount_income) {
                                                             //   Alert.alert(this.state.acount[i]['name'])
-                                                            this.setState({ Account_income: this.state.acount_income[i]['name'] });
-
+                                                            this.setState({Type_income: this.state.acount_income[i]['name']});
                                                         }
                                                     }
                                                 }}
@@ -938,7 +952,7 @@ class AdvancedSearch extends Component {
                                     }}>
                                         <Text></Text>
 
-                                        <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>جستجوی پیشرفته </Text>
+                                        <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>جستجوی پیشرفته  درامدها</Text>
                                         <Button transparent style={{ marginRight: -20 }}>
                                             <Icon name='close' style={{ fontSize: 30, color: '#fff', marginRight: 20 }} onPress={() => this.refs.modal5.close()} />
                                         </Button>
@@ -950,7 +964,7 @@ class AdvancedSearch extends Component {
                                 <ScrollView >
                                     <FlatGrid
                                         itemDimension={200}
-                                        items={this.state.dataSource}
+                                        items={this.state.dataSourceincome}
                                         style={{ marginTop: 3, }}
                                         contentContainerStyle={{}}
                                         renderItem={({ item, index }) => (
