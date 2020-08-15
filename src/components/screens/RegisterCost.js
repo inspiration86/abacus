@@ -8,10 +8,10 @@ import {
     StatusBar,
     Text,
     Image,
-    ScrollView, Alert, ActivityIndicator
+    ScrollView, Alert, ActivityIndicator,Modal
 } from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import Modal from 'react-native-modalbox';
+//import Modal from 'react-native-modalbox';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ImagePicker from 'react-native-image-picker';
 import moment from 'moment';
@@ -21,7 +21,7 @@ import DatePicker, {getFormatedDate} from 'react-native-modern-datepicker';
 import Header from '../layouts/Header';
 import LinearGradient from 'react-native-linear-gradient';
 import {Card, List, Content, ListItem, Left, Body,Button, Right, Title, CardItem, Item, Input, Label} from 'native-base';
-import Modaldate from 'react-native-modal';
+//import Modaldate from 'react-native-modal';
 import {faCoins} from '@fortawesome/free-solid-svg-icons/faCoins';
 import RNFetchBlob from 'rn-fetch-blob';
 import {connect} from "react-redux";
@@ -56,7 +56,7 @@ const renderImage = (image) => {
     ];
 };
 
-class RegisterCost extends Component {
+ class RegisterCost extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -76,6 +76,10 @@ class RegisterCost extends Component {
             selectedItems: [],
             selectedItemsincome:[],
             textMessageBox: '',
+            modalIncom: false,
+            modalRcategory: false,
+            modaltype: false,
+            modalacount: false,
 //..............RegisterCost...............
             DateText: '',
             amount_Cost: '',
@@ -111,7 +115,39 @@ class RegisterCost extends Component {
         this.getCategoryCost();
         this.getCategoryIncome();
     }
+//.............
+// ...................
+    clickEventIncom = () => {
 
+        this.setModalIncom(true);
+    }
+    setModalIncom(visible) {
+        this.setState({ modalIncom: visible });
+    }
+//.............
+    clickEventcategory = () => {
+
+        this.setModalcategory(true);
+    }
+    setModalcategory(visible) {
+        this.setState({ modalRcategory: visible });
+    }
+    clickEventtype = () => {
+
+        this.setModaltype(true);
+    }
+    setModaltype(visible) {
+        this.setState({ modaltype: visible });
+    }
+//.............
+    clickEventacount = () => {
+
+        this.setModalacount(true);
+    }
+    setModalacount(visible) {
+        this.setState({ modalacount: visible });
+    }
+//............
     showAlertSuccess = () => {
         this.setState({
             showAlertSuccess: true
@@ -228,7 +264,7 @@ class RegisterCost extends Component {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    user_id: this.state.user_id,
+                    user_id:this.state.user_id,
                     year: this.state.year,
                     month: this.state.month,
                     day: this.state.day,
@@ -240,7 +276,7 @@ class RegisterCost extends Component {
                     category:this.state.category_name_cost,
                     sub_category: this.state.sub_category_cost,
                     detail: this.state.Detail_Cost,
-                   image:this.state.imagepath
+                    image:this.state.imagepath
 
                 })
 
@@ -281,7 +317,7 @@ class RegisterCost extends Component {
                 .then((responseJson) => {
                     this.showAlertSuccess();
                     this.setState({textMessageBox: 'حساب با موفقیت ثبت شد'});
-                    this.refs.modal4.close()
+                    this.setModalacount(false)
                 }).catch((error) => {
                 console.error(error);
             });
@@ -300,7 +336,7 @@ class RegisterCost extends Component {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    user_id: this.state.user_id,
+                    user_id:this.state.user_id,
                     type_name: this.state.type_name_cost,
                 })
 
@@ -310,7 +346,7 @@ class RegisterCost extends Component {
                     this.ShowTypeRecord();
                     this.showAlertSuccess();
                     this.setState({textMessageBox: 'روش پراخت با موفقیت ثبت شد'});
-                    this.refs.modal3.close()
+                    this.setModaltype(false)
                 }).catch((error) => {
                 console.error(error);
             });
@@ -324,6 +360,7 @@ class RegisterCost extends Component {
         for(var i=0;i< categoryCost.length;i++){
             categoryCost.splice(this.state.categoryCost[i],categoryCost.length);
         }
+
         let url = "http://194.5.175.25:2000/api/v1/categorycost/" + this.state.user_id;
         fetch(url, {
             method: 'GET',
@@ -464,7 +501,7 @@ class RegisterCost extends Component {
                     this.showAlertSuccess();
                     this.setState({textMessageBox: 'دسته و زیر دسته با موفقیت ثبت شد'});
                     this.getCategoryCost();
-                    this.refs.modal5.close();
+                    this.setModalcategory(false);
                 }).catch((error) => {
                 console.error(error);
             });
@@ -590,7 +627,7 @@ class RegisterCost extends Component {
                     hidden={false}
                     backgroundColor='#3e843d'
                 />
-              <Header title="ثبت هزینه ها" onBackPress={() => {
+                <Header title="ثبت هزینه" onBackPress={() => {
                     this.props.navigation.goBack();
                 }}/>
 
@@ -605,7 +642,7 @@ class RegisterCost extends Component {
 
 
                     <View style={{flexDirection: 'row', marginTop: 20}}>
-                        <TouchableOpacity activeOpacity={0.8} style={styles.SectionStyle} onPress={this.toggleModal}>
+                        <TouchableOpacity activeOpacity={0.8} style={styles.SectionStyle} onPress={() => this.clickEventIncom()}>
                             <Icon name="calendar" size={20} color="#47b03e" style={{marginLeft: 8, marginTop: 10}}/>
                             <Text style={[styles.inputs, {
                                 marginTop: -18
@@ -613,37 +650,48 @@ class RegisterCost extends Component {
                         </TouchableOpacity>
                         <View style={{marginRight: 20, marginTop: 12, flex: 2}}>
                             <Text style={{fontSize: 14, flex: 2, fontFamily: 'IRANSansMobile'}}> تاریخ </Text>
-                            {/* <Image style={styles.imageIcon} source={require('../../../assets/images/icons/date.png')} /> */}
+                             {/*<Image style={styles.imageIcon} source={require('../../../assets/images/icons/date.png')} />*/}
                         </View>
                     </View>
 
-                    <View style={{flex: 1}}>
-                        <Modaldate isVisible={this.state.isModalVisible}
-                            // animationInTiming={1700}
-                            // animationOutTiming={1000}
-                        >
-                            <View style={{flex: 1}}>
-                                <DatePicker isGregorian={false}
-                                            mode="date"
-                                            options={{
-                                                defaultFont: 'IRANSansMobile(FaNum)',
-                                                headerFont: 'IRANSansMobile(FaNum)',
-                                            }}
-                                            onDateChange={date => {
-                                                this.setState({dateText: date});
-                                                this.setState({year:date[0]+date[1]+date[2]+date[3]});
-                                                this.setState({month:date[5]+date[6]});
-                                                this.setState({day:date[8]+date[9]});
-                                                this.toggleModal();
-                                            }
-                                            }
-                                            placeholder="Select date"
-                                />
-                                <Button title="انصراف" onPress={this.toggleModal}
-                                        buttonStyle={{backgroundColor: '#47b03e'}}/>
+                    <Modal
+                        animationType={'fade'}
+                        transparent={true}
+                        onRequestClose={() => this.setModalIncom(false)}
+                        visible={this.state.modalIncom}>
+                        <View style={styles.popupOverlay}>
+                            <View style={styles.popup}>
+                                <View style={styles.popupContent}>
+                                    <ScrollView contentContainerStyle={styles.modalInfo}>
+                                        <DatePicker isGregorian={false}
+                                                    mode="date"
+                                                    options={{
+                                                        defaultFont:'Vazir-Black',
+                                                        headerFont:'Vazir-Black',
+                                                    }}
+                                                    onDateChange={date => {
+                                                        this.setState({dateText: date});
+                                                        this.setState({year:date[0]+date[1]+date[2]+date[3]});
+                                                        this.setState({month:date[5]+date[6]});
+                                                        this.setState({day:date[8]+date[9]});
+                                                        this.setModalIncom(false);
+                                                    }
+                                                    }
+                                                    placeholder="Select date"
+                                        />
+                                    </ScrollView>
+                                    <Button full style={{ backgroundColor: '#47b03e' }} onPress={() => { this.setModalIncom(false) }}
+                                    >
+                                        <Text
+                                            style={{ color: '#fff', fontSize: 16, fontFamily: 'IRANSansMobile(FaNum)' }}>انصراف</Text>
+                                    </Button>
+
+                                </View>
                             </View>
-                        </Modaldate>
-                    </View>
+                        </View>
+
+                    </Modal>
+
 
 
                     {/* .........................price....................................... */}
@@ -775,7 +823,7 @@ class RegisterCost extends Component {
 
                     <View style={{flexDirection: 'row', flex: 1}}>
                         <View style={{flexDirection: 'row', flex: 2.2, marginTop: 10}}>
-                            <TouchableOpacity onPress={() => this.refs.modal5.open()}>
+                            <TouchableOpacity onPress={() => this.clickEventcategory()}>
                                 <Icon name="plus-circle" size={25} color='#47b03e'
                                       style={{marginLeft: 7, marginTop: 7}}/>
                             </TouchableOpacity>
@@ -837,7 +885,7 @@ class RegisterCost extends Component {
 
                     <View style={{flexDirection: 'row', flex: 1}}>
                         <View style={{flexDirection: 'row', flex: 2.2, marginTop: 10}}>
-                            <TouchableOpacity onPress={() => this.refs.modal3.open()}>
+                            <TouchableOpacity onPress={() => this.clickEventtype()}>
                                 <Icon name="plus-circle" size={25} color='#47b03e'
                                       style={{marginLeft: 7, marginTop: 3}}/>
                             </TouchableOpacity>
@@ -874,7 +922,7 @@ class RegisterCost extends Component {
                             />
                         </View>
                         <View style={{marginTop: 15, fontSize: 16, flex: 1}}>
-                            <Text style={{fontSize: 14, marginRight: 5, fontFamily: 'IRANSansMobile', flex: 2}}>روش
+                            <Text style={{fontSize: 14, marginRight: 12, fontFamily: 'IRANSansMobile', flex: 2}}>
                                 پرداخت </Text>
                         </View>
 
@@ -883,7 +931,7 @@ class RegisterCost extends Component {
                     <View style={{flexDirection: 'row'}}>
 
                         <View style={{flexDirection: 'row', flex: 2.2, marginTop: 15}}>
-                            <TouchableOpacity onPress={() => this.refs.modal4.open()}>
+                            <TouchableOpacity onPress={() => this.clickEventacount()}>
                                 <Icon name="plus-circle" size={25} color='#47b03e'
                                       style={{marginLeft: 9, marginTop: 3, flex: 2}}/>
                             </TouchableOpacity>
@@ -1006,237 +1054,219 @@ class RegisterCost extends Component {
 
                 {/*........................دسته و زیر دسته......................*/}
                 <Modal
-                    style={[styles.modal4]}
-                    position={'bottom'}
-                    ref={'modal5'}
-                    coverScreen={true}>
+                    animationType={'fade'}
+                    transparent={true}
+                    onRequestClose={() => this.setModalcategory(false)}
+                    visible={this.state.modalRcategory}>
+
                     <LinearGradient
-                        style={{
-                            borderTopLeftRadius: 15, borderTopRightRadius: 15, alignItems: 'center'
-                            , justifyContent: 'center',
-                        }}
-                        start={{x: 0.3, y: 0.0}} end={{x: 0.5, y: 1.0}}
+                        style={{ width: '100%' }}
+                        start={{ x: 0.3, y: 0.0 }} end={{ x: 0.5, y: 1.0 }}
                         locations={[0.1, 0.6, 0.9]}
                         colors={['#3e843d', '#3ede30', '#47b03e']}>
                         <View style={{
                             paddingVertical: 7,
                             alignItems: 'center'
-                            , justifyContent: 'center',
-
+                            , justifyContent: 'space-around',
+                            flexDirection: 'row'
                         }}>
+                            <Text></Text>
 
-                            <Text style={{fontSize: 20, color: '#fff', fontFamily: 'Far_Aref', alignSelf: 'center'}}>اضافه
-                                کردن دسته و زیر دسته</Text>
-
+                            <Text style={{ fontSize: 16, color: '#fff', marginBottom: 5, fontFamily: 'Vazir-Black' }}>اضافه
+                                کردن دسته و زیر دسته </Text>
+                            <Button transparent style={{ color: '#fff', marginRight: -20 }} onPress={() => this.setModalcategory(false)}>
+                                <Icon name='close' style={{ fontSize: 30, color: '#fff', marginRight: 20 }} />
+                            </Button>
                         </View>
                     </LinearGradient>
-                    <View style={{flexDirection: 'row', marginTop: 20}}>
-                        <View style={styles.SectionStyle}>
-                            <TextInput
-                                style={styles.inputs}
-                                placeholder="نام دسته جدید را وارد نمایید"
-                                underlineColorAndroid="transparent"
-                                onChangeText={category_name => this.setState({category_name_cost: category_name})}
+                    <View style={styles.popupOverlay}>
+                        <View style={styles.popup}>
+                            <View style={styles.popupContent}>
+                                <View style={{marginTop:25}}>
+                                    <Text style={{ fontSize: 14, color: '#555', marginBottom: 5, fontFamily: 'Vazir-Black',alignSelf:'center' }}> دسته و زیر  دسته جدید را وارد نمایید</Text>
+                                </View>
 
-                            />
+                                <View style={{flexDirection: 'row', marginTop: 10}}>
+
+                                    <View style={styles.SectionStylemo}>
+                                        <TextInput
+                                            style={styles.inputs}
+                                            placeholder="نام دسته جدید را وارد نمایید"
+                                            underlineColorAndroid="transparent"
+                                            onChangeText={category_name => this.setState({category_name_cost: category_name})}
+
+                                        />
+                                    </View>
+
+                                </View>
+                                <View style={{flexDirection: 'row', marginTop: 3}}>
+                                    <View style={styles.SectionStylemo}>
+                                        <TextInput
+                                            style={styles.inputs}
+                                            placeholder="نام زیر دسته جدید را وارد نمایید"
+                                            underlineColorAndroid="transparent"
+                                            onChangeText={sub_category => this.setState({sub_category_cost: sub_category})}
+
+                                        />
+                                    </View>
+
+                                </View>
+
+
+                            </View>
+
                         </View>
-                        <View style={{marginTop: 20, flex: 1}}>
-                            <Text style={{fontSize: 16, marginRight: 5}}> نام دسته</Text>
-                        </View>
+
                     </View>
-                    <View style={{flexDirection: 'row', marginTop: 3}}>
-                        <View style={styles.SectionStyle}>
-                            <TextInput
-                                style={styles.inputs}
-                                placeholder="نام زیر دسته جدید را وارد نمایید"
-                                underlineColorAndroid="transparent"
-                                onChangeText={sub_category => this.setState({sub_category_cost: sub_category})}
-
-                            />
-                        </View>
-                        <View style={{marginTop: 20, flex: 2}}>
-                            <Text style={{fontSize: 16, marginRight: 7, flex: 2}}> زیر دسته:</Text>
-                        </View>
-                    </View>
-                    <Button buttonStyle={{
-                        marginTop: 50,
-                        marginLeft: 25,
-                        backgroundColor: '#47b03e',
-                        borderRadius: 30,
-                        width: '80%',
-                        height: 45,
-                        shadowColor: '#43c164',
-                        shadowOffset: {
-                            width: 0,
-                            height: 6,
-                        },
-                        shadowOpacity: 0.37,
-                        shadowRadius: 7.49,
-                        elevation: 5,
-                        marginBottom: 20
-                    }}
-                            onPress={this.UserRegistrcategory}
-                            titleStyle={{color: '#fff', fontFamily: 'IRANSansMobile(FaNum)', fontSize: 18}}
-
-                            title="ثبت"
-                    />
+                    <Button full style={{ backgroundColor: '#47b03e' ,marginHorizontal:20,borderRadius:10}} onPress={this.UserRegistrcategory}>
+                        <Text
+                            style={{ color: '#fff', fontSize: 18, fontFamily: 'IRANSansMobile(FaNum)' }}>ثبت</Text>
+                    </Button>
                 </Modal>
 
                 {/*....................حساب جدید................................. */}
                 <Modal
-                    style={[styles.modal4]}
-                    position={'bottom'}
-                    ref={'modal4'}
-                    coverScreen={true}>
+                    animationType={'fade'}
+                    transparent={true}
+                    onRequestClose={() => this.setModalacount(false)}
+                    visible={this.state.modalacount}>
+
                     <LinearGradient
-                        style={{
-                            borderTopLeftRadius: 15, borderTopRightRadius: 15, alignItems: 'center'
-                            , justifyContent: 'center',
-                        }}
-                        start={{x: 0.3, y: 0.0}} end={{x: 0.5, y: 1.0}}
-                        locations={[0.1, 0.6, 0.9]}
-                        colors={['#3e843d', '#3ede30', '#47b03e']}>
-                        <View style={{
-                            paddingVertical: 7,
-
-                        }}>
-
-                            <Text style={{fontSize: 20, color: '#fff', fontFamily: 'Far_Aref', alignSelf: 'center'}}>
-                                اضافه کردن نوع حساب </Text>
-                        </View>
-                    </LinearGradient>
-                    <View style={{flexDirection: 'row', marginTop: 20}}>
-                        <View style={styles.SectionStyle}>
-                            <TextInput
-                                style={styles.inputs}
-                                placeholder="نام حساب جدید را وارد نمایید"
-                                underlineColorAndroid="transparent"
-                                onChangeText={acount_name => this.setState({acount_name_cost: acount_name})}
-
-                            />
-                        </View>
-                        <View style={{marginTop: 20, flex: 1}}>
-                            <Text style={{fontSize: 12, marginRight: 2, fontFamily: 'IRANSansMobile(FaNum)'}}> نام
-                                حساب</Text>
-                        </View>
-                    </View>
-                    <View style={{flexDirection: 'row', marginTop: 3}}>
-                        <View style={styles.SectionStyle}>
-                            <TextInput
-                                style={styles.inputs}
-                                placeholder=" شماره حساب خود را وارد کنید"
-                                underlineColorAndroid="transparent"
-                                onChangeText={acount_num => this.setState({acount_num_cost: acount_num})}
-
-                            />
-                        </View>
-                        <View style={{marginTop: 20, flex: 1}}>
-                            <Text style={{fontSize: 12, marginRight: 2, fontFamily: 'IRANSansMobile(FaNum)'}}> شماره
-                                حساب</Text>
-                        </View>
-                    </View>
-                    <View style={{flexDirection: 'row', marginTop: 3}}>
-
-                        <View style={styles.SectionStyle}>
-                            <TextInput
-                                style={styles.inputs}
-                                placeholder="شماره کارت خود را وارد کنید "
-                                underlineColorAndroid="transparent"
-                                onChangeText={card_num => this.setState({card_num_cost: card_num})}
-
-                            />
-                        </View>
-                        <View style={{marginTop: 20, flex: 1}}>
-                            <Text style={{fontSize: 12, marginRight: 2, fontFamily: 'IRANSansMobile(FaNum)'}}> شماره
-                                کارت:</Text>
-                        </View>
-                    </View>
-
-
-                    <Button buttonStyle={{
-                        marginTop: 20,
-                        marginLeft: 25,
-                        backgroundColor: '#47b03e',
-                        borderRadius: 30,
-                        width: '80%',
-                        height: 45,
-                        shadowColor: '#43c164',
-                        shadowOffset: {
-                            width: 0,
-                            height: 6,
-                        },
-                        shadowOpacity: 0.37,
-                        shadowRadius: 7.49,
-                        elevation: 5,
-                        marginBottom: 20
-                    }}
-                            onPress={this.UserRegistrAccont}
-                            titleStyle={{color: '#fff', fontFamily: 'IRANSansMobile(FaNum)', fontSize: 18}}
-
-                            title="ثبت"
-                    />
-                </Modal>
-                {/*............ ........پرداخت................................. */}
-
-                <Modal
-                    style={[styles.modal4]}
-                    position={'bottom'}
-                    ref={'modal3'}
-                    coverScreen={true}>
-                    <LinearGradient
-                        style={{
-                            borderTopLeftRadius: 15, borderTopRightRadius: 15, alignItems: 'center'
-                            , justifyContent: 'center',
-                        }}
-                        start={{x: 0.3, y: 0.0}} end={{x: 0.5, y: 1.0}}
+                        style={{ width: '100%' }}
+                        start={{ x: 0.3, y: 0.0 }} end={{ x: 0.5, y: 1.0 }}
                         locations={[0.1, 0.6, 0.9]}
                         colors={['#3e843d', '#3ede30', '#47b03e']}>
                         <View style={{
                             paddingVertical: 7,
                             alignItems: 'center'
-                            , justifyContent: 'center',
+                            , justifyContent: 'space-around',
+                            flexDirection: 'row'
                         }}>
+                            <Text></Text>
 
-                            <Text style={{fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref'}}>اضافه
-                                کردن روش پرداختی جدید </Text>
-
+                            <Text style={{ fontSize: 16, color: '#fff', marginBottom: 5, fontFamily: 'Vazir-Black' }}>اضافه کردن
+                                حساب جدید </Text>
+                            <Button transparent style={{ color: '#fff', marginRight: -20 }} onPress={() => this.setModalacount(false)}>
+                                <Icon name='close' style={{ fontSize: 30, color: '#fff', marginRight: 20 }} />
+                            </Button>
                         </View>
                     </LinearGradient>
-                    <View style={{flexDirection: 'row', marginTop: 20}}>
-                        <View style={styles.SectionStyle}>
-                            <TextInput
-                                style={styles.inputs}
-                                placeholder="نام روش پرداخت جدید را وارد نمایید"
-                                underlineColorAndroid="transparent"
-                                onChangeText={type_name => this.setState({type_name_cost: type_name})}
+                    <View style={styles.popupOverlay}>
+                        <View style={styles.popup}>
+                            <View style={styles.popupContent}>
+                                <View style={{marginTop:25}}>
+                                    <Text style={{ fontSize: 14, color: '#555', marginBottom: 5, fontFamily: 'Vazir-Black',alignSelf:'center' }}> نام حساب،شماره حساب و شماره کارت خود را وارد نمایید</Text>
+                                </View>
 
-                            />
+                                <View style={{flexDirection: 'row', marginTop: 10}}>
+                                    <View style={styles.SectionStylemo}>
+                                        <TextInput
+                                            style={styles.inputs}
+                                            placeholder="نام حساب جدید را وارد نمایید"
+                                            underlineColorAndroid="transparent"
+                                            onChangeText={acount_name => this.setState({acount_name_cost: acount_name})}
+
+                                        />
+                                    </View>
+
+                                </View>
+                                <View style={{flexDirection: 'row', marginTop: 3}}>
+                                    <View style={styles.SectionStylemo}>
+                                        <TextInput
+                                            style={styles.inputs}
+                                            placeholder=" شماره حساب خود را وارد کنید"
+                                            underlineColorAndroid="transparent"
+                                            onChangeText={acount_num => this.setState({acount_num_cost: acount_num})}
+
+                                        />
+                                    </View>
+
+                                </View>
+                                <View style={{flexDirection: 'row', marginTop: 3}}>
+
+                                    <View style={styles.SectionStylemo}>
+                                        <TextInput
+                                            style={styles.inputs}
+                                            placeholder="شماره کارت خود را وارد کنید "
+                                            underlineColorAndroid="transparent"
+                                            onChangeText={card_num => this.setState({card_num_cost: card_num})}
+
+                                        />
+                                    </View>
+
+                                </View>
+
+
+                            </View>
+
                         </View>
-                        <View style={{marginTop: 20, flex: 1}}>
-                            <Text style={{fontSize: 16,}}> روش پرداخت:</Text>
-                        </View>
+
                     </View>
-                    <Button buttonStyle={{
-                        marginTop: 60,
-                        marginLeft: 25,
-                        backgroundColor: '#47b03e',
-                        borderRadius: 30,
-                        width: '80%',
-                        height: 45,
-                        shadowColor: '#43c164',
-                        shadowOffset: {
-                            width: 0,
-                            height: 6,
-                        },
-                        shadowOpacity: 0.37,
-                        shadowRadius: 7.49,
-                        elevation: 5,
-                        marginBottom: 20
-                    }}
-                            onPress={this.UserRegistrType}
-                            titleStyle={{color: '#fff', fontFamily: 'IRANSansMobile(FaNum)', fontSize: 18}}
-                            title="ثبت"
-                    />
+                    <Button full style={{ backgroundColor: '#47b03e' ,marginHorizontal:20,borderRadius:10}} onPress={this.UserRegistrAccont}>
+                        <Text
+                            style={{ color: '#fff', fontSize: 18, fontFamily: 'IRANSansMobile(FaNum)' }}>ثبت</Text>
+                    </Button>
+
+                </Modal>
+                {/*............ ........پرداخت................................. */}
+
+                <Modal
+                    animationType={'fade'}
+                    transparent={true}
+                    onRequestClose={() => this.setModaltype(false)}
+                    visible={this.state.modaltype}>
+
+                    <LinearGradient
+                        style={{ width: '100%' }}
+                        start={{ x: 0.3, y: 0.0 }} end={{ x: 0.5, y: 1.0 }}
+                        locations={[0.1, 0.6, 0.9]}
+                        colors={['#3e843d', '#3ede30', '#47b03e']}>
+                        <View style={{
+                            paddingVertical: 7,
+                            alignItems: 'center'
+                            , justifyContent: 'space-around',
+                            flexDirection: 'row'
+                        }}>
+                            <Text></Text>
+
+                            <Text style={{ fontSize: 16, color: '#fff', marginBottom: 5, fontFamily: 'Vazir-Black' }}>اضافه کردن
+                                روش پرداخت جدید </Text>
+                            <Button transparent style={{ color: '#fff', marginRight: -20 }} onPress={() => this.setModaltype(false)}>
+                                <Icon name='close' style={{ fontSize: 30, color: '#fff', marginRight: 20 }} />
+                            </Button>
+                        </View>
+                    </LinearGradient>
+                    <View style={styles.popupOverlay}>
+                        <View style={styles.popup}>
+                            <View style={styles.popupContent}>
+                                <View style={{marginTop:25}}>
+                                    <Text style={{ fontSize: 14, color: '#555', marginBottom: 5, fontFamily: 'Vazir-Black',alignSelf:'center' }}> نوع روش پرداخت جدید را وارد نمایید</Text>
+                                </View>
+
+                                <View style={{flexDirection: 'row', marginTop: 10}}>
+                                    <View style={styles.SectionStylemo}>
+                                        <TextInput
+                                            style={styles.inputs}
+                                            placeholder="نوع روش پرداخت جدید را وارد نمایید"
+                                            underlineColorAndroid="transparent"
+                                            onChangeText={type_name => this.setState({type_name_cost: type_name})}
+
+                                        />
+                                    </View>
+
+                                </View>
+
+
+                            </View>
+
+                        </View>
+
+                    </View>
+                    <Button full style={{ backgroundColor: '#47b03e' ,marginHorizontal:20,borderRadius:10}} onPress={this.UserRegistrType}>
+                        <Text
+                            style={{ color: '#fff', fontSize: 18, fontFamily: 'IRANSansMobile(FaNum)' }}>ثبت</Text>
+                    </Button>
+
                 </Modal>
                 {/*....................پیغام با موفیقت ثبت شد................................. */}
                 <AwesomeAlert
@@ -1293,6 +1323,24 @@ const styles = StyleSheet.create({
         // shadowRadius: 3.84,
         // elevation: 12,
     },
+    SectionStylemo: {
+
+        borderRadius: 5, width: '85%', marginLeft: 28, borderWidth: 1.5,
+        borderColor: '#3d933c', height: 45, marginTop: 15, backgroundColor: '#fff',
+
+
+        // shadowOffset: {
+        //     width: 0,
+        //     height: 2,
+        //     marginVertical: 5,
+        //     marginRight: 16,
+        //     marginBottom: 12
+
+        // },
+        // shadowOpacity: 0.25,
+        // shadowRadius: 3.84,
+        // elevation: 12,
+    },
     imageIcon: {
         width: 30,
         height: 30,
@@ -1309,6 +1357,9 @@ const styles = StyleSheet.create({
         // borderWidth: 1,
         borderColor: '#DD2C00',
         borderRadius: 5,
+        fontFamily: 'Vazir-Black',
+        fontSize:12,
+        color:'#555'
     },
     popupButtons: {
         marginBottom: 10,
@@ -1374,5 +1425,35 @@ const styles = StyleSheet.create({
     },
     cardTitle: {
         color: '#00BFFF',
+    },
+    /************ modals ************/
+    popup: {
+        backgroundColor: 'white',
+
+    },
+    popupOverlay: {
+        backgroundColor: "#00000057",
+        flex: 1,
+
+    },
+    popupContent: {
+        //alignItems: 'center',
+        height: '100%',
+        width: '100%'
+    },
+
+    popupButtons: {
+        backgroundColor: '#47b03e',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        borderRadius: 80,
+        width: 65,
+        height: 65,
+        alignSelf: 'center',
+
+        alignItems: 'center',
+        marginBottom: 10
+
+
     },
 });

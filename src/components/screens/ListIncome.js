@@ -209,7 +209,7 @@ visible={this.state.modalVisible}>
   }}>
     <Text></Text>
 
-    <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>جزئیات بیشتر</Text>
+    <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5,fontFamily: 'Vazir-Black' }}>جزئیات بیشتر</Text>
     <Button transparent style={{ marginRight: -20 }}>
       <Icon name='close' style={{ fontSize: 25, color: '#fff', marginRight: 20 }} onPress={() => { this.setModalVisible(false) }} />
     </Button>

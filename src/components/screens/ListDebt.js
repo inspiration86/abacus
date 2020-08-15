@@ -10,7 +10,7 @@ class ListDebt extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        user_id: this.props.dataLogin['id'],
+      user_id: this.props.dataLogin['id'],
       userSelected: [],
       dataSource: [],
       isLoading: true,
@@ -196,7 +196,7 @@ class ListDebt extends Component {
             }}>
               <Text></Text>
 
-              <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>جزئیات بیشتر</Text>
+              <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5,fontFamily: 'Vazir-Black' }}>جزئیات بیشتر</Text>
               <Button transparent style={{alignItems:'flex-end',justifyContent:'flex-end'}}>
                 <Icon name='close' style={{ fontSize: 25, color: '#fff',}} onPress={() => { this.setModalVisible(false) }} />
               </Button>

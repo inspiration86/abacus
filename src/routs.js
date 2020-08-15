@@ -19,6 +19,9 @@ import ListCost from "./components/screens/ListCost";
 import ListDebt from "./components/screens/ListDebt";
 import ResetPassword from "./components/screens/ResetPassword";
 import Profile from "./components/screens/Profile";
+import AdvancedSearch from "./components/screens/AdvancedSearch";
+import ReportCategory from "./components/screens/ReportCategory";
+
 import {connect} from 'react-redux';
 const RootStack = createStackNavigator({
         Splash: {screen: Splash,navigationOptions: ({navigation}) => ({
@@ -26,6 +29,18 @@ const RootStack = createStackNavigator({
             })},
         Home: {
             screen: Home,
+            navigationOptions: ({navigation}) => ({
+                headerShown: false
+            })
+        },
+        ReportCategory: {
+            screen: ReportCategory,
+            navigationOptions: ({navigation}) => ({
+                headerShown: false
+            })
+        },
+        AdvancedSearch: {
+            screen: AdvancedSearch,
             navigationOptions: ({navigation}) => ({
                 headerShown: false
             })

@@ -105,7 +105,7 @@ import {
                             fontFamily: 'Far_Aref'}}>
                             چرتکه
                         </Text>
-                        <Text style={{ fontSize: width/22,fontFamily:'Lalezar-Regular',color: '#fff', marginBottom: 5 }}>
+                        <Text style={{ fontSize:16,fontFamily: 'Vazir-Black',color: '#fff', marginTop: 15 }}>
                             عضویت در اپ مالی حسابداری شخصی چرتکه
                         </Text>
                     </View>
@@ -192,8 +192,11 @@ const styles = StyleSheet.create({
         height:45,
         marginRight:25,
         borderBottomColor: '#FFFFFF',
-        fontFamily:'IRANSansMobile(FaNum)',
+        fontFamily: 'Vazir-Black',
         flex:1,
+        justifyContent:'center',
+        alignItems:'center',
+        alignSelf:'center'
     },
     inputIcon:{
         marginLeft: 20
@@ -236,7 +239,7 @@ const styles = StyleSheet.create({
     },
     loginText: {
         color: '#3e843d',
-        fontFamily:'IRANSansMobile_Bold',
+        fontFamily: 'Vazir-Black',
         fontSize:18,
 
 
@@ -251,7 +254,7 @@ const styles = StyleSheet.create({
     },
     btnText:{
         color:"white",
-        fontFamily:'IRANSansMobile_Bold',
+        fontFamily: 'Vazir-Black',
         fontSize:18,
 
     }

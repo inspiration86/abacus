@@ -464,15 +464,15 @@ class ReportPerformance extends React.Component {
                     colors={['#3e843d', '#3ede30', '#47b03e']}>
                     <View style={styles.headerContent}>
 
-                        <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>
-                            گزارشات خلاصه عملکرد
+                        <Text style={{ fontSize: 18, color: '#fff', marginBottom: 5, fontFamily: 'Vazir-Black' }}>
+                            گزارش خلاصه عملکرد
                         </Text>
                     </View>
                 </LinearGradient>
 
                 <Tabs tabBarUnderlineStyle={{ backgroundColor: '#3ede30', height: 3 }} initialPage={1}>
                     <Tab heading={<TabHeading style={{ backgroundColor: '#fff' }}>
-                        <Text style={{ color: 'green', fontWeight: 'bold', fontFamily: 'IRANSansMobile' }}>هزینه ها</Text>
+                        <Text style={{ color: 'green', fontFamily: 'Vazir-Black' }}>هزینه ها</Text>
                         <Image style={{
                             width: 30,
                             height:30,
@@ -538,7 +538,7 @@ class ReportPerformance extends React.Component {
                     </Tab>
                     <Tab
                         heading={<TabHeading style={{ backgroundColor: '#fff' }}>
-                            <Text style={{ color: 'green', fontWeight: 'bold', fontFamily: 'IRANSansMobile' }}>درآمدها</Text>
+                            <Text style={{ color: 'green', fontFamily: 'Vazir-Black' }}>درآمدها</Text>
                             <Image style={{
                                 width: 30,
                                 height:30,

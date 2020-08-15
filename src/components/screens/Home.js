@@ -25,15 +25,16 @@ class Home extends Component {
             data: [
                 {
                     id: 1,
-                    title: 'بودجه بندی',
-                    image: require('../../../assets/images/icons/money.png'),
+                    title: 'ثبت بدهی',
+                    image: require('../../../assets/images/icons/debt.png'),
+
 
                 }
                 ,
                 {
                     id: 2,
                     title: 'ثبت مخارج',
-                    image: require('../../../assets/images/icons/2506838.png'),
+                    image: require('../../../assets/images/icons/cost.jpg'),
                 }
                 ,
                 {
@@ -44,8 +45,8 @@ class Home extends Component {
                 ,
                 {
                     id: 4,
-                    title: 'ثبت بدهی',
-                    image: require('../../../assets/images/icons/debt.png'),
+                    title: 'بودجه بندی',
+                    image: require('../../../assets/images/icons/money.png'),
 
                 }
                 ,
@@ -133,13 +134,13 @@ class Home extends Component {
     cardNavigate=(item)=>{
         switch (item.id)
         {
-            case 1: this.props.screenProps.navigate('Budgeting');
+            case 1: this.props.screenProps.navigate('RegisterDebt');
                 break;
             case 2: this.props.screenProps.navigate('RegisterCost');
                 break;
             case 3: this.props.screenProps.navigate('RegisterIncome');
                 break;
-            case 4: this.props.screenProps.navigate('RegisterDebt');
+            case 4: this.props.screenProps.navigate('Budgeting');
                 break;
             case 5: this.props.screenProps.navigate('Reminder');
                 break;
@@ -159,7 +160,7 @@ class Home extends Component {
                 <LinearGradient start={{x: 0.40, y: 0.0}} end={{x: 0.5, y: 1.0}}
                                 locations={[0, 0.5, 0.6]}
                                 colors={['#3e843d', '#3ede30', '#47b03e']} style={{
-                    height: 200, alignItems: 'center', justifyContent: 'center',
+                    height: 220, alignItems: 'center', justifyContent: 'center',
                 }}>
                     <FontAwesomeIcon icon={faBars} size={25} style={{color: '#fff', marginLeft: '88%',marginTop:5}}
                                      onPress={() => this.props.screenProps.openDrawer()}/>
@@ -177,33 +178,33 @@ class Home extends Component {
                     }}>چرتکه</Text>
                     {/*</View>*/}
                 </LinearGradient>
-                <View style={styles.Detail}>
-                    <View style={styles.detailContent}>
-                        <Image style={styles.icon1} source={require('../../../assets/images/icons/bill2.png')}/>
-                        <Text style={styles.textHeader}>مبلغ بدهی</Text>
-                        <Text style={[styles.textHeader,{marginTop:-5}]}><Text style={{fontFamily:'IRANSansMobile(FaNum)'}}>500000</Text> تومان</Text>
+                {/*<View style={styles.Detail}>*/}
+                {/*    <View style={styles.detailContent}>*/}
+                {/*        <Image style={styles.icon1} source={require('../../../assets/images/icons/bill2.png')}/>*/}
+                {/*        <Text style={styles.textHeader}>مبلغ بدهی</Text>*/}
+                {/*        <Text style={[styles.textHeader,{marginTop:-5}]}><Text style={{fontFamily:'IRANSansMobile(FaNum)'}}>500000</Text> تومان</Text>*/}
 
-                    </View>
+                {/*    </View>*/}
 
-                    <View
-                        style={[styles.detailContent,{borderLeftWidth: 1,
-                            borderColor: '#e2e2e2'}]}>
-                        <Image style={styles.icon1} source={require('../../../assets/images/icons/2760970.png')}/>
-                        <Text style={styles.textHeader}>مخارج</Text>
-                        <Text style={[styles.textHeader,{marginTop:-5}]}><Text style={{fontFamily:'IRANSansMobile(FaNum)'}}>500000</Text> تومان</Text>
+                {/*    <View*/}
+                {/*        style={[styles.detailContent,{borderLeftWidth: 1,*/}
+                {/*            borderColor: '#e2e2e2'}]}>*/}
+                {/*        <Image style={styles.icon1} source={require('../../../assets/images/icons/2760970.png')}/>*/}
+                {/*        <Text style={styles.textHeader}>مخارج</Text>*/}
+                {/*        <Text style={[styles.textHeader,{marginTop:-5}]}><Text style={{fontFamily:'IRANSansMobile(FaNum)'}}>500000</Text> تومان</Text>*/}
 
-                    </View>
-                    <View  style={[styles.detailContent,{borderLeftWidth: 1,
-                        borderColor: '#e2e2e2'}]}>
-                        <Image style={styles.icon1} source={require('../../../assets/images/icons/wallet.png')}/>
-                        <Text style={styles.textHeader}>مانده</Text>
-                        <Text style={[styles.textHeader,{marginTop:-5}]}><Text style={{fontFamily:'IRANSansMobile(FaNum)'}}>500000</Text> تومان</Text>
-                    </View>
-                </View>
+                {/*    </View>*/}
+                {/*    <View  style={[styles.detailContent,{borderLeftWidth: 1,*/}
+                {/*        borderColor: '#e2e2e2'}]}>*/}
+                {/*        <Image style={styles.icon1} source={require('../../../assets/images/icons/wallet.png')}/>*/}
+                {/*        <Text style={styles.textHeader}>مانده</Text>*/}
+                {/*        <Text style={[styles.textHeader,{marginTop:-5}]}><Text style={{fontFamily:'IRANSansMobile(FaNum)'}}>500000</Text> تومان</Text>*/}
+                {/*    </View>*/}
+                {/*</View>*/}
                     <FlatGrid
                         itemDimension={100}
                         items={this.state.data}
-                      style={{marginTop:60}}
+                      style={{}}
                               contentContainerStyle={{justifyContent:'center', alignItems:'center'}}
                         renderItem={({ item, index }) => (
                             <TouchableOpacity activeOpacity={0.9}
@@ -345,10 +346,11 @@ const styles = StyleSheet.create({
    title: {
        // fontSize: RFValue(11, 580),
        fontSize:13,
-        textAlign: "center",
-        margin: 10,
-       color: '#555',
-       fontFamily: 'Lalezar-Regular',
+      //  textAlign: "center",
+       alignSelf:'center',
+        marginHorizontal: 15,
+       color: '#333',
+       fontFamily: 'Vazir-Black',
        flex:2
    },
 });

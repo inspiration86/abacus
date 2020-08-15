@@ -17,6 +17,12 @@ import {
 import {FlatGrid} from 'react-native-super-grid';
 import Header from '../layouts/Header';
 import {connect} from 'react-redux';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faPhoneSquare} from '@fortawesome/free-solid-svg-icons/faPhoneSquare';
+import {faMoneyBill} from '@fortawesome/free-solid-svg-icons/faMoneyBill';
+import {faCoins, faShoppingBasket, faSignInAlt} from '@fortawesome/free-solid-svg-icons';
+import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons/faSignOutAlt';
+import {faInbox} from '@fortawesome/free-solid-svg-icons/faInbox';
 class ReportCategory extends React.Component {
     constructor(props) {
         super(props);
@@ -426,8 +432,7 @@ class ReportCategory extends React.Component {
 
                         <Text style={{
                             color: 'green',
-                            fontWeight: 'bold',
-                            fontFamily: 'IRANSansMobile(FaNum)',
+                            fontFamily: 'Vazir-Black',
                             marginRight: 7,
                         }}>هزینه ها</Text>
                         <Image style={{width: 30, height: 30}}
@@ -435,14 +440,14 @@ class ReportCategory extends React.Component {
                     </TabHeading>}>
                         <FlatGrid
                             itemDimension={200}
-                            data={this.state.dataSource}
+                            items={this.state.dataSource}
                             style={{marginTop: 3, marginHorizontal: 10}}
                             contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
                             renderItem={({item, index}) => (
                                 <ListItem icon>
                                     <Left>
                                         <Button style={{backgroundColor: '#00C851'}}>
-                                            <Icon active name="cog"/>
+                                            <FontAwesomeIcon icon={faShoppingBasket} size={20} style={{color: '#fff'}}/>
                                         </Button>
                                     </Left>
                                     <Body>
@@ -452,8 +457,8 @@ class ReportCategory extends React.Component {
                                         }}>{item._id}</Text>
                                     </Body>
                                     <Right>
-                                        <Text style={{fontFamily: 'IRANSansMobile(FaNum)', color: '#00C851'}}>{item.sum}
-                                            تومان</Text>
+                                        <Text style={{fontFamily: 'IRANSansMobile(FaNum)', color: '#00C851'}}>{[item.sum,'  تومان']}
+                                            </Text>
                                     </Right>
                                 </ListItem>
                             )}/>
@@ -461,8 +466,8 @@ class ReportCategory extends React.Component {
 
                     <Tab heading={<TabHeading style={{backgroundColor: '#fff'}}>
                         <Text style={{
-                            color: '#3e843d',
-                            fontFamily: 'IRANSansMobile(FaNum)',
+                            color: 'green',
+                            fontFamily: 'Vazir-Black',
                             marginRight: 7,
                         }}> درآمدها</Text>
                         <Image style={{width: 30, height: 30}}
@@ -471,14 +476,14 @@ class ReportCategory extends React.Component {
                     </TabHeading>}>
                         <FlatGrid
                             itemDimension={200}
-                            data={this.state.dataSourcincome}
+                            items={this.state.dataSourcincome}
                             style={{marginTop: 3, marginHorizontal: 10}}
                             contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
                             renderItem={({item, index}) => (
                                 <ListItem icon>
                                     <Left>
                                         <Button style={{backgroundColor: '#00C851'}}>
-                                            <Icon active name="cog"/>
+                                            <FontAwesomeIcon icon={faCoins} size={20} style={{color: '#fff'}}/>
                                         </Button>
                                     </Left>
                                     <Body>
@@ -488,8 +493,7 @@ class ReportCategory extends React.Component {
                                         }}>{item._id}</Text>
                                     </Body>
                                     <Right>
-                                        <Text style={{fontFamily: 'IRANSansMobile(FaNum)', color: '#00C851'}}>{item.sum}
-                                            تومان</Text>
+                                        <Text style={{fontFamily: 'IRANSansMobile(FaNum)', color: '#47b03e'}}>{[item.sum,'  تومان']}</Text>
                                     </Right>
                                 </ListItem>
                             )}/>

@@ -9,32 +9,33 @@ import {
     Image,
     Text,
     ImageBackground,
-    StatusBar,AsyncStorage
+    StatusBar, AsyncStorage,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {connect} from 'react-redux';
+
 class Splash extends Component {
     constructor(props) {
         super(props);
         this.animatedValue1 = new Animated.Value(0);
         this.animatedValue2 = new Animated.Value(0);
         this.animatedValue3 = new Animated.Value(0);
-        this.state={
-        }
+        this.state = {};
     }
 
     componentDidMount() {
         this.animate();
         this.splash();
     }
+
     splash() {
         setTimeout(() => {
-    // AsyncStorage.getItem(this.state.user_id,(err,result)=>{
-    // if (result===null)
-        this.props.navigation.navigate('LoginOrRegister');
-    // else
-    //     this.props.navigation.navigate('DashboardUser');
-    //         });
+            // AsyncStorage.getItem(this.state.user_id,(err,result)=>{
+            // if (result===null)
+            this.props.navigation.navigate('LoginOrRegister');
+            // else
+            //     this.props.navigation.navigate('DashboardUser');
+            //         });
         }, 6000);
     }
 
@@ -48,7 +49,7 @@ class Splash extends Component {
                 duration,
                 easing,
                 delay,
-                useNativeDriver:false
+                useNativeDriver: false,
             });
         };
         Animated.sequence([
@@ -81,10 +82,13 @@ class Splash extends Component {
                 {/*start={{x: -0.1, y: 0.9}} end={{x: 0.6, y: 1.0}}*/}
                 {/*locations={[0,0.28,0.20]}*/}
                 <LinearGradient start={{x: -0.1, y: 0.9}} end={{x: 0.6, y: 1.0}}
-                                locations={[0,0.5,0.9]}
-                                colors={['#3e843d','#3ede30','#47b03e']} style={{flex:5,alignItems:'center',justifyContent:'center'}}>
-                    <Animated.View style={[{ flex: 1, justifyContent: 'center',marginTop:200,
-                        alignItems: 'center',},{transform: [{scale: scale}]}]}>
+                                locations={[0, 0.5, 0.9]}
+                                colors={['#3e843d', '#3ede30', '#47b03e']}
+                                style={{flex: 5, alignItems: 'center', justifyContent: 'center'}}>
+                    <Animated.View style={[{
+                        flex: 1, justifyContent: 'center', marginTop: 200,
+                        alignItems: 'center',
+                    }, {transform: [{scale: scale}]}]}>
                         <Image
                             source={require('../../../assets/images/icons/abacus.png')}
                             style={{width: 100, height: 100}}
@@ -96,14 +100,14 @@ class Splash extends Component {
                     <View style={{
                         flex: 1, justifyContent: 'center',
                         alignItems: 'center',
-                        marginTop:180,
+                        marginTop: 180,
                     }}>
 
-                        <Animated.View   style={[styles.inputContainer,{bottom: introtext,}]}>
-                            <Text style={{fontSize:20,fontFamily:'Lalezar-Regular',color:'green',}}>اپلیکیشن مالی حسابداری شخصی</Text>
+                        <Animated.View style={[styles.inputContainer, {bottom: introtext}]}>
+                            <Text style={{fontSize: 20, fontFamily: 'Lalezar-Regular', color: 'green'}}>اپلیکیشن مالی
+                                حسابداری شخصی</Text>
                         </Animated.View>
                     </View>
-
 
 
                     <View style={{
@@ -112,7 +116,8 @@ class Splash extends Component {
                     }}>
 
                         <Animated.View style={[{opacity}]}>
-                            <Text style={{fontSize: 16, color: '#fff', fontFamily: 'Lalezar-Regular'}}>طراحی و پیاده سازی
+                            <Text style={{fontSize: 16, color: '#fff', fontFamily: 'Lalezar-Regular'}}>طراحی و پیاده
+                                سازی
                                 شرکت دانش بنیان آرکا</Text>
                         </Animated.View>
                         <Animated.View style={{transform: [{scale: scale}]}}>
@@ -150,24 +155,24 @@ const styles = StyleSheet.create({
     },
     textversion: {
         fontSize: 14,
-        marginTop:5,
+        marginTop: 5,
         color: '#fff',
         // fontFamily: 'GreatVibes-Regular',
         fontFamily: 'IRANSansMobile(FaNum)',
     },
     inputContainer: {
         backgroundColor: '#FFFFFF',
-        borderRadius:100,
-        textAlign:'center',
+        borderRadius: 100,
+        textAlign: 'center',
 
-        width:300,
-        height:40,
+        width: 300,
+        height: 40,
 
         flexDirection: 'row',
-        alignItems:'center',
-        justifyContent:'center',
+        alignItems: 'center',
+        justifyContent: 'center',
 
-        shadowColor: "#808080",
+        shadowColor: '#808080',
         shadowOffset: {
             width: 0,
             height: 2,
@@ -175,6 +180,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
 
-        elevation:19,
+        elevation: 19,
     },
 });

@@ -19,12 +19,10 @@ import {connect} from 'react-redux';
 class reportMonth extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             resultIncome: [],
             sumOfIncome: 0,
             sumOfCost: 0,
-
             day: '',
             year: '',
             month: '',
@@ -55,18 +53,7 @@ class reportMonth extends React.Component {
                 textColor: processColor('darkgray'),
 
             },
-            Daydata: [
-                {
-                    id: 1,
-                    mounth: 'اردیبهشت',
-                    priceincom: 10000000,
-                    payment: 200000,
-                    date: '1/3/1399',
 
-                }
-                ,
-
-            ],
         };
 
     }
@@ -83,7 +70,6 @@ class reportMonth extends React.Component {
     }
 
     getDate() {
-
 
     }
 
@@ -237,7 +223,8 @@ class reportMonth extends React.Component {
         }
 
         let x = [];
-        fetch('http://194.5.175.25:2000/api/v1/reportmonthIncome/' + this.state.user_id, {
+        let user_id= '5edc76e96c47dc0d8040e744';
+        fetch('http://194.5.175.25:2000/api/v1/reportmonthIncome/' + user_id, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -446,6 +433,7 @@ class reportMonth extends React.Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                user_id:this.state.user_id,
                 year: year.toString(),
                 month: monthNumber.toString(),
             }),
@@ -507,20 +495,20 @@ class reportMonth extends React.Component {
                     colors={['#3e843d', '#3ede30', '#47b03e']}>
                     <View style={styles.headerContent}>
 
-                        <Text style={{fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref'}}>
+                        <Text style={{fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Vazir-Black'}}>
                             گزارشات ماهانه
                         </Text>
                     </View>
                 </LinearGradient>
                 <Tabs tabBarUnderlineStyle={{backgroundColor: '#3ede30', height: 3}} initialPage={1}>
                     <Tab heading={<TabHeading style={{backgroundColor: '#fff'}}>
-                        <Text style={{color: 'green', fontWeight: 'bold', fontFamily: 'IRANSansMobile'}}>هزینه
+                        <Text style={{color: 'green', fontFamily: 'Vazir-Black'}}>هزینه
                             ها</Text>
-                        <Image style={{
+                        {/* <Image style={{
                             width: 30,
                             height:30,
                             marginLeft:10
-                        }} source={require('../../../assets/images/icons/coin.png')} />
+                        }} source={require('../../../assets/images/icons/coin.png')} /> */}
 
                     </TabHeading>}>
                         <View style={{flex: 1, backgroundColor: '#DCDCDC'}}>
@@ -555,64 +543,55 @@ class reportMonth extends React.Component {
                                 />
                             </Card>
                             <View style={{flex: 1, marginTop: 10}}>
-                                <FlatList style={styles.notificationList} enableEmptySections={true}
-                                          data={this.state.Daydata}
-                                          keyExtractor={(item) => {
-                                              return item.id;
-                                          }}
-                                          renderItem={({item}) => {
-                                              return (
 
-                                                  <Card style={{
-                                                      marginTop: 10,
-                                                      paddingRight: 10,
-                                                      paddingLeft: 10,
-                                                      backgroundColor: '#fff',
-                                                      height: 65,
-                                                      marginHorizontal: 10,
-                                                  }} key={0}>
-                                                      <View style={{flex: 1, flexDirection: 'row'}}>
-                                                          <View style={{
-                                                              flex: 3,
-                                                              marginTop: 17,
-                                                              alignItems: 'flex-start',
-                                                              paddingLeft: 15,
-                                                          }}>
+                                <Card style={{
+                                    marginTop: 10,
+                                    paddingRight: 10,
+                                    paddingLeft: 10,
+                                    backgroundColor: '#fff',
+                                    height: 65,
+                                    marginHorizontal: 10,
+                                }} key={0}>
+                                    <View style={{flex: 1, flexDirection: 'row'}}>
+                                        <View style={{
+                                            flex: 3,
+                                            marginTop: 17,
+                                            alignItems: 'flex-start',
+                                            paddingLeft: 15,
+                                        }}>
 
-                                                              <Text style={{
-                                                                  fontSize: 14,
-                                                                  color: 'red',
-                                                                  fontFamily: 'IRANSansMobile(FaNum)',
-                                                              }}> هزینه: <Text style={{
-                                                                  fontSize: 16,
-                                                                  color: '#777777',
-                                                                  fontFamily: 'IRANSansMobile(FaNum)',
-                                                              }}> {this.state.sumOfCost}</Text></Text>
+                                            <Text style={{
+                                                fontSize: 14,
+                                                color: 'red',
+                                                fontFamily: 'IRANSansMobile(FaNum)',
+                                            }}> هزینه: <Text style={{
+                                                fontSize: 16,
+                                                color: '#777777',
+                                                fontFamily: 'IRANSansMobile(FaNum)',
+                                            }}> {this.state.sumOfCost}</Text></Text>
 
-                                                          </View>
-                                                          <View style={{flex: 3, marginTop: 12}}>
-                                                              <Text style={{
-                                                                  fontSize: 14,
-                                                                  color: '#777777',
-                                                                  fontFamily: 'IRANSansMobile(FaNum)',
-                                                              }}>{this.state.month}</Text>
-                                                              <Text style={{
-                                                                  fontSize: 13,
-                                                                  color: '#777777',
-                                                                  fontFamily: 'IRANSansMobile(FaNum)',
-                                                                  marginTop: 3,
-                                                                  textAlign: 'right',
-                                                              }}>{this.state.year}</Text>
+                                        </View>
+                                        <View style={{flex: 3, marginTop: 12}}>
+                                            <Text style={{
+                                                fontSize: 14,
+                                                color: '#777777',
+                                                fontFamily: 'IRANSansMobile(FaNum)',
+                                            }}>{this.state.month}</Text>
+                                            <Text style={{
+                                                fontSize: 13,
+                                                color: '#777777',
+                                                fontFamily: 'IRANSansMobile(FaNum)',
+                                                marginTop: 3,
+                                                textAlign: 'right',
+                                            }}>{this.state.year}</Text>
 
 
-                                                          </View>
-                                                      </View>
+                                        </View>
+                                    </View>
 
-                                                  </Card>
+                                </Card>
 
 
-                                              );
-                                          }}/>
                             </View>
                         </View>
 
@@ -621,14 +600,13 @@ class reportMonth extends React.Component {
                         heading={<TabHeading style={{backgroundColor: '#fff'}}>
                             <Text style={{
                                 color: 'green',
-                                fontWeight: 'bold',
-                                fontFamily: 'IRANSansMobile',
+                                fontFamily: 'Vazir-Black',
                             }}>درآمدها</Text>
-                            <Image style={{
+                            {/* <Image style={{
                                 width: 30,
                                 height:30,
                                 marginLeft:10
-                            }} source={require('../../../assets/images/icons/incom.png')} />
+                            }} source={require('../../../assets/images/icons/incom.png')} /> */}
                         </TabHeading>}>
                         <View style={{flex: 1, backgroundColor: '#DCDCDC'}}>
                             <Card style={styles.cardStyle}>
@@ -662,61 +640,53 @@ class reportMonth extends React.Component {
                                 />
                             </Card>
                             <View style={{flex: 1, marginTop: 10}}>
-                                <FlatList style={styles.notificationList} enableEmptySections={true}
-                                          data={this.state.Daydata}
-                                          keyExtractor={(item) => {
-                                              return item.id;
-                                          }}
-                                          renderItem={({item}) => {
-                                              return (
 
-                                                  <Card style={{
-                                                      marginTop: 10,
-                                                      paddingRight: 10,
-                                                      paddingLeft: 10,
-                                                      backgroundColor: '#fff',
-                                                      height: 65,
-                                                      marginHorizontal: 10,
-                                                  }} key={0}>
-                                                      <View style={{flex: 1, flexDirection: 'row'}}>
-                                                          <View style={{
-                                                              flex: 3,
-                                                              marginTop: 17,
-                                                              alignItems: 'flex-start',
-                                                              paddingLeft: 15,
-                                                          }}>
+                                <Card style={{
+                                    marginTop: 10,
+                                    paddingRight: 10,
+                                    paddingLeft: 10,
+                                    backgroundColor: '#fff',
+                                    height: 65,
+                                    marginHorizontal: 10,
+                                }} key={0}>
+                                    <View style={{flex: 1, flexDirection: 'row'}}>
+                                        <View style={{
+                                            flex: 3,
+                                            marginTop: 17,
+                                            alignItems: 'flex-start',
+                                            paddingLeft: 15,
+                                        }}>
 
-                                                              <Text style={{
-                                                                  fontSize: 14,
-                                                                  color: 'green',
-                                                                  fontFamily: 'IRANSansMobile(FaNum)',
-                                                              }}> درآمدها: <Text style={{
-                                                                  fontSize: 16,
-                                                                  color: '#777777',
-                                                                  fontFamily: 'IRANSansMobile(FaNum)',
-                                                              }}> {this.state.sumOfIncome}</Text></Text>
+                                            <Text style={{
+                                                fontSize: 14,
+                                                color: 'green',
+                                                fontFamily: 'IRANSansMobile(FaNum)',
+                                            }}> درآمدها: <Text style={{
+                                                fontSize: 16,
+                                                color: '#777777',
+                                                fontFamily: 'IRANSansMobile(FaNum)',
+                                            }}> {this.state.sumOfIncome}</Text></Text>
 
-                                                          </View>
-                                                          <View style={{flex: 3, marginTop: 12}}>
-                                                              <Text style={{
-                                                                  fontSize: 14,
-                                                                  color: '#777777',
-                                                                  fontFamily: 'IRANSansMobile(FaNum)',
-                                                              }}>{this.state.month}</Text>
-                                                              <Text style={{
-                                                                  fontSize: 13,
-                                                                  color: '#777777',
-                                                                  fontFamily: 'IRANSansMobile(FaNum)',
-                                                                  marginTop: 3,
-                                                                  textAlign: 'right',
-                                                              }}>{this.state.year}</Text>
-                                                          </View>
-                                                      </View>
+                                        </View>
+                                        <View style={{flex: 3, marginTop: 12}}>
+                                            <Text style={{
+                                                fontSize: 14,
+                                                color: '#777777',
+                                                fontFamily: 'IRANSansMobile(FaNum)',
+                                            }}>{this.state.month}</Text>
+                                            <Text style={{
+                                                fontSize: 13,
+                                                color: '#777777',
+                                                fontFamily: 'IRANSansMobile(FaNum)',
+                                                marginTop: 3,
+                                                textAlign: 'right',
+                                            }}>{this.state.year}</Text>
+                                        </View>
+                                    </View>
 
-                                                  </Card>
+                                </Card>
 
-                                              );
-                                          }}/>
+
                             </View>
                         </View>
                     </Tab>
@@ -736,42 +706,42 @@ const    mapStateToProps = state => {
 export default connect(mapStateToProps)(reportMonth);
 const styles = StyleSheet.create({
 
-        chart: {
-            flex: 1,
-            marginTop: 5,
-            borderRadius: 10,
+    chart: {
+        flex: 1,
+        marginTop: 5,
+        borderRadius: 10,
 
-        },
-        header: {
-            backgroundColor: '#3d933c',
-        },
-        headerContent: {
-            padding: 45,
-            alignItems: 'center',
-        },
-        cardStyle: {
+    },
+    header: {
+        backgroundColor: '#3d933c',
+    },
+    headerContent: {
+        padding: 45,
+        alignItems: 'center',
+    },
+    cardStyle: {
 
-            marginTop: 10,
-            paddingRight: 10,
-            paddingLeft: 10,
-            backgroundColor: '#fff',
-            marginHorizontal: 10,
-            height: 200,
-
-
-            // shadowOffset: {
-            //     width: 0,
-            //     height: 2,
-            //     marginVertical: 5,
-            //     marginRight: 16,
-            //     marginBottom: 12
-
-            // },
-            // shadowOpacity: 0.25,
-            // shadowRadius: 3.84,
-            // elevation: 12,
-        },
+        marginTop: 10,
+        paddingRight: 10,
+        paddingLeft: 10,
+        backgroundColor: '#fff',
+        marginHorizontal: 10,
+        height: 200,
 
 
-    });
+        // shadowOffset: {
+        //     width: 0,
+        //     height: 2,
+        //     marginVertical: 5,
+        //     marginRight: 16,
+        //     marginBottom: 12
+
+        // },
+        // shadowOpacity: 0.25,
+        // shadowRadius: 3.84,
+        // elevation: 12,
+    },
+
+
+});
 

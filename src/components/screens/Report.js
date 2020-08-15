@@ -20,7 +20,6 @@ export default class Home extends Component {
                     id: 1,
                     title: 'گزارش روزانه',
                     image: require('../../../assets/images/icons/2416340.png'),
-
                 }
                 ,
                 {
@@ -127,8 +126,8 @@ export default class Home extends Component {
                     <Text style={{
                         textAlign: 'center',
                         color: '#fff',
-                        fontSize: 30,
-                        fontFamily: 'Far_Aref',
+                        fontSize: 25,
+                        fontFamily: 'Vazir-Black',
                         marginTop: -10,
                         marginBottom: 8,
                     }}>گزارش گیری</Text>
@@ -286,12 +285,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     title: {
-        fontSize:13,
+        fontSize:12.5,
         textAlign: "center",
         margin: 10,
-        color: '#666',
-        fontFamily: 'Lalezar-Regular',
-        marginHorizontal: -5,
+        color: '#444',
+        fontFamily: 'Vazir-Black',
+        marginHorizontal: -3,
 
         flex:2
     },

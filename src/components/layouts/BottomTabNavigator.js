@@ -12,7 +12,16 @@ import ReportMonth from "../screens/ReportMonth";
 import ReportCategory from "../screens/ReportCategory";
 import {createStackNavigator} from 'react-navigation-stack';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faBell, faCalculator, faChartPie, faHome} from '@fortawesome/free-solid-svg-icons';
+import {
+    faAddressCard,
+    faBell,
+    faCalculator,
+    faCashRegister,
+    faChartPie, faExternalLinkSquareAlt,
+    faHome,
+    faSearchDollar,
+} from '@fortawesome/free-solid-svg-icons';
+import {faFileExport} from '@fortawesome/free-solid-svg-icons/faFileExport';
 const RootStack = createStackNavigator({
         Report: {
             screen: Report,
@@ -77,7 +86,7 @@ const AppMaterialTopTabNavigator = createMaterialBottomTabNavigator(
                 tabBarLabel: 'جستجوی پیشرفته',
                 tabBarIcon: ({ tintColor }) => (
                     <View>
-                        <FontAwesomeIcon icon={faBell} size={20} style={{color: tintColor}}/>
+                        <FontAwesomeIcon icon={faSearchDollar} size={25} style={{color: tintColor}}/>
 
                     </View>),
             }
@@ -88,7 +97,7 @@ const AppMaterialTopTabNavigator = createMaterialBottomTabNavigator(
                 tabBarIcon: ({ tintColor }) => (
                     <View>
                         {/*<Icon style={[{color: tintColor}]} size={25} name={'alert'}/>*/}
-                        <FontAwesomeIcon icon={faBell} size={20} style={{color: tintColor}}/>
+                        <FontAwesomeIcon icon={faFileExport} size={25} style={{color: tintColor}}/>
                     </View>),
             }
         },

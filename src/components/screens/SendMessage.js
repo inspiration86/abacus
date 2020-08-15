@@ -57,7 +57,7 @@ class SendMessage extends Component {
         } else
             Alert.alert(
                 '',
-                'کاربر محترم کد وارد شده اشتباه می باشد. مجدد تلاش کنید');
+                'کاربر محترم کد وارد شده اشتباه می باشد. مجدد تلاش کنید',[ {text: 'تایید'}]);
     }
     componentDidMount() {
         this.onSendSMS();

@@ -7,10 +7,10 @@ import {FlatGrid} from 'react-native-super-grid';
 import LinearGradient from 'react-native-linear-gradient';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Header from '../layouts/Header';
+ import Header from '../layouts/Header';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import {Divider} from 'react-native-paper';
-import {connect} from 'react-redux';
+ import {connect} from 'react-redux';
 import Select2 from 'react-native-select-two';
 class BudgetingScreen extends React.Component {
     constructor(props) {
@@ -18,7 +18,7 @@ class BudgetingScreen extends React.Component {
         this.state = {
             modalVisible: false,
             modalVisibleicon:false,
-            user_id: this.props.dataLogin['id'],
+           user_id: this.props.dataLogin['id'],
             userSelected: [],
             dataSource: [],
             isLoading: true,
@@ -52,19 +52,19 @@ class BudgetingScreen extends React.Component {
     componentDidMount(): void {
         this.ShowBudgetRecord();
     }
-   componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
-       this.ShowBudgetRecord();
-   }
+    componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
+        this.ShowBudgetRecord();
+    }
     clearInputText(){
         setTimeout(() => {
-           // this._categorybudget.setNativeProps({ text: '' });
+            // this._categorybudget.setNativeProps({ text: '' });
             // this._textInputAmount.setNativeProps({ text: '' });
-             this.setState({sub_category_cost:''});
+            this.setState({sub_category_cost:''});
             // this.setState({amount_Cost:''});
         },2);
     }
     clickEventListener = () => {
-            this.setModalVisible(true);
+        this.setModalVisible(true);
     }
     setModalVisible(visible) {
         this.setState({modalVisible: visible});
@@ -114,10 +114,14 @@ class BudgetingScreen extends React.Component {
     };
     // .............. Registerbudget..............
     UserRegistrbudeget = () => {
+//         console.log("amount_cost=" +this.state.amount_cost);
+// console.log("category_name=" +this.state.category_name);
+// console.log("icon_cost="+ this.state.icon_cost);
+
         if(this.state.amount_cost=="" ||this.state.category_name==""|| this.state.icon_cost==""){
             Alert.alert('','لطفا اطلاعات را کامل وارد نمایید',
                 [
-                {text: 'تایید'}]
+                    {text: 'تایید'}]
             );
         }
         else {
@@ -128,7 +132,7 @@ class BudgetingScreen extends React.Component {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    user_id: this.state.user_id,
+                    user_id:this.state.user_id,
                     amount: this.state.amount_cost,
                     category: this.state.category_name,
                     //sub_category: this.state.sub_category_cost,
@@ -137,13 +141,13 @@ class BudgetingScreen extends React.Component {
             }).then((response) => response.json())
                 .then((responseJson) => {
                     Alert.alert(
-                        'تایید ثبت بودجه',
+                        '',
                         'بودجه با موفقیت ثبت شد',
                         [
                             {text: 'تایید'}]);
                     // Alert.alert(responseJson.data);
                     this.setModalVisible(false);
-                 this.clearInputText();
+                    this.clearInputText();
                 }).catch((error) => {
                 console.error(error);
             });
@@ -180,9 +184,10 @@ class BudgetingScreen extends React.Component {
     //
     // }
 
-    // ................getCategoryCost.........
+    //................getCategoryCost.........
     getCategoryCost() {
-        let url = 'http://194.5.175.25:2000/api/v1/categorycost/' + this.state.user_id;
+
+        let url = 'http://194.5.175.25:2000/api/v1/categorycost/' +this.state.user_id;
         fetch(url, {
             method: 'GET',
         }).then((response) => response.json()).then((responseJson) => {
@@ -218,15 +223,15 @@ class BudgetingScreen extends React.Component {
         });
     }
 
-    onSelectedItemsChange = (selectedItems) => {
-        this.setState({selectedItems});
-    };
+    // onSelectedItemsChange = (selectedItems) => {
+    //     this.setState({selectedItems});
+    // };
 
-    onSelectedItemObjectsChange = (selectedItems) => {
-       // this.setState({sub_category_cost: selectedItems[0]['name']});
-        this.setState({category_cost: selectedItems[0]['name']});
-        console.log(selectedItems);
-    };
+    // onSelectedItemObjectsChange = (selectedItems) => {
+    //    // this.setState({sub_category_cost: selectedItems[0]['name']});
+    //     this.setState({category_cost: selectedItems[0]['name']});
+    //     console.log(selectedItems);
+    // };
 
     render() {
         return (
@@ -234,7 +239,7 @@ class BudgetingScreen extends React.Component {
                 <StatusBar
                     hidden={false}
                     backgroundColor='#3e843d'/>
-                <Header title={'بودجه بندی'} onBackPress={() => {
+                 <Header title={'بودجه بندی'} onBackPress={() => {
                     this.props.navigation.goBack();
                 }}/>
                 <View style={{flex: 1}}>
@@ -292,10 +297,10 @@ class BudgetingScreen extends React.Component {
 
                 <Modal
                     animationType={'center'}
-                   transparent={true}
+                    transparent={true}
                     position={'center'}
                     coverScreen={true}
-                  //onRequestClose={() => this.setModalVisible(false)}
+                    //onRequestClose={() => this.setModalVisible(false)}
                     visible={this.state.modalVisible}>
                     <LinearGradient
                         style={{ width: '100%' }}
@@ -309,7 +314,7 @@ class BudgetingScreen extends React.Component {
                             flexDirection: 'row'
                         }}>
                             <Text></Text>
-                            <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>تعریف بودجه جدید</Text>
+                            <Text style={{ fontSize: 18, color: '#fff', marginBottom: 5,  fontFamily: 'Vazir-Black' }}>تعریف بودجه جدید</Text>
                             <Button transparent style={{  color: '#fff', marginRight: -20 }} >
                                 <Icon name='close' style={{ fontSize: 25, color: '#fff', marginRight: 20 }} onPress={() => { this.setModalVisible(false) }} />
                             </Button>
@@ -319,157 +324,157 @@ class BudgetingScreen extends React.Component {
                         <View style={styles.popup}>
                             <View style={styles.popupContent}>
                                 <ScrollView contentContainerStyle={styles.modalInfo}>
-                                        <View style={styles.container}>
-                                            <CardItem cardBody style={{marginTop: 10}}>
-                                                <Image source={require('../../../assets/images/icons/818203.png')}
-                                                       style={{height: 200, flex: 1}}/>
+                                    <View style={styles.container}>
+                                        <CardItem cardBody style={{marginTop: 10}}>
+                                            {/* <Image source={require('../../../assets/images/icons/818203.png')}
+                                                       style={{height: 200, flex: 1}}/> */}
 
-                                            </CardItem>
-                                            <View style={{
-                                                borderStyle: 'solid',
-                                                borderWidth: 1.5,
-                                                borderColor: '#00C851',
-                                                borderRadius: 10,
-                                                marginHorizontal: 10,
-                                                marginTop: 20,
-                                            }}>
-                                                <Card>
-                                                    {/*<SectionedMultiSelect*/}
-                                                    {/*    itemFontFamily={{fontWeight: 'bold'}}*/}
-                                                    {/*    subItemFontFamily={{fontWeight: 'bold', color: '#555'}}*/}
-                                                    {/*    items={this.state.categoryCost}*/}
-                                                    {/*    confirmText={{*/}
-                                                    {/*        fontSize: 50,*/}
-                                                    {/*        fontFamily: 'IRANSansMobile(FaNum)',*/}
-                                                    {/*        backgroundColor: 'green',*/}
-                                                    {/*    }}*/}
-                                                    {/*    colors={{primary: '#47b03e'}}*/}
-                                                    {/*    single={true}*/}
-                                                    {/*    showChips={true}*/}
-                                                    {/*    uniqueKey='id'*/}
-                                                    {/*    subKey='children'*/}
-                                                    {/*    selectText='دسته مورد نظر خود را انتخاب نمائيد'*/}
-                                                    {/*    showDropDowns={true}*/}
-                                                    {/*    readOnlyHeadings={true}*/}
-                                                    {/*    confirmText="بستن"*/}
-                                                    {/*    text="#2e2e2e"*/}
-                                                    {/*    numberOfLines="3"*/}
-                                                    {/*    success="green"*/}
-                                                    {/*    searchPlaceholderText="جستجو"*/}
-                                                    {/*    onSelectedItemsChange={this.onSelectedItemsChange}*/}
-                                                    {/*    selectedItems={this.state.selectedItems}*/}
-                                                    {/*    onSelectedItemObjectsChange={this.onSelectedItemObjectsChange}*/}
-                                                    {/*/>*/}
+                                        </CardItem>
+                                        <View style={{
+                                            borderStyle: 'solid',
+                                            borderWidth: 1.5,
+                                            borderColor: '#00C851',
+                                            borderRadius: 10,
+                                            marginHorizontal: 10,
+                                            marginTop: 20,
+                                        }}>
+                                            <Card>
+                                                {/*<SectionedMultiSelect*/}
+                                                {/*    itemFontFamily={{fontWeight: 'bold'}}*/}
+                                                {/*    subItemFontFamily={{fontWeight: 'bold', color: '#555'}}*/}
+                                                {/*    items={this.state.categoryCost}*/}
+                                                {/*    confirmText={{*/}
+                                                {/*        fontSize: 50,*/}
+                                                {/*        fontFamily: 'IRANSansMobile(FaNum)',*/}
+                                                {/*        backgroundColor: 'green',*/}
+                                                {/*    }}*/}
+                                                {/*    colors={{primary: '#47b03e'}}*/}
+                                                {/*    single={true}*/}
+                                                {/*    showChips={true}*/}
+                                                {/*    uniqueKey='id'*/}
+                                                {/*    subKey='children'*/}
+                                                {/*    selectText='دسته مورد نظر خود را انتخاب نمائيد'*/}
+                                                {/*    showDropDowns={true}*/}
+                                                {/*    readOnlyHeadings={true}*/}
+                                                {/*    confirmText="بستن"*/}
+                                                {/*    text="#2e2e2e"*/}
+                                                {/*    numberOfLines="3"*/}
+                                                {/*    success="green"*/}
+                                                {/*    searchPlaceholderText="جستجو"*/}
+                                                {/*    onSelectedItemsChange={this.onSelectedItemsChange}*/}
+                                                {/*    selectedItems={this.state.selectedItems}*/}
+                                                {/*    onSelectedItemObjectsChange={this.onSelectedItemObjectsChange}*/}
+                                                {/*/>*/}
 
 
-                                                    <View >
-                                                        <Select2
-                                                            style={{
-                                                                justifyContent: 'center',
-                                                                borderRadius: 5,
-                                                                height: 48,
-                                                                width: '100%',
-                                                                marginRight: 8,
+                                                <View >
+                                                    <Select2
+                                                        style={{
+                                                            justifyContent: 'center',
+                                                            borderRadius: 5,
+                                                            height: 48,
+                                                            width: '100%',
+                                                            marginRight: 8,
 
-                                                            }}
-                                                            isSelectSingle={true}
-                                                            colorTheme='#3d933c'
-                                                            popupTitle="دسته مورد نظر را انتخاب کنید"
-                                                            cancelButtonText="انصراف"
-                                                            selectButtonText="تایید"
-                                                            title="دسته مورد نظر را انتخاب کنید"
-                                                            searchPlaceHolderText="جستجو حساب"
-                                                            data={this.state.categoryCost}
-                                                            onSelect={categoryCost => {
-                                                                for (var i = 0; i < this.state.categoryCost.length; i++) {
+                                                        }}
+                                                        isSelectSingle={true}
+                                                        colorTheme='#3d933c'
+                                                        popupTitle="دسته مورد نظر را انتخاب کنید"
+                                                        cancelButtonText="انصراف"
+                                                        selectButtonText="تایید"
+                                                        title="دسته مورد نظر را انتخاب کنید"
+                                                        searchPlaceHolderText="جستجو حساب"
+                                                        data={this.state.categoryCost}
+                                                        onSelect={categoryCost => {
+                                                            for (var i = 0; i < this.state.categoryCost.length; i++) {
 
-                                                                    if (this.state.categoryCost[i]['id'] == categoryCost) {
-                                                                        //   Alert.alert(this.state.acount[i]['name'])
-                                                                        this.setState({ category_name: this.state.categoryCost[i]['name'] });
+                                                                if (this.state.categoryCost[i]['id'] == categoryCost) {
+                                                                    //   Alert.alert(this.state.acount[i]['name'])
+                                                                    this.setState({ category_name: this.state.categoryCost[i]['name'] });
 
-                                                                    }
                                                                 }
-                                                            }}
-                                                        />
-                                                    </View>
+                                                            }
+                                                        }}
+                                                    />
+                                                </View>
 
 
 
-                                                    <Divider/>
-                                                    <CardItem>
-                                                        <Body>
-                                                            <Item fixedLabel>
-                                                                <Left>
+                                                <Divider/>
+                                                <CardItem>
+                                                    <Body>
+                                                        <Item fixedLabel>
+                                                            <Left>
 
-                                                                    <View style={{flex: 1, marginTop: 10, marginLeft: 10}}>
-                                                                        <Text style={{
-                                                                            color: '#777',
-                                                                            fontFamily: 'IRANSansMobile(FaNum)',
-                                                                        }}>تومان</Text>
-                                                                    </View>
-                                                                </Left>
-                                                                <Input style={{color: '#777', fontFamily: 'IRANSansMobile(FaNum)'}}
-                                                                       onChangeText={amount => this.setState({amount_cost: amount})}
-
-                                                                />
-                                                                <Label><Text style={{
-                                                                    color: '#777',
-                                                                    fontFamily: 'IRANSansMobile(FaNum)',
-                                                                    paddingRight: 20,
-                                                                }}>هزینه :</Text></Label>
-
-                                                            </Item>
-                                                        </Body>
-                                                    </CardItem>
-                                                    <CardItem>
-                                                        <Body>
-                                                            <Item fixedLabel style={{height: 50}}
-                                                                  onPress={() => this.clickEventListenericon()}>
-                                                                <View style={{
-                                                                    flex: 1,
-                                                                    marginTop: 10,
-                                                                    flexDirection: 'row',
-                                                                    alignItems: 'flex-end',
-                                                                    justifyContent: 'flex-end',
-                                                                }}>
+                                                                <View style={{flex: 1, marginTop: 10, marginLeft: 10}}>
                                                                     <Text style={{
                                                                         color: '#777',
                                                                         fontFamily: 'IRANSansMobile(FaNum)',
-                                                                    }}></Text>
-                                                                    <Label><Text style={{
-                                                                        color: '#555',
-                                                                        fontFamily: 'IRANSansMobile(FaNum)',
-                                                                        fontSize: 14,
-                                                                        textAlign: 'right',
-                                                                    }}>ایکن را انتخاب کنید :{this.state.icon_cost}</Text></Label>
+                                                                    }}>تومان</Text>
                                                                 </View>
-                                                            </Item>
-                                                        </Body>
-                                                    </CardItem>
-                                                    <CardItem footer style={{justifyContent: 'flex-end'}}>
-                                                        <Text style={{fontFamily: 'IRANSansMobile(FaNum)'}}>بودجه بندی به صورت ماهانه می
-                                                            باشد</Text>
-                                                    </CardItem>
-                                                    <Button iconRight full style={{backgroundColor: '#47b03e'}}
-                                                            onPress={this.UserRegistrbudeget}>
-                                                        <Text style={{
-                                                            color: '#fff',
-                                                            fontSize: 19,
-                                                            fontFamily: 'IRANSansMobile(FaNum)',
-                                                        }}> ثبت
-                                                            بودجه</Text>
-                                                        <Icon name='plus-circle' style={{
-                                                            marginLeft: 30,
-                                                            fontSize: 27,
-                                                            color: '#fff',
-                                                            backgroundColor: '#47b03e',
-                                                        }}/>
-                                                    </Button>
-                                                </Card>
+                                                            </Left>
+                                                            <Input style={{color: '#777', fontFamily: 'IRANSansMobile(FaNum)'}}
+                                                                   onChangeText={amount => this.setState({amount_cost: amount})}
 
-                                            </View>
+                                                            />
+                                                            <Label><Text style={{
+                                                                color: '#777',
+                                                                fontFamily: 'IRANSansMobile(FaNum)',
+                                                                paddingRight: 20,
+                                                            }}>هزینه :</Text></Label>
+
+                                                        </Item>
+                                                    </Body>
+                                                </CardItem>
+                                                <CardItem>
+                                                    <Body>
+                                                        <Item fixedLabel style={{height: 50}}
+                                                              onPress={() => this.clickEventListenericon()}>
+                                                            <View style={{
+                                                                flex: 1,
+                                                                marginTop: 10,
+                                                                flexDirection: 'row',
+                                                                alignItems: 'flex-end',
+                                                                justifyContent: 'flex-end',
+                                                            }}>
+                                                                <Text style={{
+                                                                    color: '#777',
+                                                                    fontFamily: 'IRANSansMobile(FaNum)',
+                                                                }}></Text>
+                                                                <Label><Text style={{
+                                                                    color: '#555',
+                                                                    fontFamily: 'IRANSansMobile(FaNum)',
+                                                                    fontSize: 14,
+                                                                    textAlign: 'right',
+                                                                }}>ایکن را انتخاب کنید :{this.state.icon_cost}</Text></Label>
+                                                            </View>
+                                                        </Item>
+                                                    </Body>
+                                                </CardItem>
+                                                <CardItem footer style={{justifyContent: 'flex-end'}}>
+                                                    <Text style={{fontFamily: 'IRANSansMobile(FaNum)'}}>بودجه بندی به صورت ماهانه می
+                                                        باشد</Text>
+                                                </CardItem>
+                                                <Button iconRight full style={{backgroundColor: '#47b03e'}}
+                                                        onPress={this.UserRegistrbudeget}>
+                                                    <Text style={{
+                                                        color: '#fff',
+                                                        fontSize: 19,
+                                                        fontFamily: 'IRANSansMobile(FaNum)',
+                                                    }}> ثبت
+                                                        بودجه</Text>
+                                                    <Icon name='plus-circle' style={{
+                                                        marginLeft: 30,
+                                                        fontSize: 27,
+                                                        color: '#fff',
+                                                        backgroundColor: '#47b03e',
+                                                    }}/>
+                                                </Button>
+                                            </Card>
+
                                         </View>
-                                    </ScrollView>
+                                    </View>
+                                </ScrollView>
                             </View>
                         </View>
                     </View>
@@ -493,7 +498,7 @@ class BudgetingScreen extends React.Component {
                                 flexDirection: 'row'
                             }}>
                                 <Text></Text>
-                                <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>انتخاب آیکن</Text>
+                                <Text style={{ fontSize: 18, color: '#fff', marginBottom: 5, fontFamily: 'Vazir-Black' }}>انتخاب آیکن</Text>
                                 <Button transparent style={{  color: '#fff', marginRight: -20 }} >
                                     <Icon name='close' style={{ fontSize: 25, color: '#fff', marginRight: 20 }} onPress={() => { this.setModalVisibleicon(false) }} />
                                 </Button>
@@ -503,19 +508,19 @@ class BudgetingScreen extends React.Component {
                             <View style={styles.popup}>
                                 <View style={styles.popupContent}>
                                     <ScrollView contentContainerStyle={styles.modalInfo}>
-                            <FlatGrid
-                                itemDimension={70}
-                                items={this.state.data}
-                                style={styles.gridView}
-                                renderItem={({item, index}) => (
-                                    <View style={styles.view}>
-                                        <TouchableOpacity
-                                            onPress={() => this.setState({icon_cost: item.icon}, this.setModalVisibleicon(false))}>
-                                            <FontAwesomeIcon style={{fontSize: 20}} name={item.icon}/>
-                                        </TouchableOpacity>
-                                    </View>
-                                )}/>
-                        </ScrollView>
+                                        <FlatGrid
+                                            itemDimension={70}
+                                            items={this.state.data}
+                                            style={styles.gridView}
+                                            renderItem={({item, index}) => (
+                                                <View style={styles.view}>
+                                                    <TouchableOpacity
+                                                        onPress={() => this.setState({icon_cost: item.icon}, this.setModalVisibleicon(false))}>
+                                                        <FontAwesomeIcon style={{fontSize: 20}} name={item.icon}/>
+                                                    </TouchableOpacity>
+                                                </View>
+                                            )}/>
+                                    </ScrollView>
                                 </View>
                             </View>
                         </View>

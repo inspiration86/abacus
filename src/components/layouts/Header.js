@@ -17,8 +17,8 @@ export default class Header extends React.Component {
                     <Appbar.Content
                         titleStyle={{
                             color: '#fff',
-                            fontFamily: 'Iranian Sans',
-                            fontSize: 20,
+                            fontFamily: 'Vazir-Black',
+                            fontSize: 18,
                             textAlign:'center',
                         }}
                         title={this.props.title}/>

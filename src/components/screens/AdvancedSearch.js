@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import {
     StyleSheet,
@@ -7,13 +8,15 @@ import {
     Text,
     Image,
     ScrollView, Alert,
+    Modal
 } from 'react-native';
-import Modal from 'react-native-modalbox';
+//import Modal from 'react-native-modalbox';
 import Select2 from 'react-native-select-two';
 import { FlatGrid } from 'react-native-super-grid';
 import DatePicker, { getFormatedDate } from 'react-native-modern-datepicker';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import LinearGradient from 'react-native-linear-gradient';
+
 
 import {
     CardItem,
@@ -40,8 +43,15 @@ class AdvancedSearch extends Component {
         super(props);
         this.state = {
             dataSource: [],
-            dataSourceincome:[],
+            dataSourceincome: [],
             isLoading: true,
+            // .........modal
+            modalDateIncomS: false,
+            modalDateIncomE: false,
+            modalDateCost: false,
+            modalDateCostE: false,
+            modalCost: false,
+            modalIncom: false,
             user_id: this.props.dataLogin['id'],
             selectedItems: [],
             //..............income...............
@@ -52,34 +62,82 @@ class AdvancedSearch extends Component {
             category_income: '',
             Type_incom: '',
             sub_category_incom: '',
-            //..............cost...............
+            //..............Incom...............
             DateStartTextCost: '',
             DateEndTextCost: '',
             fromamount_cost: '',
             toamount_cost: '',
             category_cost: '',
-            Type_cost: '',
+            acount_cost: '',
 
             sub_category_cost: '',
+
 
             //  ..........showRecords.............
 
             acount_income: [],
             categoryIncome: [],
             categoryCost: [],
-            type_cost: [],
+            acount: [],
         };
         this.ShowAcountIncome();
-        this.ShowTypeRecordCost();
-        this. SearchAdvencedcost();
+        this.ShowAcountRecord();
+
         this.getCategoryIncome();
         this.getCategoryCost();
     }
+    // .............................
+    clickEventDateCost = () => {
 
+        this.setModalDateCost(true);
+    }
+    setModalDateCost(visible) {
+        this.setState({ modalDateCost: visible });
+    }
+    //   ....
+    clickEventDateCostE = () => {
+
+        this.setModalDateCostE(true);
+    }
+    setModalDateCostE(visible) {
+        this.setState({ modalDateCostE: visible });
+    }
+    //   ....
+    clickEventCost = () => {
+
+        this.setModalCost(true);
+    }
+    setModalCost(visible) {
+        this.setState({ modalCost: visible });
+    }
+// ...................
+    clickEventIncom = () => {
+
+        this.setModalIncom(true);
+    }
+    setModalIncom(visible) {
+        this.setState({ modalIncom: visible });
+    }
+
+    clickEventDateIncomS = () => {
+
+        this.setModalDateIncomS(true);
+    }
+    setModalDateIncomS(visible) {
+        this.setState({ modalDateIncomS: visible });
+    }
+//   ....
+    clickEventDateIncomE = () => {
+
+        this.setModalDateIncomE(true);
+    }
+    setModalDateIncomE(visible) {
+        this.setState({ modalDateIncomE: visible });
+    }
     // ................getCategoryincome.........
     getCategoryIncome() {
-        let userId = this.state.user_id;
-        let url = "http://194.5.175.25:2000/api/v1/categoryincome/" + userId;
+        //let userId = '5edc76e96c47dc0d8040e744';
+        let url = "http://194.5.175.25:2000/api/v1/categoryincome/" + this.state.user_id;
         fetch(url, {
             method: 'GET',
         }).then((response) => response.json()).then((responseJson) => {
@@ -128,21 +186,21 @@ class AdvancedSearch extends Component {
                 }
             })
         })
-        this.setState({category_income:match})
+        this.setState({ category_income: match })
         // alert(match)
     }
     onSelectedItemObjectsChangeincom = (selectedItems) => {
 
         this.setState({ sub_category_incom: selectedItems[0]['name'] })
-this.findParenticom(selectedItems[0]['id'])
+        this.findParenticom(selectedItems[0]['id'])
         console.log(selectedItems);
 
     }
 
     findParentCost = (itemId) => {
-        const { categoryIncome } = this.state
+        const { categoryCost } = this.state
         let match = false
-        categoryIncome.forEach((item) => {
+        categoryCost.forEach((item) => {
             item.children &&
             item.children.filter(({ id }) => {
                 if (id === itemId) {
@@ -150,14 +208,20 @@ this.findParenticom(selectedItems[0]['id'])
                 }
             })
         })
-        this.setState({category_cost:match})
+        this.setState({ category_cost: match })
         // alert(match)
+    }
+    onSelectedItemObjectsChange = (selectedItems) => {
+        this.setState({ sub_category_cost: selectedItems[0]['name'] })
+
+        this.findParentCost(selectedItems[0]['id'])
+
     }
 
     // ................getCategoryCost.........
     getCategoryCost() {
-        let userId = this.state.user_id;
-        let url = "http://194.5.175.25:2000/api/v1/categorycost/" + userId;
+        //let userId = '5edc76e96c47dc0d8040e744';
+        let url = "http://194.5.175.25:2000/api/v1/categorycost/" + this.state.user_id;
         fetch(url, {
             method: 'GET',
         }).then((response) => response.json()).then((responseJson) => {
@@ -197,12 +261,7 @@ this.findParenticom(selectedItems[0]['id'])
         this.setState({ selectedItems });
     };
 
-    onSelectedItemObjectsChange = (selectedItems) => {
-        this.setState({ sub_category_cost: selectedItems[0]['name'] })
 
-        this.findParentCost(selectedItems[0]['id'] )
-
-    }
     // .............. SearchAdvencedincome..............
     SearchAdvencedincome = () => {
         // console.log("Type_income=" + this.state.Type_income);
@@ -213,7 +272,7 @@ this.findParenticom(selectedItems[0]['id'])
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                user_id: this.state.user_id,
+                user_id:this.state.user_id,
                 todate: this.state.DateEndTextIncome,
                 fromdate: this.state.DateStartTextIncome,
                 fromAmount: this.state.fromamount_income,
@@ -221,6 +280,8 @@ this.findParenticom(selectedItems[0]['id'])
                 category: this.state.category_income,
                 sub_category: this.state.sub_category_incom,
                 acount: this.state.Type_income,
+
+
             })
 
         }).then((response) => response.json())
@@ -232,7 +293,7 @@ this.findParenticom(selectedItems[0]['id'])
                         dataSourceincome: responseJson.data
                     })
 
-                    this.refs.modal5.open()
+                    this.clickEventIncom();
 
 
                 } else {
@@ -261,14 +322,14 @@ this.findParenticom(selectedItems[0]['id'])
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                user_id: this.state.user_id,
-                todate: this.state.DateStartTextCost,
-                fromdate: this.state.DateEndTextCost,
+                user_id:this.state.user_id,
+                todate: this.state.DateEndTextCost,
+                fromdate: this.state.DateStartTextCost,
                 fromAmount: this.state.fromamount_cost,
                 toAmount: this.state.toamount_cost,
                 category: this.state.category_cost,
-                sub_category:this.state.sub_category_cost,
-               acount: this.state.Type_cost,
+                sub_category: this.state.sub_category_cost,
+                acount: this.state.acount_cost,
 
 
             })
@@ -276,15 +337,16 @@ this.findParenticom(selectedItems[0]['id'])
         }).then((response) => response.json())
             .then((responseJson) => {
                 console.log(responseJson)
-                if (responseJson.success === true){
+                if (responseJson.success === true) {
                     this.setState({
                         isLoading: false,
                         dataSource: responseJson.data
                     })
+                    this.clickEventCost()
 
-                } else if(responseJson.success ===false) {
+                } else if (responseJson.success === false) {
                     alert('جستجوی یافت نشد')
-                    this.refs.modal6.open()
+
 
                 }
             }).catch((error) => {
@@ -296,8 +358,8 @@ this.findParenticom(selectedItems[0]['id'])
 
     ShowAcountIncome = () => {
 
-        let userId = this.state.user_id;
-        fetch('http://194.5.175.25:2000/api/v1/acount/' + userId)
+      //  let userId = '5edc76e96c47dc0d8040e744';
+        fetch('http://194.5.175.25:2000/api/v1/acount/' + this.state.user_id)
             .then((response) => response.json())
             .then((responseJson) => {
                 console.log(responseJson.data);
@@ -313,17 +375,15 @@ this.findParenticom(selectedItems[0]['id'])
                 console.error(error);
             });
     }
-    //   .............. ShowTypeRecord...................
+    ShowAcountRecord = () => {
 
-    ShowTypeRecordCost = () => {
-
-        let userId = this.state.user_id;
-        fetch('http://194.5.175.25:2000/api/v1/acount/' + userId)
+       // let userId = '5edc76e96c47dc0d8040e744';
+        fetch('http://194.5.175.25:2000/api/v1/acount/' + this.state.user_id)
             .then((response) => response.json())
             .then((responseJson) => {
-                console.log(responseJson.data);
+                console.log(responseJson);
                 for (var i = 0; i < responseJson.data.length; i++) {
-                    this.state.type_cost.push({
+                    this.state.acount.push({
                         id: responseJson.data[i]['_id'],
                         name: responseJson.data[i]['acount_name']
                     })
@@ -348,7 +408,11 @@ this.findParenticom(selectedItems[0]['id'])
                     locations={[0.1, 0.6, 0.9]}
                     colors={['#3e843d', '#3ede30', '#47b03e']}>
                     <View style={styles.headerContent}>
-                        <Text style={{ fontSize: 30, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>
+                        <Image
+                            source={require('../../../assets/images/icons/1312175.png')}
+                            style={{width: 50, height: 50}}
+                        />
+                        <Text style={{ fontSize: 23, color: '#fff', marginBottom: 5,  fontFamily: 'Vazir-Black' }}>
                             جستجوی پیشرفته
                         </Text>
                     </View>
@@ -356,13 +420,13 @@ this.findParenticom(selectedItems[0]['id'])
                 <Tabs initialPage={1} tabBarUnderlineStyle={{ backgroundColor: '#3ede30', height: 3 }}>
                     <Tab heading={<TabHeading style={{ backgroundColor: '#fff' }}>
 
-                        <Text style={{ color: 'green', fontWeight: 'bold', fontFamily: 'IRANSansMobile(FaNum)', marginRight: 7 }}>هزینه ها</Text>
-                        <Image style={{ width: 30, height: 30 }} source={require('../../../assets/images/icons/coin.png')} />
+                        <Text style={{ color: 'green', fontFamily: 'Vazir-Black', marginRight: 7 }}>هزینه ها</Text>
+                         <Image style={{ width: 30, height: 30 }} source={require('../../../assets/images/icons/coin.png')} />
 
                     </TabHeading>}>
                         <ScrollView showsVerticalScrollIndicator={false}>
                             <View>
-                                <Item fixedLabel onPress={() => this.refs.modal1.open()}>
+                                <Item fixedLabel onPress={() => this.clickEventDateCost()}>
                                     <Left>
                                         <Button transparent >
                                             <Icon active name="calendar" style={{ color: '#00C851', fontSize: 35 }} />
@@ -379,35 +443,46 @@ this.findParenticom(selectedItems[0]['id'])
 
                                 </Item>
                                 <Modal
-                                    style={[styles.modal4]}
-                                    position={'bottom'}
-                                    ref={'modal1'}
-                                    coverScreen={true}
-                                    useNativeDriver={true}
-                                >
+                                    animationType={'fade'}
+                                    transparent={true}
+                                    onRequestClose={() => this.setModalDateCost(false)}
+                                    visible={this.state.modalDateCost}>
+                                    <View style={styles.popupOverlay}>
+                                        <View style={styles.popup}>
+                                            <View style={styles.popupContent}>
+                                                <ScrollView contentContainerStyle={styles.modalInfo}>
 
-                                    <DatePicker isGregorian={false}
-                                                mode='datepicker'
-                                                options={{
-                                                    defaultFont: 'IRANSansMobile(FaNum)',
-                                                    headerFont: 'IRANSansMobile(FaNum)',
-                                                }}
-                                                onDateChange={date => {
-                                                    this.setState({ DateStartTextCost: date });
-                                                    this.refs.modal1.close();
-                                                }
 
-                                                }
+                                                    <DatePicker isGregorian={false}
+                                                                mode='datepicker'
+                                                                options={{
+                                                                    defaultFont:'Vazir-Black',
+                                                                    headerFont:'Vazir-Black',
+                                                                }}
+                                                                onDateChange={date => {
+                                                                    this.setState({ DateStartTextCost: date });
+                                                                    this.setModalDateCost(false)
+                                                                }
 
-                                                placeholder="Select date"
-                                    />
-                                    <Button full success>
-                                        <Text style={{ color: '#fff' }}>تایید</Text>
-                                    </Button>
+                                                                }
+
+                                                                placeholder="Select date"
+                                                    />
+                                                </ScrollView>
+                                                <Button full style={{ backgroundColor: '#47b03e' }} onPress={() => { this.setModalDateCost(false) }}
+                                                >
+                                                    <Text
+                                                        style={{ color: '#fff', fontSize: 16, fontFamily: 'IRANSansMobile(FaNum)' }}>انصراف</Text>
+                                                </Button>
+
+                                            </View>
+                                        </View>
+                                    </View>
+
                                 </Modal>
 
 
-                                <Item fixedLabel Icon onPress={() => this.refs.modal2.open()}>
+                                <Item fixedLabel Icon onPress={() => this.clickEventDateCostE()}>
                                     <Left>
                                         <Button transparent >
                                             <Icon active name="calendar" style={{ color: '#00C851', fontSize: 35 }} />
@@ -423,31 +498,40 @@ this.findParenticom(selectedItems[0]['id'])
 
                                 </Item>
                                 <Modal
-                                    style={[styles.modal4]}
-                                    position={'bottom'}
-                                    ref={'modal2'}
-                                    coverScreen={true}
-                                    useNativeDriver={true}
-                                >
+                                    animationType={'fade'}
+                                    transparent={true}
+                                    onRequestClose={() => this.setModalDateCostE(false)}
+                                    visible={this.state.modalDateCostE}>
+                                    <View style={styles.popupOverlay}>
+                                        <View style={styles.popup}>
+                                            <View style={styles.popupContent}>
+                                                <ScrollView contentContainerStyle={styles.modalInfo}>
+                                                    <DatePicker isGregorian={false}
+                                                                mode='datepicker'
+                                                                options={{
+                                                                    defaultFont:'Vazir-Black',
+                                                                    headerFont:'Vazir-Black',
+                                                                }}
+                                                                onDateChange={date => {
+                                                                    this.setState({ DateEndTextCost: date });
+                                                                    this.setModalDateCostE(false);
+                                                                }
 
-                                    <DatePicker isGregorian={false}
-                                                mode='datepicker'
-                                                options={{
-                                                    defaultFont: 'IRANSansMobile(FaNum)',
-                                                    headerFont: 'IRANSansMobile(FaNum)',
-                                                }}
-                                                onDateChange={date => {
-                                                    this.setState({ DateEndTextCost: date });
-                                                    this.refs.modal2.close();
-                                                }
+                                                                }
 
-                                                }
+                                                                placeholder="Select date"
+                                                    />
+                                                </ScrollView>
+                                                <Button full style={{ backgroundColor: '#47b03e' }} onPress={() => { this.setModalDateCostE(false) }}
+                                                >
+                                                    <Text
+                                                        style={{ color: '#fff', fontSize: 16, fontFamily: 'IRANSansMobile(FaNum)' }}>انصراف</Text>
+                                                </Button>
 
-                                                placeholder="Select date"
-                                    />
-                                    <Button full success>
-                                        <Text style={{ color: '#fff' }}>تایید</Text>
-                                    </Button>
+                                            </View>
+                                        </View>
+                                    </View>
+
                                 </Modal>
                                 <Item fixedLabel Icon>
 
@@ -458,7 +542,7 @@ this.findParenticom(selectedItems[0]['id'])
 
                                     </Left>
                                     <Input keyboardType='number-pad'
-                                           onChangeText={fromAmount => this.setState({fromamount_cost:fromAmount })}
+                                           onChangeText={fromAmount => this.setState({ fromamount_cost: fromAmount })}
 
                                            style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)', alignSelf: 'center' }} />
                                     <Label style={{
@@ -475,7 +559,7 @@ this.findParenticom(selectedItems[0]['id'])
                                         }}>ریال</Text>
                                     </Left>
                                     <Input keyboardType='number-pad'
-                                           onChangeText={toAmount => this.setState({toamount_cost:toAmount })}
+                                           onChangeText={toAmount => this.setState({ toamount_cost: toAmount })}
 
                                            style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)', alignItems: 'center', justifyContent: 'center' }} />
                                     <Label style={{
@@ -565,16 +649,17 @@ this.findParenticom(selectedItems[0]['id'])
                                                 selectButtonText="تایید"
                                                 title="انتخاب حساب"
                                                 searchPlaceHolderText="جستجو حساب"
-                                                data={this.state.type_cost}
-                                                onSelect={type_cost => {
-                                                    for (var i = 0; i < this.state.type_cost.length; i++) {
+                                                data={this.state.acount}
+                                                onSelect={account => {
+                                                    for (var i = 0; i < this.state.acount.length; i++) {
 
-                                                        if (this.state.type_cost[i]['id'] =type_cost) {
+                                                        if (this.state.acount[i]['id'] == account) {
                                                             //   Alert.alert(this.state.acount[i]['name'])
-                                                            this.setState({ Type_cost: this.state.type_cost[i]['name'] });
+                                                            this.setState({ acount_cost: this.state.acount[i]['name'] });
 
                                                         }
                                                     }
+
                                                 }}
                                             />
                                         </View>
@@ -593,11 +678,11 @@ this.findParenticom(selectedItems[0]['id'])
 
                             </View>
                             <Modal
-                                swipeToClose={false}
-                                style={[styles.modal]}
-                                position={'center'}
-                                ref={'modal6'}
-                                coverScreen={true}>
+                                animationType={'fade'}
+                                transparent={true}
+                                onRequestClose={() => this.setModalCost(false)}
+                                visible={this.state.modalCost}>
+
                                 <LinearGradient
                                     style={{ width: '100%' }}
                                     start={{ x: 0.3, y: 0.0 }} end={{ x: 0.5, y: 1.0 }}
@@ -611,82 +696,86 @@ this.findParenticom(selectedItems[0]['id'])
                                     }}>
                                         <Text></Text>
 
-                                        <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>جستجوی پیشرفته </Text>
-                                        <Button transparent style={{  color: '#fff', marginRight: -20 }} onPress={() => this.refs.modal6.close()}>
+                                        <Text style={{ fontSize: 16, color: '#fff', marginBottom: 5, fontFamily: 'Vazir-Black' }}>نتایج جستجوی پیشرفته هزینه </Text>
+                                        <Button transparent style={{  color: '#fff', marginRight: -20 }} onPress={() => this.setModalCost(false)}>
                                             <Icon name='close' style={{ fontSize: 30, color: '#fff', marginRight: 20 }} />
                                         </Button>
-
-
-
                                     </View>
                                 </LinearGradient>
-                                <ScrollView >
-                                    <FlatGrid
-                                        itemDimension={200}
-                                        items={this.state.dataSource}
-                                        style={{ marginTop: 3, }}
-                                        contentContainerStyle={{}}
-                                        renderItem={({ item, index }) => (
-                                            <Card style={styles.card} key={0}>
-                                                <View style={{flexDirection:'row-reverse',flex:1,backgroundColor:'#47b03e',marginHorizontal:-10}}>
-                                                    <View style={{ flex: 1,marginTop:5}}>
-                                                        <Text style={styles.title2}>مبلغ:</Text>
-                                                    </View>
-                                                    <View style={{ flex: 1,marginTop:5, alignItems: 'flex-start', }}>
-                                                        <Text style={styles.title2}>{[item.amount,'  ریال']} </Text>
-                                                    </View>
+                                <View style={styles.popupOverlay}>
+                                    <View style={styles.popup}>
+                                        <View style={styles.popupContent}>
+                                            <ScrollView contentContainerStyle={styles.modalInfo}>
+                                                <FlatGrid
+                                                    itemDimension={200}
+                                                    items={this.state.dataSource}
+                                                    style={{ marginTop: 3, }}
+                                                    contentContainerStyle={{}}
+                                                    renderItem={({ item, index }) => (
+                                                        <Card style={styles.card} key={0}>
+                                                            <View style={{flexDirection:'row-reverse',flex:1,backgroundColor:'#47b03e',marginHorizontal:-10}}>
+                                                                <View style={{ flex: 1,marginTop:5}}>
+                                                                    <Text style={styles.title2}>مبلغ:</Text>
+                                                                </View>
+                                                                <View style={{ flex: 1,marginTop:5, alignItems: 'flex-start', }}>
+                                                                    <Text style={styles.title2}>{[item.amount,'  ریال']} </Text>
+                                                                </View>
 
 
-                                                </View>
-                                                <View style={{flexDirection:'row-reverse',flex:1,backgroundColor:'#fff',marginHorizontal:-10}}>
-                                                    <View style={{ flex: 1,marginTop:5}}>
+                                                            </View>
+                                                            <View style={{flexDirection:'row-reverse',flex:1,backgroundColor:'#fff',marginHorizontal:-10}}>
+                                                                <View style={{ flex: 1,marginTop:5}}>
 
-                                                        <Text style={styles.title}>تاریخ:</Text>
+                                                                    <Text style={styles.title}>تاریخ:</Text>
 
-                                                    </View>
+                                                                </View>
 
-                                                    <View style={{ flex: 1,marginTop:5, alignItems: 'flex-start', }}>
-                                                        <Text style={styles.title}>{item.year}/{item.month}/{item.day} </Text>
+                                                                <View style={{ flex: 1,marginTop:5, alignItems: 'flex-start', }}>
+                                                                    <Text style={styles.title}>{item.year}/{item.month}/{item.day} </Text>
 
-                                                    </View>
-
-
-                                                </View>
-                                                <View style={{flexDirection:'row-reverse',flex:1,backgroundColor:'#e2e2e2',marginHorizontal:-10}}>
-                                                    <View style={{ flex: 1,marginTop:5}}>
-
-                                                        <Text style={styles.title}>دسته:</Text>
-
-                                                    </View>
-
-                                                    <View style={{ flex: 1,marginTop:5, alignItems: 'flex-start', }}>
-                                                        <Text style={styles.title}>{item.category} </Text>
-
-                                                    </View>
+                                                                </View>
 
 
-                                                </View>
-                                                <View style={{flexDirection:'row-reverse',flex:1,backgroundColor:'#fff',marginHorizontal:-10}}>
-                                                    <View style={{ flex: 1,marginTop:5}}>
+                                                            </View>
+                                                            <View style={{flexDirection:'row-reverse',flex:1,backgroundColor:'#e2e2e2',marginHorizontal:-10}}>
+                                                                <View style={{ flex: 1,marginTop:5}}>
 
-                                                        <Text style={styles.title}>زیردسته:</Text>
+                                                                    <Text style={styles.title}>دسته:</Text>
 
-                                                    </View>
+                                                                </View>
 
-                                                    <View style={{ flex: 1,marginTop:5, alignItems: 'flex-start', }}>
-                                                        <Text style={styles.title}>{item.sub_category} </Text>
+                                                                <View style={{ flex: 1,marginTop:5, alignItems: 'flex-start', }}>
+                                                                    <Text style={styles.title}>{item.category} </Text>
 
-                                                    </View>
-
-
-                                                </View>
+                                                                </View>
 
 
-                                            </Card>
+                                                            </View>
+                                                            <View style={{flexDirection:'row-reverse',flex:1,backgroundColor:'#fff',marginHorizontal:-10}}>
+                                                                <View style={{ flex: 1,marginTop:5}}>
 
-                                        )} />
+                                                                    <Text style={styles.title}>زیردسته:</Text>
 
-                                </ScrollView>
+                                                                </View>
+
+                                                                <View style={{ flex: 1,marginTop:5, alignItems: 'flex-start', }}>
+                                                                    <Text style={styles.title}>{item.sub_category} </Text>
+
+                                                                </View>
+
+
+                                                            </View>
+
+
+                                                        </Card>
+
+                                                    )} />
+
+                                            </ScrollView>
+
+                                        </View>
+                                    </View>
+                                </View>
 
 
                             </Modal>
@@ -698,16 +787,16 @@ this.findParenticom(selectedItems[0]['id'])
                         </Button>
                     </Tab>
                     <Tab heading={<TabHeading style={{ backgroundColor: '#fff' }}>
-                        <Text style={{ color: '#3e843d', fontFamily: 'IRANSansMobile(FaNum)', marginRight: 7 }}> درآمدها</Text>
-                        <Image style={{ width: 30, height: 30 }} source={require('../../../assets/images/icons/incom.png')} />
+                        <Text style={{ color: '#3e843d',  fontFamily: 'Vazir-Black', marginRight: 7 }}> درآمدها</Text>
+                         <Image style={{ width: 30, height: 30 }} source={require('../../../assets/images/icons/incom.png')} />
 
                     </TabHeading>}>
                         <ScrollView showsVerticalScrollIndicator={false}>
                             <View>
                                 <TouchableOpacity>
-                                    <Item fixedLabel Icon onPress={() => this.refs.modal3.open()}>
+                                    <Item fixedLabel Icon onPress={() => this.clickEventDateIncomS()}>
                                         <Left>
-                                            <Button transparent onPress={() => this.refs.modal3.open()}>
+                                            <Button transparent onPress={() => this.clickEventDateIncomS()}>
                                                 <Icon active name="calendar" style={{ color: '#00C851', fontSize: 35 }} />
                                             </Button>
                                         </Left>
@@ -723,37 +812,48 @@ this.findParenticom(selectedItems[0]['id'])
                                 {/*............ ........modal4................................. */}
 
                                 <Modal
-                                    style={[styles.modal4]}
-                                    position={'bottom'}
-                                    ref={'modal3'}
-                                    coverScreen={true}
-                                >
+                                    animationType={'fade'}
+                                    transparent={true}
+                                    onRequestClose={() => this.setModalDateIncomS(false)}
+                                    visible={this.state.modalDateIncomS}>
+                                    <View style={styles.popupOverlay}>
+                                        <View style={styles.popup}>
+                                            <View style={styles.popupContent}>
+                                                <ScrollView contentContainerStyle={styles.modalInfo}>
 
-                                    <DatePicker isGregorian={false}
-                                                mode="date"
-                                                options={{
-                                                    defaultFont: 'Shabnam-Light',
-                                                    headerFont: 'Shabnam-Medium',
-                                                }}
-                                                onDateChange={date => {
-                                                    this.setState({ DateStartTextIncome: date });
-                                                    this.refs.modal3.close();
-                                                }
+                                                    <DatePicker isGregorian={false}
+                                                                mode="date"
+                                                                options={{
+                                                                    defaultFont:'Vazir-Black',
+                                                                    headerFont:'Vazir-Black',
+                                                                }}
+                                                                onDateChange={date => {
+                                                                    this.setState({ DateStartTextIncome: date });
+                                                                    this.setModalDateIncomS(false);
+                                                                }
 
-                                                }
+                                                                }
 
-                                                placeholder="Select date"
-                                    />
-                                    <Button full success>
-                                        <Text style={{ color: '#fff' }}>تایید</Text>
-                                    </Button>
+                                                                placeholder="Select date"
+                                                    />
+
+                                                </ScrollView>
+                                                <Button full style={{ backgroundColor: '#47b03e' }} onPress={() => { this.setModalDateIncomS(false) }}
+                                                >
+                                                    <Text
+                                                        style={{ color: '#fff', fontSize: 16, fontFamily: 'IRANSansMobile(FaNum)' }}>انصراف</Text>
+                                                </Button>
+
+                                            </View>
+                                        </View>
+                                    </View>
                                 </Modal>
 
 
-                                <Item fixedLabel Icon onPress={() => this.refs.modal4.open()}>
+                                <Item fixedLabel Icon onPress={() => this.clickEventDateIncomE()}>
 
                                     <Left>
-                                        <Button transparent onPress={() => this.refs.modal4.open()}>
+                                        <Button transparent onPress={() => this.clickEventDateIncomE()}>
                                             <Icon active name="calendar" style={{ color: '#00C851', fontSize: 35 }} />
                                         </Button>
                                     </Left>
@@ -766,31 +866,40 @@ this.findParenticom(selectedItems[0]['id'])
 
                                 </Item>
                                 <Modal
-                                    style={[styles.modal4]}
-                                    position={'bottom'}
-                                    ref={'modal4'}
-                                    coverScreen={true}
-                                >
+                                    animationType={'fade'}
+                                    transparent={true}
+                                    onRequestClose={() => this.setModalDateIncomE(false)}
+                                    visible={this.state.modalDateIncomE}>
+                                    <View style={styles.popupOverlay}>
+                                        <View style={styles.popup}>
+                                            <View style={styles.popupContent}>
+                                                <ScrollView contentContainerStyle={styles.modalInfo}>
 
-                                    <DatePicker isGregorian={false}
-                                                mode="date"
-                                                options={{
-                                                    defaultFont: 'Shabnam-Light',
-                                                    headerFont: 'Shabnam-Medium',
-                                                }}
-                                                onDateChange={date => {
-                                                    this.setState({ DateEndTextIncome: date });
-                                                    this.refs.modal4.close();
-                                                }
+                                                    <DatePicker isGregorian={false}
+                                                                mode="date"
+                                                                options={{
+                                                                    defaultFont:'Vazir-Black',
+                                                                    headerFont:'Vazir-Black',
+                                                                }}
+                                                                onDateChange={date => {
+                                                                    this.setState({ DateEndTextIncome: date });
+                                                                    this.setModalDateIncomE(false);
+                                                                }
 
-                                                }
+                                                                }
 
-                                                placeholder="Select date"
-                                    />
-                                    <Button full success>
-                                        <Text style={{ color: '#fff' }}
-                                              onPress={() => this.refs.modal4.close()}>تایید</Text>
-                                    </Button>
+                                                                placeholder="Select date"
+                                                    />
+                                                </ScrollView>
+                                                <Button full style={{ backgroundColor: '#47b03e' }} onPress={() => { this.setModalDateIncomE(false) }}
+                                                >
+                                                    <Text
+                                                        style={{ color: '#fff', fontSize: 16, fontFamily: 'IRANSansMobile(FaNum)' }}>انصراف</Text>
+                                                </Button>
+
+                                            </View>
+                                        </View>
+                                    </View>
                                 </Modal>
                                 <Item fixedLabel Icon>
 
@@ -801,7 +910,7 @@ this.findParenticom(selectedItems[0]['id'])
 
                                     </Left>
                                     <Input keyboardType='number-pad'
-                                           onChangeText={fromAmount => this.setState({fromamount_income:fromAmount })}
+                                           onChangeText={fromAmount => this.setState({ fromamount_income: fromAmount })}
 
                                            style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)_Light' }} />
                                     <Label style={{
@@ -818,7 +927,7 @@ this.findParenticom(selectedItems[0]['id'])
                                         }}>ریال</Text>
                                     </Left>
                                     <Input keyboardType='number-pad'
-                                           onChangeText={toAmount => this.setState({toamount_income:toAmount })}
+                                           onChangeText={toAmount => this.setState({ toamount_income: toAmount })}
 
                                            style={{ color: '#777', fontFamily: 'IRANSansMobile(FaNum)', justifyContent: 'center', alignItems: 'center', alignSelf: 'center' }} />
                                     <Label style={{
@@ -910,9 +1019,9 @@ this.findParenticom(selectedItems[0]['id'])
                                                 data={this.state.acount_income}
                                                 onSelect={acount_income => {
                                                     for (var i = 0; i < this.state.acount_income.length; i++) {
-                                                        if (this.state.acount_income[i]['id'] ==acount_income) {
+                                                        if (this.state.acount_income[i]['id'] == acount_income) {
                                                             //   Alert.alert(this.state.acount[i]['name'])
-                                                            this.setState({Type_income: this.state.acount_income[i]['name']});
+                                                            this.setState({ Type_income: this.state.acount_income[i]['name'] });
                                                         }
                                                     }
                                                 }}
@@ -934,11 +1043,11 @@ this.findParenticom(selectedItems[0]['id'])
                             </View>
 
                             <Modal
-                                swipeToClose={false}
-                                style={[styles.modal]}
-                                position={'center'}
-                                ref={'modal5'}
-                                coverScreen={true}>
+                                animationType={'fade'}
+                                transparent={true}
+                                onRequestClose={() => this.setModalIncom(false)}
+                                visible={this.state.modalIncom}>
+
                                 <LinearGradient
                                     style={{ width: '100%' }}
                                     start={{ x: 0.3, y: 0.0 }} end={{ x: 0.5, y: 1.0 }}
@@ -952,88 +1061,87 @@ this.findParenticom(selectedItems[0]['id'])
                                     }}>
                                         <Text></Text>
 
-                                        <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>جستجوی پیشرفته  درامدها</Text>
-                                        <Button transparent style={{ marginRight: -20 }}>
-                                            <Icon name='close' style={{ fontSize: 30, color: '#fff', marginRight: 20 }} onPress={() => this.refs.modal5.close()} />
+                                        <Text style={{ fontSize: 16, color: '#fff', marginBottom: 5, fontFamily: 'Vazir-Black' }}>نتایج جستجوی پیشرفته درآمد</Text>
+                                        <Button transparent style={{ color: '#fff', marginRight: -20 }} onPress={() => this.setModalIncom(false)}>
+                                            <Icon name='close' style={{ fontSize: 30, color: '#fff', marginRight: 20 }} />
                                         </Button>
-
-
-
                                     </View>
                                 </LinearGradient>
-                                <ScrollView >
-                                    <FlatGrid
-                                        itemDimension={200}
-                                        items={this.state.dataSourceincome}
-                                        style={{ marginTop: 3, }}
-                                        contentContainerStyle={{}}
-                                        renderItem={({ item, index }) => (
-                                            <Card style={styles.card} key={0}>
-                                                <View style={{flexDirection:'row-reverse',flex:1,backgroundColor:'#47b03e',marginHorizontal:-10}}>
-                                                    <View style={{ flex: 1,marginTop:5}}>
+                                <View style={styles.popupOverlay}>
+                                    <View style={styles.popup}>
+                                        <View style={styles.popupContent}>
+                                            <ScrollView contentContainerStyle={styles.modalInfo}>
+                                                <FlatGrid
+                                                    itemDimension={200}
+                                                    items={this.state.dataSourceincome}
+                                                    style={{ marginTop: 3, }}
+                                                    contentContainerStyle={{}}
+                                                    renderItem={({ item, index }) => (
+                                                        <Card style={styles.card} key={0}>
+                                                            <View style={{ flexDirection: 'row-reverse', flex: 1, backgroundColor: '#47b03e', marginHorizontal: -10 }}>
+                                                                <View style={{ flex: 1, marginTop: 5 }}>
 
-                                                        <Text style={styles.title2}>مبلغ:</Text>
+                                                                    <Text style={styles.title2}>مبلغ:</Text>
 
-                                                    </View>
+                                                                </View>
 
-                                                    <View style={{ flex: 1,marginTop:5, alignItems: 'flex-start', }}>
-                                                        <Text style={styles.title2}>{[item.amount,'  ریال']}</Text>
+                                                                <View style={{ flex: 1, marginTop: 5, alignItems: 'flex-start', }}>
+                                                                    <Text style={styles.title2}>{[item.amount, '  ریال']}</Text>
 
-                                                    </View>
-
-
-                                                </View>
-                                                <View style={{flexDirection:'row-reverse',flex:1,backgroundColor:'#fff',marginHorizontal:-10}}>
-                                                    <View style={{ flex: 1,marginTop:5}}>
-
-                                                        <Text style={styles.title}>تاریخ:</Text>
-
-                                                    </View>
-
-                                                    <View style={{ flex: 1,marginTop:5, alignItems: 'flex-start', }}>
-                                                        <Text style={styles.title}>{item.year}/{item.month}/{item.day} </Text>
-
-                                                    </View>
+                                                                </View>
 
 
-                                                </View>
-                                                <View style={{flexDirection:'row-reverse',flex:1,backgroundColor:'#e2e2e2',marginHorizontal:-10}}>
-                                                    <View style={{ flex: 1,marginTop:5}}>
+                                                            </View>
+                                                            <View style={{ flexDirection: 'row-reverse', flex: 1, backgroundColor: '#fff', marginHorizontal: -10 }}>
+                                                                <View style={{ flex: 1, marginTop: 5 }}>
 
-                                                        <Text style={styles.title}>دسته:</Text>
+                                                                    <Text style={styles.title}>تاریخ:</Text>
 
-                                                    </View>
+                                                                </View>
 
-                                                    <View style={{ flex: 1,marginTop:5, alignItems: 'flex-start', }}>
-                                                        <Text style={styles.title}>{item.category} </Text>
+                                                                <View style={{ flex: 1, marginTop: 5, alignItems: 'flex-start', }}>
+                                                                    <Text style={styles.title}>{item.year}/{item.month}/{item.day} </Text>
 
-                                                    </View>
-
-
-                                                </View>
-                                                <View style={{flexDirection:'row-reverse',flex:1,backgroundColor:'#fff',marginHorizontal:-10}}>
-                                                    <View style={{ flex: 1,marginTop:5}}>
-
-                                                        <Text style={styles.title}>زیردسته:</Text>
-
-                                                    </View>
-
-                                                    <View style={{ flex: 1,marginTop:5, alignItems: 'flex-start', }}>
-                                                        <Text style={styles.title}>{item.sub_category} </Text>
-
-                                                    </View>
+                                                                </View>
 
 
-                                                </View>
+                                                            </View>
+                                                            <View style={{ flexDirection: 'row-reverse', flex: 1, backgroundColor: '#e2e2e2', marginHorizontal: -10 }}>
+                                                                <View style={{ flex: 1, marginTop: 5 }}>
+
+                                                                    <Text style={styles.title}>دسته:</Text>
+
+                                                                </View>
+
+                                                                <View style={{ flex: 1, marginTop: 5, alignItems: 'flex-start', }}>
+                                                                    <Text style={styles.title}>{item.category} </Text>
+
+                                                                </View>
 
 
-                                            </Card>
+                                                            </View>
+                                                            <View style={{ flexDirection: 'row-reverse', flex: 1, backgroundColor: '#fff', marginHorizontal: -10 }}>
+                                                                <View style={{ flex: 1, marginTop: 5 }}>
 
-                                        )} />
+                                                                    <Text style={styles.title}>زیردسته:</Text>
 
-                                </ScrollView>
+                                                                </View>
 
+                                                                <View style={{ flex: 1, marginTop: 5, alignItems: 'flex-start', }}>
+                                                                    <Text style={styles.title}>{item.sub_category} </Text>
 
+                                                                </View>
+
+                                                            </View>
+
+                                                        </Card>
+
+                                                    )} />
+
+                                            </ScrollView>
+                                        </View>
+                                    </View>
+                                </View>
                             </Modal>
 
 
@@ -1077,8 +1185,8 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         backgroundColor: '#fff',
         height: 120,
-        borderWidth:0.5,
-        borderColor:'#47b03e'
+        borderWidth: 0.5,
+        borderColor: '#47b03e'
     },
     viewbuttom: {
         borderTopWidth: 1,
@@ -1100,7 +1208,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontFamily: 'IRANSansMobile(FaNum)_Bold',
         marginRight: 17,
-        marginTop:-3,
+        marginTop: -3,
         marginLeft: 5,
     },
     title: {
@@ -1108,7 +1216,7 @@ const styles = StyleSheet.create({
         color: '#555',
         fontFamily: 'IRANSansMobile(FaNum)',
         marginRight: 17,
-        marginTop:-3,
+        marginTop: -3,
         marginLeft: 5,
     },
     imageIcon: {
@@ -1127,27 +1235,27 @@ const styles = StyleSheet.create({
         borderRadius: 5,
 
     },
-    popupButtons: {
-
-        marginBottom: 10,
-        flexDirection: 'row',
-        flex: 1,
-        borderColor: '#eee',
-        justifyContent: 'center',
-        marginLeft: -30,
-
-    },
-    popup: {
-        marginTop: 20,
-        marginBottom: 10,
-        flexDirection: 'row',
-        borderColor: '#e2e2e2',
-        justifyContent: 'center',
-        borderBottomWidth: 2,
-        // backgroundColor:'#3d933c'
-
-
-    },
+    // popupButtons: {
+    //
+    //     marginBottom: 10,
+    //     flexDirection: 'row',
+    //     flex: 1,
+    //     borderColor: '#eee',
+    //     justifyContent: 'center',
+    //     marginLeft: -30,
+    //
+    // },
+    // popup: {
+    //     marginTop: 20,
+    //     marginBottom: 10,
+    //     flexDirection: 'row',
+    //     borderColor: '#e2e2e2',
+    //     justifyContent: 'center',
+    //     borderBottomWidth: 2,
+    //     // backgroundColor:'#3d933c'
+    //
+    //
+    // },
 
     icon: {
         width: 22,
@@ -1173,4 +1281,35 @@ const styles = StyleSheet.create({
     tabs: {
         backgroundColor: '#fff',
     },
+    /************ modals ************/
+    popup: {
+        backgroundColor: 'white',
+
+    },
+    popupOverlay: {
+        backgroundColor: "#00000057",
+        flex: 1,
+
+    },
+    popupContent: {
+        //alignItems: 'center',
+        height: '100%',
+        width: '100%'
+    },
+
+    popupButtons: {
+        backgroundColor: '#47b03e',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        borderRadius: 80,
+        width: 65,
+        height: 65,
+        alignSelf: 'center',
+
+        alignItems: 'center',
+        marginBottom: 10
+
+
+    },
+
 });

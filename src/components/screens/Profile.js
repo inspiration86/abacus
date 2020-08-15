@@ -264,8 +264,8 @@ class profile extends Component {
                     locations={[0.1, 0.6, 0.9]}
                     colors={['#3e843d', '#3ede30', '#47b03e']}>
                     <View style={styles.headerContent}>
-                        <Text style={{ fontSize: 20, color: '#fff', marginBottom: 15, fontFamily: 'Far_Aref' }}>
-                            پروفایل من
+                        <Text style={{ fontSize: 20, color: '#fff', marginBottom: 15, fontFamily: 'Vazir-Black' }}>
+                            پروفایل کاربری
                         </Text>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',}}>
@@ -378,7 +378,7 @@ class profile extends Component {
 
                 </View>
                 <Button full success style={{backgroundColor:'#47b03e'}}  onPress={ this.UserUpdateRegistr}>
-                    <Text style={{ color: '#fff', fontFamily: 'IRANSansMobile(FaNum)_Bold', fontSize: 16 }}>ویرایش پروفایل</Text>
+                    <Text style={{ color: '#fff',  fontFamily: 'Vazir-Black', fontSize: 16 }}>ویرایش پروفایل</Text>
                 </Button>
 
                 <View style={styles.dialoge}>

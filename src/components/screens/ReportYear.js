@@ -498,7 +498,7 @@ class ReportYear extends React.Component {
                     colors={['#3e843d', '#3ede30', '#47b03e']}>
                     <View style={styles.headerContent}>
 
-                        <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>
+                        <Text style={{ fontSize: 18, color: '#fff', marginBottom: 5, fontFamily: 'Vazir-Black' }}>
                             گزارشات سالانه
                         </Text>
                     </View>
@@ -506,7 +506,7 @@ class ReportYear extends React.Component {
                 <Tabs tabBarUnderlineStyle={{ backgroundColor: '#3ede30', height: 3 }} initialPage={1}>
                     <Tab heading={<TabHeading style={{ backgroundColor: '#fff' }}>
 
-                        <Text style={{ color: 'green', fontWeight: 'bold', fontFamily: 'IRANSansMobile(FaNum)', marginRight: 7 }}>هزینه ها</Text>
+                        <Text style={{ color: 'green', fontFamily: 'Vazir-Black', marginRight: 7 }}>هزینه ها</Text>
                         <Image style={{
                             width: 30,
                             height:30,
@@ -583,7 +583,7 @@ class ReportYear extends React.Component {
 
                     </Tab>
                     <Tab heading={<TabHeading style={{ backgroundColor: '#fff' }}>
-                        <Text style={{ color: '#3e843d', fontFamily: 'IRANSansMobile(FaNum)', marginRight: 7 }}> درآمدها</Text>
+                        <Text style={{ color: '#3e843d',fontFamily: 'Vazir-Black', marginRight: 7 }}> درآمدها</Text>
                         <Image style={{
                             width: 30,
                             height:30,

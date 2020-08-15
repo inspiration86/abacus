@@ -16,12 +16,12 @@ import { Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { StackNavigator, SafeAreaView } from 'react-navigation';
 import { PieChart } from 'react-native-charts-wrapper';
-import {connect} from 'react-redux';
+ import {connect} from 'react-redux';
 class ReportDay extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user_id: this.props.dataLogin['id'],
+             user_id: this.props.dataLogin['id'],
             sumOfIncome: 0,
             sumOfCost: 0,
             week:'',
@@ -38,22 +38,12 @@ class ReportDay extends React.Component {
                 wordWrapEnabled: true,
             },
             data:{},
-            // highlights: [{ x: 1 }],
-            // description: {
-            //     text: '',
-            //     textSize: 15,
-            //     textColor: processColor('darkgray'),
-            //
-            // },
-
             dataCost: {},
-
             highlights: [{ x: 50 }],
             description: {
                 text: '',
                 textSize: 15,
                 textColor: processColor('darkgray'),
-
             },
             Daydata: [
                 {
@@ -236,7 +226,7 @@ class ReportDay extends React.Component {
         }
         //console.log(dayNumber)
         let x = [];
-        fetch('http://194.5.175.25:2000/api/v1/reportDayIncome/' + this.state.user_id, {
+        fetch('http://194.5.175.25:2000/api/v1/reportDayIncome/' +this.state.user_id, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -245,7 +235,7 @@ class ReportDay extends React.Component {
             body: JSON.stringify({
                 year: year.toString(),
                 month: monthNumber.toString(),
-                day: dayNumber.toString(),
+                day: dayNumber,
             }),
         }).then((response) => response.json())
             .then((responseJson) => {
@@ -452,7 +442,7 @@ class ReportDay extends React.Component {
             body: JSON.stringify({
                 year: year.toString(),
                 month: monthNumber.toString(),
-                day: dayNumber.toString(),
+                day: dayNumber,
             }),
         }).then((response) => response.json())
             .then((responseJson) => {
@@ -511,19 +501,19 @@ class ReportDay extends React.Component {
                     colors={['#3e843d', '#3ede30', '#47b03e']}>
                     <View style={styles.headerContent}>
 
-                        <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5, fontFamily: 'Far_Aref' }}>
+                        <Text style={{ fontSize: 20, color: '#fff', marginBottom: 5,fontFamily: 'Vazir-Black' }}>
                             گزارشات روزانه
                         </Text>
                     </View>
                 </LinearGradient>
                 <Tabs tabBarUnderlineStyle={{ backgroundColor: '#3ede30', height: 3 }} initialPage={1}>
                     <Tab heading={<TabHeading style={{ backgroundColor: '#fff' }}>
-                        <Text style={{ color: 'green', fontFamily: 'IRANSansMobile(FaNum)' }}>هزینه ها</Text>
-                        <Image style={{
+                        <Text style={{ color: 'green',fontFamily: 'Vazir-Black' }}>هزینه ها</Text>
+                        {/* <Image style={{
               width: 30,
               height:30,
           marginLeft:10
-            }} source={require('../../../assets/images/icons/coin.png')} />
+            }} source={require('../../../assets/images/icons/coin.png')} /> */}
 
                     </TabHeading>}>
                         <View style={{ flex: 1, backgroundColor: '#DCDCDC', }}>
@@ -593,11 +583,11 @@ class ReportDay extends React.Component {
                     <Tab
                         heading={<TabHeading style={{ backgroundColor: '#fff' }}>
                             <Text style={{ color: 'green',fontFamily: 'IRANSansMobile(FaNum)'}}>درآمدها</Text>
-                            <Image style={{
+                            {/* <Image style={{
                                 width: 30,
                                 height:30,
                                 marginLeft:10
-                            }} source={require('../../../assets/images/icons/incom.png')} />
+                            }} source={require('../../../assets/images/icons/incom.png')} /> */}
                         </TabHeading>}>
                         <View style={{ flex: 1, backgroundColor: '#DCDCDC', }}>
                             <Card style={styles.cardStyle}>
